@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block header %}
+    
+{% endblock %}
+{% block body %}
+    <section class="contact-section section-padding" id="section_3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 mx-auto">
+                    <h2 class="text-center mb-4">Connexion</h2>
+                        <form method="post" class = "custom-form">
+                            <div class="container">
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('deconnexion') }}">Deconnexion</a>
+                                    </div>
+                                {% endif %}
+
+                                <label for="username">Email</label>
+                                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                                <label for="password">Mot de passe</label>
+                                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            </div>
+                            {#
+                                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                See https://symfony.com/doc/current/security/remember_me.html
+
+                                <div class="checkbox mb-3">
+                                    <label>
+                                        <input type="checkbox" name="_remember_me"> Remember me
+                                    </label>
+                                </div>
+                            #}
+                            <div class = "container text-center">
+                                <div class = "row justify-content-center">
+                                    <div class = "col-4">
+                                        <a href="" role = "button" class = "btn btn-primary">Pas encore inscrit ?</a>
+                                    </div>
+                                    <div class = "col-4">
+                                        <a href="" role = "button" class = "btn btn-success">Mot de passe oublié ?</a>
+                                    </div>
+                                    <div class = "col-4">
+                                        <button class="btn btn-secondary" type="submit">Connexion</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
@@ -28,59 +28,51 @@ https://templatemo.com/tm-583-festava-live
 </head>
 <body>
     <main>
-        <header class="site-header d-none d-md-block">
-            <div class="container d-md-none d-lg-block ">
-                <div class="row">
-                    <div class="col-lg-12 col-12 d-flex flex-wrap">
-                        <p class="d-flex me-4 mb-0">
-                            <i class="bi-person custom-icon me-2"></i>
-                            <strong class="text-dark">Bienvenue sur le site des Speed Meeting EvryBio 2024</strong>
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </header>
-        <nav class="navbar navbar-expand-lg">
+        {% block header %}{% endblock %}
+        <nav class="navbar navbar-expand-lg custom-navbar">
             <div class="container">
-                <a class="navbar-brand" href="{{path ("accueil")}}">Speed Meeting</a>
-                {# <a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a> #}
+                <a class="navbar-brand" href="{{path ('accueil')}}">
+                    Speed Meeting EvryBio 2024
+                </a>
+
+                <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-none ms-auto me-4">Connexion</a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_1">Accueil</a>
+                            <a class="nav-link click-scroll" href="">Présentation</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_4">Organisation</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_3">Professionnels</a>
+                            <a class="nav-link click-scroll" href="">Organisation</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_6">Contact</a>
                         </li>
                     </ul>
-
-                    <a href="ticket.html" class="btn custom-btn d-lg-block d-none">Se Connecter</a>
+                    {% if app.user %}
+                        <a href="{{path ('deconnexion')}}" class="btn custom-btn d-lg-block d-none">Deconnexion</a>
+                    {% else %}
+                        <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-block d-none">Connexion</a>
+                    {% endif %}
+                    
                 </div>
             </div>
         </nav>
-    </main>
     {% block body %}{% endblock %}
+    </main>
     <footer class="site-footer">
         <div class="site-footer-top">
             <div class="container">
                 <div class="row">
-
                     <div class="col-lg-6 col-12">
-                        <h2 class="text-white mb-lg-0">EvryBio 2024</h2>
+                        <h2 class="text-white mb-lg-0">Colloque EvryBio 2024</h2>
                     </div>
 
                     <div class="col-lg-6 col-12 d-flex justify-content-lg-end align-items-center">
@@ -88,12 +80,6 @@ https://templatemo.com/tm-583-festava-live
                             <li class="social-icon-item">
                                 <a href="#" class="social-icon-link">
                                     <span class="bi-twitter"></span>
-                                </a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link">
-                                    <span class="bi-apple"></span>
                                 </a>
                             </li>
 
@@ -109,11 +95,6 @@ https://templatemo.com/tm-583-festava-live
                                 </a>
                             </li>
 
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link">
-                                    <span class="bi-pinterest"></span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -123,7 +104,7 @@ https://templatemo.com/tm-583-festava-live
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-6 col-12 mb-4 pb-2">
+                {# <div class="col-lg-6 col-12 mb-4 pb-2">
                     <h5 class="site-footer-title mb-3">Links</h5>
 
                     <ul class="site-footer-links">
@@ -151,20 +132,20 @@ https://templatemo.com/tm-583-festava-live
                             <a href="#" class="site-footer-link">Contact</a>
                         </li>
                     </ul>
-                </div>
+                </div> #}
 
-                <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                    <h5 class="site-footer-title mb-3">Have a question?</h5>
+                <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
+                    <h5 class="site-footer-title mb-3">Des questions ?</h5>
 
-                    <p class="text-white d-flex mb-1">
+                    {# <p class="text-white d-flex mb-1">
                         <a href="tel: 090-080-0760" class="site-footer-link">
                             090-080-0760
                         </a>
-                    </p>
+                    </p> #}
 
                     <p class="text-white d-flex">
-                        <a href="mailto:hello@company.com" class="site-footer-link">
-                            hello@company.com
+                        <a href="mailto:speed.meetings.evrybio2024@gmail.com" class="site-footer-link">
+                            speed.meetings.evrybio2024@gmail.com
                         </a>
                     </p>
                 </div>
@@ -173,11 +154,13 @@ https://templatemo.com/tm-583-festava-live
                     <h5 class="site-footer-title mb-3">Location</h5>
 
                     <p class="text-white d-flex mt-3 mb-2">
-                        Silang Junction South, Tagaytay, Cavite, Philippines
+                        Université d'Evry Val d'Essonne </br>
+                        23 Bd François Mitterrand </br>
+                        91000 Evry-Courcouronnes
                     </p>
 
                     <a class="link-fx-1 color-contrast-higher mt-3" href="#">
-                        <span>Our Maps</span>
+                        <span>Carte</span>
                         <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
                             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="16" cy="16" r="15.5"></circle>
@@ -190,7 +173,7 @@ https://templatemo.com/tm-583-festava-live
             </div>
         </div>
 
-        <div class="site-footer-bottom">
+        {# <div class="site-footer-bottom">
             <div class="container">
                 <div class="row">
 
@@ -216,7 +199,7 @@ https://templatemo.com/tm-583-festava-live
                     </div>
                 </div>
             </div>
-        </div>
+        </div> #}
     </footer>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

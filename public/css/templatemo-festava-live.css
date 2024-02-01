@@ -12,8 +12,9 @@ https://templatemo.com/tm-583-festava-live
 -----------------------------------------*/
 :root {
   --white-color:                  #ffffff;
-  --primary-color:                #F8CB2E;
+  --primary-color:                #ecc32bda;
   --secondary-color:              #EE5007;
+  --success-color:                #28a745;
   --section-bg-color:             #f0f8ff;
   --custom-btn-bg-color:          #EE5007;
   --custom-btn-bg-hover-color:    #c01f27;
@@ -46,8 +47,17 @@ https://templatemo.com/tm-583-festava-live
 body {
   background-color: var(--white-color);
   font-family: var(--body-font-family); 
+  margin-top: 0;
+  padding: 0;
+  min-height: 100vh; /* Cette règle assure que le corps de la page a au moins la hauteur de la fenêtre du navigateur */
+  display: flex;
+  flex-direction: column;
 }
 
+main {
+  /* Styles pour le contenu principal de la page */
+  flex-grow: 1; /* Cela permet au contenu principal de prendre autant d'espace vertical disponible que possible */
+}
 
 /*---------------------------------------
   TYPOGRAPHY               
@@ -216,6 +226,68 @@ strong {
   color: var(--secondary-color);
 }
 
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--dark-color);
+  background: var(--primary-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+.btn-primary:hover {
+  background-color: var(--custom-btn-bg-hover-color);
+  border-color: var(--custom-btn-bg-hover-color);
+  color: var(--dark-color);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--dark-color);
+  background: var(--secondary-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+.btn-secondary:hover {
+  background-color: var(--custom-btn-bg-hover-color);
+  border-color: var(--custom-btn-bg-hover-color);
+  color: var(--dark-color);
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+  color: var(--dark-color);
+  background: var(--success-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+.btn-sucess:hover {
+  background-color: var(--custom-btn-bg-hover-color);
+  border-color: var(--custom-btn-bg-hover-color);
+  color: var(--dark-color);
+}
 /*---------------------------------------
   SECTION               
 -----------------------------------------*/
@@ -381,12 +453,22 @@ strong {
 /*---------------------------------------
   NAVIGATION              
 -----------------------------------------*/
+.custom-navbar {
+  background-color: #000 !important; /* Noir */
+  color: #fff; /* Texte blanc pour contraste */
+}
+
+.custom-navbar .navbar-nav .nav-link {
+  color: #fff !important; /* Assure que le texte des liens est blanc */
+}
+
+
 .sticky-wrapper {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  margin-top: 51px;
+  margin-top: 0px;
 }
 
 .sticky-wrapper.is-sticky .navbar {
@@ -442,7 +524,7 @@ strong {
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  background: transparent;
+  background: black;
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before,
@@ -505,7 +587,7 @@ strong {
 .hero-section {
   position: relative;
   overflow: hidden;
-  padding-top: 100px;
+  /* padding-top: px; */
   height: calc(100vh - 51px);
 }
 
@@ -536,6 +618,7 @@ strong {
 -----------------------------------------*/
 .about-section {
   background-image: url('../images/edward-unsplash-blur.jpg');
+  background-position: center;
   background-color: #704010;
   background-repeat: no-repeat;
   background-size: cover;
@@ -673,7 +756,7 @@ strong {
   SCHEDULE              
 -----------------------------------------*/
 .schedule-section {
-  background-image: url('../images/nainoa-shizuru-unsplash-blur.jpg');
+  background-image: url('../images/fond_2.jpg');
   background-color: #242424;
   background-repeat: no-repeat;
   background-position: center;
@@ -710,7 +793,7 @@ strong {
 }
 
 .schedule-table thead th {
-  border-right: 1px solid #c7460a;
+  /* border-right: 1px solid #c7460a; */
   border-bottom-color: transparent;
 }
 
