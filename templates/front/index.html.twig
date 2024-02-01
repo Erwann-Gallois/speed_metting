@@ -1,20 +1,231 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FrontController!{% endblock %}
+{% block title %}Acceuil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="hero-section" id="section_1">
+            <div class="section-overlay"></div>
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="row">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                    <div class="col-12 mt-auto mb-5 text-center">
+                        <small>Sylvain Fisson présente</small>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/Site/speed_metting/src/Controller/FrontController.php</code></li>
-        <li>Your template at <code>D:/Site/speed_metting/templates/front/index.html.twig</code></li>
-    </ul>
-</div>
+                        <h1 class="text-white mb-5">Speed Meetings 2024</h1>
+
+                        <a class="btn custom-btn smoothscroll" href="">Inscription</a>
+                        <a class="btn custom-btn smoothscroll btn-primary-color" style = "background-color : var(--primary-color); color : black;"href="">Connexion</a>
+                    </div>
+
+                    <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
+                        <div class="date-wrap">
+                            <h5 class="text-white">
+                                <i class="custom-icon bi-clock me-2"></i>
+                                21 Mai 2024
+                            </h5>
+                        </div>
+
+                        <div class="location-wrap mx-auto py-3 py-lg-0">
+                            <h5 class="text-white">
+                                <i class="custom-icon bi-geo-alt me-2"></i>
+                                31 cours Blaise Pascal, 91000 Évry-Courcouronnes
+                            </h5>
+                        </div>
+
+                        <div class="social-share">
+                            <ul class="social-icon d-flex align-items-center justify-content-center">
+                                <span class="text-white me-3">Share:</span>
+
+                                <li class="social-icon-item">
+                                    <a href="#" class="social-icon-link">
+                                        <span class="bi-facebook"></span>
+                                    </a>
+                                </li>
+
+                                <li class="social-icon-item">
+                                    <a href="#" class="social-icon-link">
+                                        <span class="bi-twitter"></span>
+                                    </a>
+                                </li>
+
+                                <li class="social-icon-item">
+                                    <a href="#" class="social-icon-link">
+                                        <span class="bi-instagram"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "image-wrap">
+                <img src="{{asset ("images/Fisson.jpg")}}" alt="Fisson Malveillance Max">
+            </div>
+            {# <div class="video-wrap">
+                <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                    <source src="video/pexels-2022395.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div> #}
+        </section>
+
+        <section class="about-section section-padding" id="section_2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-12 mb-4 mb-lg-0 d-flex align-items-center">
+                        <div class="services-info">
+                            <h2 class="text-white mb-4">A propos des speed meetings</h2>
+                            <p class="text-white">
+                                Les speed meetings sont des rencontres de 10 minutes entre les élèves de L3 et les professionnels.
+                            </p>
+                            <h6 class="text-white mt-4">Comment cela va se passer ?</h6>
+                            <p class="text-white">
+                                Avant la date du speed meeting, vous recevrez un mail pour vous prévenir de l'ouverture des inscriptions sur les créneaux.
+                                Attention, les places sont limitées !
+                            </p>
+                            <h6 class="text-white mt-4">Quand et Où</h6>
+                            <p class="text-white">Le 21 mai 2024 de 14h à 17h30, 31 cours Blaise Pascal, 91000 Evry-Courcouronnes</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="about-text-wrap">
+                            <img src="{{asset ('images/Fisson.jpg')}}" class="about-image img-fluid">
+                            {# <div class="about-text-info d-flex">
+                                <div class="d-flex">
+                                    <i class="about-text-icon bi-person"></i>
+                                </div>
+                                <div class="ms-4">
+                                    <h3>Un moment de rencontre</h3>
+                                    <p class="mb-0">Construisez votre avenir avec nous</p>
+                                </div>
+                            </div> #}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="schedule-section section-padding" id="section_4">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 text-center">
+                        <h2 class="text-white mb-4">Organisation de la journée</h2>
+
+                            <div class="table-responsive">
+                                <table class="schedule-table table table-dark table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Heure</th>
+                                            <th>Activités</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td scope = "row">14h00 - 15h00</td>
+                                            <td>
+                                                Premiere Session (30 eleves)<br />
+                                                Partie Question - Reponse par Groupe
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td scope = "row">15h00 - 15h30</td>
+                                            <td>
+                                                Premiere Session (30 eleves)<br />
+                                                Partie Libre + Gouter
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td scope = "row">16h00 - 17h00</td>
+                                            <td>
+                                                Deuxieme Session (30 eleves)<br />
+                                                Partie Question - Reponse par Groupe
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td scope = "row">17h00 - 17h30</td>
+                                            <td>
+                                                Deuxieme Session (30 eleves)<br />
+                                                Partie Libre + Gouter
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section section-padding" id="section_6">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-8 col-12 mx-auto">
+                        <h2 class="text-center mb-4">Interested? Let's talk</h2>
+
+                        <nav class="d-flex justify-content-center">
+                            <div class="nav nav-tabs align-items-baseline justify-content-center" id="nav-tab"
+                                role="tablist">
+                                <button class="nav-link active" id="nav-ContactForm-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-ContactForm" type="button" role="tab"
+                                    aria-controls="nav-ContactForm" aria-selected="false">
+                                    <h5>Contact Form</h5>
+                                </button>
+
+                                <button class="nav-link" id="nav-ContactMap-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-ContactMap" type="button" role="tab"
+                                    aria-controls="nav-ContactMap" aria-selected="false">
+                                    <h5>Google Maps</h5>
+                                </button>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"
+                                aria-labelledby="nav-ContactForm-tab">
+                                <form class="custom-form contact-form mb-5 mb-lg-0" action="#" method="post"
+                                    role="form">
+                                    <div class="contact-form-body">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <input type="text" name="contact-name" id="contact-name"
+                                                    class="form-control" placeholder="Full name" required>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <input type="email" name="contact-email" id="contact-email"
+                                                    pattern="[^ @]*@[^ @]*" class="form-control"
+                                                    placeholder="Email address" required>
+                                            </div>
+                                        </div>
+
+                                        <input type="text" name="contact-company" id="contact-company"
+                                            class="form-control" placeholder="Company" required>
+
+                                        <textarea name="contact-message" rows="3" class="form-control"
+                                            id="contact-message" placeholder="Message"></textarea>
+
+                                        <div class="col-lg-4 col-md-10 col-8 mx-auto">
+                                            <button type="submit" class="form-control">Send message</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-ContactMap" role="tabpanel"
+                                aria-labelledby="nav-ContactMap-tab">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2637.192130685937!2d2.425795391858858!3d48.625305343092464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5de1b71db3e7d%3A0xc2b3c2bba0107943!2s31%20Cr%20Blaise%20Pascal%2C%2091000%20%C3%89vry-Courcouronnes!5e0!3m2!1sfr!2sfr!4v1706798837272!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <!-- You can easily copy the embed code from Google Maps -> Share -> Embed a map // -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
 {% endblock %}
