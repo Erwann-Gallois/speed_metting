@@ -31,9 +31,15 @@ https://templatemo.com/tm-583-festava-live
         {% block header %}{% endblock %}
         <nav class="navbar navbar-expand-lg custom-navbar">
             <div class="container">
-                <a class="navbar-brand" href="{{path ('accueil')}}">
-                    Speed Meeting EvryBio 2024
-                </a>
+                {% if is_granted("ROLE_ORGANISATEUR") %}
+                    <a class="navbar-brand" href="{{path ('admin')}}">
+                        Admin
+                    </a>
+                {% else %}
+                    <a class="navbar-brand" href="{{path ('accueil')}}">
+                        Speed Meeting EvryBio 2024
+                    </a>
+                {% endif %}
 
                 <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-none ms-auto me-4">Connexion</a>
 
