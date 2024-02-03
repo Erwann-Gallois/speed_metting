@@ -88,7 +88,7 @@
                 </video>
             </div> #}
         </section>
-        {{ include("flash_message.html.twig") }}
+        {% include 'flash_message.html.twig' %}
         <section class="about-section section-padding" id="section_1">
             <div class="container">
                 <div class="row">
@@ -130,10 +130,8 @@
         <section class="schedule-section section-padding" id="section_2">
             <div class="container">
                 <div class="row">
-
                     <div class="col-12 text-center">
                         <h2 class="text-dark mb-4">Organisation de la journée</h2>
-
                             <div class="table-responsive">
                                 <table class="schedule-table table table-dark table-hover table-borderless">
                                     <thead>
@@ -147,34 +145,35 @@
                                         <tr>
                                             <td scope = "row">14h00 - 15h00</td>
                                             <td>
-                                                Premiere Session (30 eleves)<br />
+                                                Premiere Session<br />
                                                 Partie Question - Reponse par Groupe
                                             </td>
                                         </tr>
                                         <tr>
                                             <td scope = "row">15h00 - 15h30</td>
                                             <td>
-                                                Premiere Session (30 eleves)<br />
+                                                Premiere Session<br />
                                                 Partie Libre + Gouter
                                             </td>
                                         </tr>
                                         <tr>
                                             <td scope = "row">16h00 - 17h00</td>
                                             <td>
-                                                Deuxieme Session (30 eleves)<br />
+                                                Deuxieme Session<br />
                                                 Partie Question - Reponse par Groupe
                                             </td>
                                         </tr>
                                         <tr>
                                             <td scope = "row">17h00 - 17h30</td>
                                             <td>
-                                                Deuxieme Session (30 eleves)<br />
+                                                Deuxieme Session<br />
                                                 Partie Libre + Gouter
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        <a href="{{path ('organisation')}}" class="btn btn-dark">En savoir plus</a>
                     </div>
                 </div>
             </div>

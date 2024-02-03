@@ -59,6 +59,7 @@ class RegistrationController extends AbstractController
                     $user->setRoles(['ROLE_ORGANISATEUR']);
                     $entityManager->persist($user);
                     $entityManager->flush();
+                    $this->addFlash('success', 'Votre compte a bien été créé, vous pouvez vous connecter');
                     return $this->redirectToRoute('connexion');
                     break;
             }
@@ -91,6 +92,7 @@ class RegistrationController extends AbstractController
             $user->setQuestion($form->get('question')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('success', 'Votre compte a bien été créé, vous pouvez vous connecter');
             return $this->redirectToRoute('connexion');
         }
         return $this->render('registration/inscription-step2.html.twig', [

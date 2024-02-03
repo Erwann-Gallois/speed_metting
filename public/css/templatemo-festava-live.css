@@ -288,6 +288,27 @@ strong {
   border-color: var(--custom-btn-bg-hover-color);
   color: var(--dark-color);
 }
+
+.btn-dark {
+  background-color: #242424;
+  border-color: #242424;
+  color: #242424;
+  background: #242424;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+.btn-dark:hover {
+  background-color: var(--custom-btn-bg-hover-color);
+  border-color: var(--custom-btn-bg-hover-color);
+  color: var(--dark-color);
+}
 /*---------------------------------------
   SECTION               
 -----------------------------------------*/
