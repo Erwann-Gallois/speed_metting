@@ -88,7 +88,7 @@
                 </video>
             </div> #}
         </section>
-
+        {{ include("flash_message.html.twig") }}
         <section class="about-section section-padding" id="section_1">
             <div class="container">
                 <div class="row">
@@ -205,9 +205,8 @@
                         </nav>
 
                         <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"
-                                aria-labelledby="nav-ContactForm-tab">
-                                <form class="custom-form contact-form mb-5 mb-lg-0">
+                            <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"aria-labelledby="nav-ContactForm-tab">
+                                <div class = "custom-form">
                                     {{ form_start(form) }}
                                     <div class="contact-form-body">
                                         <div class="row">
@@ -226,7 +225,7 @@
                                         </div>
                                     </div>
                                     {{ form_end(form) }}
-                                </form>
+                                </div>
                             </div>
 
                             <div class="tab-pane fade" id="nav-ContactMap" role="tabpanel"

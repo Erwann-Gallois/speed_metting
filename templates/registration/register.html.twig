@@ -3,13 +3,14 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+    {{ include("flash_message.html.twig") }}
     <section class="contact-section section-padding" id="section_3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
                     <h2 class="text-center mb-4">Inscription</h2>
                         <p class = "text-center">Les champs avec (*) sont obligatoire</p>
-                        <form class = "custom-form">
+                        <div class = "custom-form">
                             <div class = "container">
                                 {{ form_errors(registrationForm) }}
 
@@ -26,7 +27,7 @@
                                     <button type="submit" class="btn btn-primary">S'inscrire</button>
                                 {{ form_end(registrationForm) }}
                             </div>
-                        </form>
+                        </div>
                 </div>
             </div>
         </div>

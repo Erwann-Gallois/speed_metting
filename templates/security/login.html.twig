@@ -6,13 +6,13 @@
     
 {% endblock %}
 {% block body %}
-    <section class="contact-section section-padding" id="section_3">
+    <section class="contact-section section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
                     <h2 class="text-center mb-4">Connexion</h2>
-                        <form method="post" class = "custom-form">
-                            <div class="container">
+                        <form method="post">
+                            <div class="container custom-form">
                                 {% if error %}
                                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                                 {% endif %}
