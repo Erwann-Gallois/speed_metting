@@ -1,0 +1,39 @@
+{% extends 'base_back.html.twig' %}
+{% block title %}
+    Liste des professionnels
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Liste des professionnels</h1>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Mail</th>
+                        {# <th>Validé</th> #}
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for pro in pros %}
+                        <tr>
+                            <td>{{ pro.nom }}</td>
+                            <td>{{ pro.prenom }}</td>
+                            <td>{{ pro.mail }}</td>
+                            {# <td>{{ pro.valide }}</td> #}
+                            <td>
+                                <a href="{{ path('pro_show', {'id': pro.id}) }}" class="btn btn-primary">Voir</a>
+                                <a href="{{ path('pro_edit', {'id': pro.id}) }}" class="btn btn-secondary">Modifier</a>
+                                <a href="{{ path('pro_delete', {'id': pro.id}) }}" class="btn btn-danger">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{{ path('pro_new') }}" class="btn btn-success">Ajouter un professionnel</a>
+            </div>
+        </div>
+    </div>
