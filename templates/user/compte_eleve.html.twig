@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+{% block title %}Profil : {{ user.nom }} - {{ user.prenom }}{% endblock %}
+{% block body %}
+<section class="section-padding">
+    <div class="container">
+        <h1 class="text-center">Profil : {{ user.nom }} - {{ user.prenom }}</h1>
+        <hr />
+        <div class='row justify-content-center'>
+            <div class='col-3'>
+                <a href="" class="btn btn-sm btn-primary">Modifier</a>
+            </div>
+            <div class='col-3'>
+                <a href="" class="btn btn-sm btn-danger">Supprimer</a>
+            </div>
+            <div class='col-3'>
+                <a href="" class="btn btn-sm btn-primary">Modifier mot de passe</a>
+            </div>
+            <div class='col-3'>
+                <a href="" class="btn btn-sm btn-primary">Modifier image de profil</a>
+            </div>
+        </div>
+        <hr />
+        <h2 class="text-center">Présentation</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-8 text-center align-self-center">
+                <p><strong>Nom :</strong> {{ user.nom }}</p>
+                <p><strong>Prénom :</strong> {{ user.prenom }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Filiere :</strong> {{ user.filiere }}</p>
+                {# <p><strong>Entreprise :</strong> {{ user.entreprise }}</p> #}
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/Fisson.jpg') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+        {# <hr /> #}
+        {# <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Etude</h2>
+                <p>{{ user.etude }}</p>
+            </div>
+        </div> #}
+        <hr />
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Decrivez votre projet d'avenir</h2>
+                <p>{{ user.question }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
