@@ -23,7 +23,7 @@
 									<i class="bi bi-house-fill"></i> <span class="ms-1 d-none d-sm-inline">Accueil Front</span>
 								</a>
 							</li>
-							{# NOTE - Modération signalement annonce #}
+							{# NOTE - Modération signalement annonce
 							<li>
 								<a href="#annoncemenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 									<i class="bi bi-shield-exclamation"></i> <span class="ms-1 d-none d-sm-inline">Signalement Annonce</span> </a>
@@ -35,12 +35,22 @@
 										<a href="" class="nav-link px-0"><i class="bi bi-emoji-laughing-fill"></i> <span class="d-none d-sm-inline">Traiter</span></a>
 									</li>
 								</ul>
-							</li>
+							</li> #}
 							{# NOTE - Ajout de la partie User #}
-							<li class="nav-item">
-								<a href="#" class="nav-link align-middle px-0">
-									<i class="bi bi-person-lines-fill"></i> <span class="ms-1 d-none d-sm-inline">Liste Utilisateur</span>
-								</a>
+							<li>
+								<a href="#Liste" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+									<i class="bi bi-person-lines-fill"></i> <span class="ms-1 d-none d-sm-inline">Liste Utilisateur</span> </a>
+								<ul class="collapse nav flex-column ms-2" id="Liste" data-bs-parent="#menu">
+									<li class="w-120">
+										<a href="{{path ('liste_professionnel')}}" class="nav-link px-0"><i class="bi bi-person-circle"></i> <span class="d-none d-sm-inline">Professionnel</span></a>
+									</li>
+									<li>
+										<a href="{{path ('liste_eleve')}}" class="nav-link px-0"><i class="bi bi-person-badge-fill"></i> <span class="d-none d-sm-inline">Eleve</span></a>
+									</li>
+									<li>
+										<a href="" class="nav-link px-0"><i class="bi bi-person-square"></i> <span class="d-none d-sm-inline">Organisateur</span></a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</div>
@@ -53,7 +63,7 @@
 						{% endfor %}
 				</div>
 				{% endfor %}
-				<hr />
+				{# <hr /> #}
 				{% block body %}{% endblock %}
 				</div>
 			</div>
