@@ -15,7 +15,7 @@
                             <p class = 'text-center'>Pour que les professionnels puissent mieux vous connaître, parlez nous de votre projet professionnel</p>
                         {% endif %}
                         <p class = "text-center">Cette question </p>
-                        <form class = "custom-form">
+                        <div class = "custom-form">
                             <div class = "container">
                                 {{ form_errors(questionForm) }}
                                 {{ form_start(questionForm) }}
@@ -23,7 +23,7 @@
                                     <button type="submit" class="btn btn-primary">Envoyer</button>
                                 {{ form_end(questionForm) }}
                             </div>
-                        </form>
+                        </div>
                 </div>
             </div>
         </div>
