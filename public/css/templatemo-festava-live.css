@@ -14,6 +14,7 @@ https://templatemo.com/tm-583-festava-live
   --white-color:                  #ffffff;
   --primary-color:                #ecc32bda;
   --secondary-color:              #EE5007;
+  --danger-color:                 #dc3545;
   --success-color:                #28a745;
   --section-bg-color:             #f0f8ff;
   --custom-btn-bg-color:          #EE5007;
@@ -315,6 +316,62 @@ strong {
   border-color: var(--custom-btn-bg-hover-color);
   color: var(--dark-color);
 }
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+  background: var(--danger-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+.btn-danger:hover {
+  background-color: var(--custom-btn-bg-hover-color);
+  border-color: var(--custom-btn-bg-hover-color);
+  color: var(--dark-color);
+}
+
+.btn-sm {
+  padding: 7px 14px;
+  font-size: var(--p-font-size);
+}
+
+/* Style du bouton */
+.btn.custom-btn-dropdown {
+  background: var(--custom-btn-bg-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--btn-font-size);
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+/* Style du menu déroulant */
+.dropdown-menu {
+  background-color: var(--dark-color); /* Fond noir */
+}
+
+.dropdown-menu .dropdown-item {
+  color: var(--white-color); /* Texte blanc */
+}
+
+/* Style au survol pour les éléments du menu déroulant */
+.dropdown-menu .dropdown-item:hover {
+  background-color: #1c1c1e; /* Fond plus foncé au survol */
+  color: var(--primary-color); /* Texte légèrement plus clair que blanc pur */
+}
+
+
 /*---------------------------------------
   SECTION               
 -----------------------------------------*/
@@ -378,6 +435,42 @@ strong {
 .nav-tabs h5 {
   color: var(--p-color); 
   margin-bottom: 0;
+}
+
+/* CSS pour le menu déroulant */
+.nav-item .dropdown-menu {
+  background-color: var(--dark-color); /* Fond noir */
+}
+
+.nav-item .dropdown-menu .dropdown-item {
+  color: white; /* Texte blanc */
+}
+
+/* Change la couleur du texte au survol */
+.nav-item .dropdown-menu .dropdown-item:hover {
+  color: #f8f9fa; /* Légèrement plus clair que blanc pur pour l'effet de survol */
+  background-color: var(--primary-color); /* Fond plus foncé au survol */
+}
+
+.custom-navbar .nav-link-class, .custom-navbar {
+  /* border-radius: var(--border-radius-large); */
+  border: 0;
+  padding: 15px 25px;
+  transition: all 0.3s;
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-normal);
+  
+}
+/* Style des liens de la navbar au survol */
+.custom-navbar .nav-link-class:hover, .custom-navbar .navbar-brand:hover {
+  color: var(--primary-color); /* Changez cette valeur pour la couleur souhaitée */
+}
+
+/* Style des éléments du menu déroulant au survol */
+.custom-navbar .dropdown-menu .dropdown-item:hover {
+  background-color: #333; /* Fond plus foncé pour le menu déroulant au survol */
+  color: #fff; /* Texte en blanc */
 }
 
 .nav-tabs .nav-link.active h5,

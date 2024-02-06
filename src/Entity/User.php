@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -53,6 +55,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poste = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $session = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $info_valid = null;
+
+    #[ORM\OneToMany(mappedBy: 'pro', targetEntity: Session::class)]
+    private Collection $sessions;
+
+    public function __construct()
+    {
+        $this->sessions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -216,6 +235,72 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPoste(?string $poste): static
     {
         $this->poste = $poste;
+
+        return $this;
+    }
+
+    public function getSession(): ?int
+    {
+        return $this->session;
+    }
+
+    public function setSession(?int $session): static
+    {
+        $this->session = $session;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function isInfoValid(): ?bool
+    {
+        return $this->info_valid;
+    }
+
+    public function setInfoValid(?bool $info_valid): static
+    {
+        $this->info_valid = $info_valid;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Session>
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    public function addSession(Session $session): static
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions->add($session);
+            $session->setPro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSession(Session $session): static
+    {
+        if ($this->sessions->removeElement($session)) {
+            // set the owning side to null (unless already changed)
+            if ($session->getPro() === $this) {
+                $session->setPro(null);
+            }
+        }
 
         return $this;
     }
