@@ -36,7 +36,7 @@ class ContactFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Message',
-                    'rows' => 10,
+                    'rows' => 5,
                 ]
             ])
         ;

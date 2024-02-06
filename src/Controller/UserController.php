@@ -62,4 +62,51 @@ class UserController extends AbstractController
             'user' => $user
         ]);
     }
+
+    #[Route("/compte/planning", name: "planning")]
+    public function planning():Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        else if ($user->getType() == 1) {
+            return $this->redirectToRoute('planning_pro');
+        }
+        else if ($user->getType() == 2) {
+            return $this->redirectToRoute('planning_eleve');
+        }
+    }
+
+    #[Route("/compte/pro/planning", name: "planning_pro")]
+    public function planningPro():Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        else if ($user->getType() != 1) {
+            return $this->redirectToRoute('planning');
+        }
+        return $this->render('user/planning_pro.html.twig', [
+            'controller_name' => 'UserController',
+            'user' => $user
+        ]);
+    }
+
+    #[Route("/compte/eleve/planning", name: "planning_eleve")]
+    public function planningEleve():Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        else if ($user->getType() != 2) {
+            return $this->redirectToRoute('planning');
+        }
+        return $this->render('user/planning_eleve.html.twig', [
+            'controller_name' => 'UserController',
+            'user' => $user
+        ]);
+    }
 }
