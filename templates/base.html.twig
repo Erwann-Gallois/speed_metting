@@ -55,7 +55,7 @@ https://templatemo.com/tm-583-festava-live
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="">Présentation</a>
+                            <a class="nav-link-class click-scroll" href="">Présentation</a>
                         </li>
                         {# <li class="nav-item">
                             <a class="nav-link click-scroll" href="">Professionnels</a>
@@ -64,14 +64,14 @@ https://templatemo.com/tm-583-festava-live
                             {% if route != "accueil" %}
                                 <a class="nav-link-class" href="{{path ('organisation')}}">Organisation</a>
                             {% else %}
-                                <a class="nav-link click-scroll" href="">Organisation</a>
+                                <a class="nav-link-class click-scroll" href="">Organisation</a>
                             {% endif %}
                         </li>
                         <li class="nav-item">
                             {% if route != "accueil" %}
                                 <a class="nav-link-class" href="{{path ('contact')}}">Contact</a>
                             {% else %}
-                                <a class="nav-link click-scroll" href="">Contact</a>
+                                <a class="nav-link-class click-scroll" href="">Contact</a>
                             {% endif %}
                         </li>
                         {% if app.user %}
@@ -189,7 +189,7 @@ https://templatemo.com/tm-583-festava-live
                         91000 Evry-Courcouronnes
                     </p>
 
-                    <a class="link-fx-1 color-contrast-higher mt-3" href="#">
+                    <a class="link-fx-1 color-contrast-higher mt-3" href="{{path ('carte')}}">
                         <span>Carte</span>
                         <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
                             <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">

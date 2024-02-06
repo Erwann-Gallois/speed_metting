@@ -112,4 +112,10 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route("/nous-trouvez", name: "carte")]
+    public function carte(): Response
+    {
+        return $this->render('front/carte.html.twig');
+    }
+
 }
