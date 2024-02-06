@@ -152,4 +152,33 @@ class AdminController extends AbstractController
             // 'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/liste/organisateur', name: 'liste_organisateur')]
+    public function listeorganisateur(Request $request): Response
+    {
+        $organisateurs = $this->doctrine->getRepository(User::class)->findBy(["type" => 3]);
+        // dump($organisateur);
+        $emails = array_map(function ($organisateur) {
+            return $organisateur->getEmail();
+        }, $organisateurs);
+        $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $selectedEmails = [];
+            foreach ($emails as $index => $email) {
+                $checkboxField = 'email_' . $index;
+                if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
+                    $selectedEmails[] = $email;
+                }
+            }
+            dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
+        }
+        return $this->render('admin/liste_organisateur.html.twig', [
+            'organisateurs' => $organisateurs,
+            'form' => $form->createView(),
+            // 'controller_name' => 'AdminController',
+        ]);
+    }
 }
