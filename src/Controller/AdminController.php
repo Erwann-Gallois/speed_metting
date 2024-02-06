@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EmailSelectionType;
 use App\Form\LimitePlacesFormType;
+use App\Form\LimiteSessionFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 // use Symfony\Component\CssSelector\XPath\TranslatorInterface;
@@ -26,10 +28,70 @@ class AdminController extends AbstractController
     {
     }
     #[Route('', name: 'admin')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $nbre_eleve = count($this->doctrine->getRepository(User::class)->findBy(["type"=>2]));
+        $nbre_organisateur = count($this->doctrine->getRepository(User::class)->findBy(["type"=>3]));
+        $form = $this->createForm(LimitePlacesFormType::class);
+        $form->handleRequest($request);
+
+        $form2 = $this->createForm(LimiteSessionFormType::class);
+        $form2->handleRequest($request);
+        // Mettre à jour le fichier de configuration ou un fichier spécifique
+        $filesystem = new Filesystem();
+        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $filename = $configDir . '/limite_places.txt';
+        $filename2 = $configDir . '/limite_place_session.txt';
+        if ($form->isSubmitted() && $form->isValid()) {
+            $limitePlaces = $form->get('limite_places')->getData();
+
+            // Mettre à jour le fichier de configuration ou un fichier spécifique
+            $filesystem = new Filesystem();
+            $configDir = $this->getParameter('kernel.project_dir') . '/config';
+            $filename = $configDir . '/limite_places.txt';
+
+            try {
+                $filesystem->dumpFile($filename, $limitePlaces);
+                $this->addFlash('success', 'La limite de places a été mise à jour.');
+            } catch (IOExceptionInterface $exception) {
+                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la limite de places.');
+            }
+
+            return $this->redirectToRoute('admin');
+        }
+
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $limiteSession = $form2->get('limite_session')->getData();
+
+            // Mettre à jour le fichier de configuration ou un fichier spécifique
+            $filesystem = new Filesystem();
+            $configDir = $this->getParameter('kernel.project_dir') . '/config';
+            $filename2 = $configDir . '/limite_place_session.txt';
+
+            try {
+                $filesystem->dumpFile($filename2, $limiteSession);
+                $this->addFlash('success', 'La limite de places par session a été mise à jour.');
+            } catch (IOExceptionInterface $exception) {
+                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la limite de places par session.');
+            }
+
+            return $this->redirectToRoute('admin');
+        }
+        // Lire la valeur actuelle
+        $nbre_place_groupe = null;
+        if ($filesystem->exists($filename)) {
+            $nbre_place_groupe = file_get_contents($filename);
+        }
+        $nbre_place_session = null;
+        if ($filesystem->exists($filename2)) {
+            $nbre_place_session = file_get_contents($filename2);
+        }
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'form' => $form->createView(),
+            'form2' => $form2->createView(),
+            'nbre_place_groupe' => $nbre_place_groupe,
+            'nbre_place_session' => $nbre_place_session,
+            'nbre_eleve' => $nbre_eleve + $nbre_organisateur,
         ]);
     }
 
@@ -88,33 +150,6 @@ class AdminController extends AbstractController
             'eleves' => $eleves,
             'form' => $form->createView(),
             // 'controller_name' => 'AdminController',
-        ]);
-    }
-
-    #[Route('/config/limite-places', name: 'config_limite_places')]
-    public function updateLimitePlaces(Request $request): Response
-    {
-        $form = $this->createForm(LimitePlacesFormType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $limitePlaces = $form->get('limite_places')->getData();
-
-            // Utiliser le Filesystem pour écrire dans un fichier de config ou une autre méthode de stockage
-            $filesystem = new Filesystem();
-            $filesystem->dumpFile($this->getParameter('config_directory') . '/limite_places.txt', $limitePlaces);
-
-            // Gérer la réponse AJAX ou rediriger normalement si non-AJAX
-            if ($request->isXmlHttpRequest()) {
-                return new Response('La limite de places a été mise à jour.');
-            } else {
-                $this->addFlash('success', 'La limite de places a été mise à jour.');
-                return $this->redirectToRoute('accueil');
-            }
-        }
-
-        return $this->render('configuration/limitePlaces.html.twig', [
-            'form' => $form->createView(),
         ]);
     }
 }

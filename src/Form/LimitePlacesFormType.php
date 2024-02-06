@@ -12,8 +12,15 @@ class LimitePlacesFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('limite_places', IntegerType::class)
-            ->add('save', SubmitType::class, ['label' => 'Modifier']);
+            ->add('limite_places', IntegerType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Nouvelle limite de places par groupe',
+                    'class' => 'form-control',
+                ],
+                'required' => true,
+            ]);
+            // ->add('save', SubmitType::class, ['label' => 'Modifier']);
     }
 }
 
