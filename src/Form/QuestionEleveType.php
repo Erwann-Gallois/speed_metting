@@ -13,10 +13,11 @@ class QuestionEleveType extends AbstractType
     {
         $builder
             ->add('question', TextareaType::class, [
-                'label ' => "Decrivez votre projet d'avenir (2-3 lignes)",
+                'label' => "Decrivez votre projet d'avenir (2-3 lignes)",
                 'attr' => [
                     'placeholder' => "Decrivez votre projet d'avenir (2-3 lignes)",
                     'class' => "form-control",
+                    'rows' => 5,
                 ],
                 'required' => true,
             ])

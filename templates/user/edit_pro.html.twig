@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
-{% block title %}Changement de mot de passe{% endblock %}
+{% block title %}Changement des informations du profil{% endblock %}
 {% block body %}
     <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="text-center mb-4">Changement de mot de passe</h2>
+                    <h2 class="text-center mb-4">Changement des informations du profil</h2>
                     <div class = "custom-form">
                         <div class = "container">
                             {# {{ form_errors(questionForm) }} #}
                             {{ form_start(form) }}
-                                {{form_row(form.ancien_mdp) }}
-                                {{form_row(form.nouveau_mdp) }}
+                                {{form_row(form.nom) }}
+                                {{form_row(form.prenom) }}
+                                {{form_row(form.question) }}
+                                {{form_row(form.entreprise) }}
+                                {{form_row(form.etude) }}
+                                {{form_row(form.poste) }}
                                 {# {{form_row(form.confirmation_mdp) }} #}
                                 <button type="submit" class="btn btn-primary">Modifier</button>
                             {{ form_end(form) }}

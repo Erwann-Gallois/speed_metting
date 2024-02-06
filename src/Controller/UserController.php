@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserChangeMPDType;
+use App\Form\UserProType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -143,7 +144,29 @@ class UserController extends AbstractController
         return $this->render('user/edit_Password.html.twig',[
             'form'=> $form->createView(),
             'user' => $user
-        ]); 
-        
+        ]);
+    }
+
+    #[Route('/compte/pro/modifier', name: 'pro_modifier')]
+    public function editPro(Request $request, EntityManagerInterface $eM): Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        else if ($user->getType() != 1) {
+            return $this->redirectToRoute('compte');
+        }
+        $form = $this->createForm(UserProType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $eM->flush();
+            $this->addFlash('success', 'Profil modifié avec succès');
+            return $this->redirectToRoute('compte_pro');
+        }
+        return $this->render('user/edit_pro.html.twig',[
+            'form'=> $form->createView(),
+            'user' => $user
+        ]);
     }
 }
