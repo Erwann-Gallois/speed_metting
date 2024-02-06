@@ -32,7 +32,7 @@
                             <td>{{ pro.email }}</td>
                             {# <td>{{ pro.valide }}</td> #}
                             <td>
-                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
+                                <a href="{{path ("front_pro", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
                                 <a href="" class="btn btn-sm btn-secondary"><i class="bi bi-envelope-at-fill"></i></a>
                                 <a href="" class="btn btn-sm btn-warning"><i class="bi bi-printer-fill"></i></a>
                                 <a href="" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>

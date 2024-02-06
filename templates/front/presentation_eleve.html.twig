@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block title %}{{ eleve.nom }} - {{ eleve.prenom }}{% endblock %}
+{% block body %}
+<section class="section-padding">
+    <div class="container">
+        <h2 class="text-center">Présentation</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-8 text-center align-self-center">
+                <p><strong>Nom :</strong> {{ eleve.nom }}</p>
+                <p><strong>Prénom :</strong> {{ eleve.prenom }}</p>
+                <p><strong>Email :</strong> {{ eleve.email }}</p>
+                <p><strong>Filiere :</strong> {{ eleve.filiere }}</p>
+                {# <p><strong>Entreprise :</strong> {{ eleve.entreprise }}</p> #}
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/Fisson.jpg') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+        {# <hr /> #}
+        {# <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Etude</h2>
+                <p>{{ eleve.etude }}</p>
+            </div>
+        </div> #}
+        <hr />
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Decrivez votre projet d'avenir</h2>
+                <p>{{ eleve.question }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

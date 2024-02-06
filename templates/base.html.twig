@@ -7,17 +7,17 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="shortcut icon" href="{{asset ('images/Fisson.jpg')}}" type="image/x-icon">
     <title>{% block title %}{% endblock %}</title>
 
     <!-- CSS FILES -->
+    {# Partie Template #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/templatemo-festava-live.css" rel="stylesheet">
-
+    <link href="{{asset ('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset ('css/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{asset ('css/templatemo-festava-live.css')}}" rel="stylesheet">
     <!--
 
 TemplateMo 583 Festava Live
@@ -207,10 +207,10 @@ https://templatemo.com/tm-583-festava-live
             </div>
         </div> #}
     </footer>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/click-scroll.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="{{asset ('js/jquery.min.js')}}"></script>
+    <script src="{{asset ('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset ('js/jquery.sticky.js')}}"></script>
+    <script src="{{asset ('js/click-scroll.js')}}"></script>
+    <script src="{{asset ('js/custom.js')}}"></script>
 </body>
 </html>

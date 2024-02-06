@@ -59,6 +59,12 @@ main {
   flex-grow: 1; /* Cela permet au contenu principal de prendre autant d'espace vertical disponible que possible */
 }
 
+p {
+  max-width: 100%; /* La largeur maximale est de 100% de leur conteneur */
+  overflow-wrap: break-word; /* Cela va casser les mots longs pour éviter le débordement */
+  margin: 0 auto; /* Centrer le paragraphe si besoin */
+  padding: 0 10px; /* Ajouter un peu de padding pour ne pas coller aux bords */
+}
 /*---------------------------------------
   TYPOGRAPHY               
 -----------------------------------------*/

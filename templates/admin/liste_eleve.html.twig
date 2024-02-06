@@ -21,18 +21,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for pro in pros %}
+                    {% for eleve in eleves %}
                         {# {% set cpt = loop.index0 %} #}
                         <tr>
                             <td>
                                 {{ form_row(form["email_"~ loop.index0]) }}
                             </td>
-                            <td>{{ pro.nom }}</td>
-                            <td>{{ pro.prenom }}</td>
-                            <td>{{ pro.email }}</td>
-                            {# <td>{{ pro.valide }}</td> #}
+                            <td>{{ eleve.nom }}</td>
+                            <td>{{ eleve.prenom }}</td>
+                            <td>{{ eleve.email }}</td>
+                            {# <td>{{ eleve.valide }}</td> #}
                             <td>
-                                <a href="" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
+                                <a href="{{path ('front_eleve', {id : eleve.id, nom : eleve.nom, prenom:eleve.prenom})}}" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
                                 <a href="" class="btn btn-sm btn-secondary"><i class="bi bi-envelope-at-fill"></i></a>
                                 <a href="" class="btn btn-sm btn-warning"><i class="bi bi-printer-fill"></i></a>
                                 <a href="" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>
@@ -41,7 +41,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {# <a href="{{ path('pro_new') }}" class="btn btn-success">Ajouter un professionnel</a> #}
+                {# <a href="{{ path('eleve_new') }}" class="btn btn-success">Ajouter un elevefessionnel</a> #}
             </div>
         </div>
         {{ form_end(form) }}

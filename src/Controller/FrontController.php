@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ContactFormType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -12,6 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FrontController extends AbstractController
 {
+    public function __construct(
+        private ManagerRegistry $doctrine, 
+        private Security $security, 
+    )
+    {
+    }
+    
     #[Route('/', name: 'accueil')]
     public function index(Request $request): Response
     {
@@ -59,6 +69,27 @@ class FrontController extends AbstractController
     public function organisation(): Response
     {
         return $this->render('front/organisation.html.twig');
+    }
+
+    #[Route("/presentation/professionnel/{nom}/{prenom}/{id}", name: "front_pro")]
+    public function presentationProfessionnel(String $nom, String $prenom, int $id): Response
+    {
+        $pro = $this->doctrine->getRepository(User::class)->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 1, "id" => $id]);
+        if ($pro === null) {
+            throw $this->createNotFoundException('Professionnel non trouvé');
+        }
+        return $this->render('front/presentation_professionnel.html.twig', [
+            'pro' => $pro
+        ]);
+    }
+
+    #[Route ("/presentation/eleve/{nom}/{prenom}/{id}", name: "front_eleve")]
+    public function presentationEleve(String $nom, String $prenom, int $id): Response
+    {
+        $eleve = $this->doctrine->getRepository(User::class)->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
+        return $this->render('front/presentation_eleve.html.twig', [
+            'eleve' => $eleve
+        ]);
     }
 
 }

@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block title %}{{ pro.nom }} - {{ pro.prenom }}{% endblock %}
+{% block body %}
+<section class="section-padding">
+    <div class="container">
+        <h2 class="text-center">Présentation</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-8 text-center align-self-center">
+                <p><strong>Nom :</strong> {{ pro.nom }}</p>
+                <p><strong>Prénom :</strong> {{ pro.prenom }}</p>
+                <p><strong>Email :</strong> {{ pro.email }}</p>
+                <p><strong>Intitulé du poste :</strong> {{ pro.poste }}</p>
+                <p><strong>Entreprise :</strong> {{ pro.entreprise }}</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/Fisson.jpg') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+        <hr />
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Etude</h2>
+                <p>{{ pro.etude }}</p>
+            </div>
+        </div>
+        <hr />
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Qu'est qui est le plus passionnant dans votre métier ?</h2>
+                <p>{{ pro.question }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
