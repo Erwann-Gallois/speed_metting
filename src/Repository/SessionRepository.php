@@ -21,6 +21,15 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
+    // public function verif_nbre_place_restante($id_pro): array
+    // {
+    //     $query = $this->createQueryBuilder('s')
+    //         ->where('s.pro = :id')
+    //         ->setParameter('id', $id_pro)
+    //         ->getQuery()
+    //         ->getResult();
+    //     return $query;
+    // }
 //    /**
 //     * @return Session[] Returns an array of Session objects
 //     */

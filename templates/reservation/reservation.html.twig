@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+{% block body %}
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 mx-auto">
+                    <h2 class="text-center mb-4">Reservation</h2>
+                    <p class="text-center">Veuillez choisir une heure et un professionnel (nom prenom - intitulé du poste)</p>
+                    <p class="text-center">Il faut choisir 6 professionnels</p>
+                    <div class = "custom-form">
+                        <div class = "container">
+                            {{ dump(form) }}
+                            {{ form_start(form) }}
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Heure</th>
+                                        <th scope="col">Professionnel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {# {% for reservationForm in form.reservations %}
+                                        <tr>
+                                            <td>
+                                                {{heures[loop.index0]}}
+                                            </td>
+                                            <td>
+                                                {{ form_row(form["pro_"~ loop.index0]) }}
+                                            </td>
+                                        </tr>
+                                        {% endfor %} #}
+                                    </tbody>
+                                </table>
+                                <div class="d-grid gap-2 col-3 mx-auto">
+                                    <button type="submit" class = "btn btn-secondary">Réserver</button>
+                                </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
