@@ -1,13 +1,13 @@
 {% extends "base.html.twig" %}
-{% block title %}Profil : {{ user.nom }} - {{ user.prenom }}{% endblock %}
+{% block title %}Profil : {{ user.nom }} {{ user.prenom }}{% endblock %}
 {% block body %}
 <section class="section-padding">
     <div class="container">
-        <h1 class="text-center">Profil : {{ user.nom }} - {{ user.prenom }}</h1>
+        <h1 class="text-center">Profil : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
         <div class='row justify-content-center'>
             <div class='col-3'>
-                <a href="" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="{{path ('eleve_modifier')}}" class="btn btn-sm btn-primary">Modifier</a>
             </div>
             <div class='col-3'>
                 <a href="" class="btn btn-sm btn-danger">Supprimer</a>

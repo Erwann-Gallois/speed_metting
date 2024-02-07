@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserChangeMPDType;
+use App\Form\UserEleveType;
 use App\Form\UserProType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,7 +27,7 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() == 1) {
             return $this->redirectToRoute('compte_pro');
@@ -73,7 +74,7 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() == 1) {
             return $this->redirectToRoute('planning_pro');
@@ -88,7 +89,7 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() != 1) {
             return $this->redirectToRoute('planning');
@@ -104,7 +105,7 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() != 2) {
             return $this->redirectToRoute('planning');
@@ -152,7 +153,7 @@ class UserController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() != 1) {
             return $this->redirectToRoute('compte');
@@ -162,9 +163,32 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eM->flush();
             $this->addFlash('success', 'Profil modifié avec succès');
-            return $this->redirectToRoute('compte_pro');
+            return $this->redirectToRoute('compte');
         }
         return $this->render('user/edit_pro.html.twig',[
+            'form'=> $form->createView(),
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/compte/eleve/modifier', name: 'eleve_modifier')]
+    public function editEleve(Request $request, EntityManagerInterface $eM): Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('connexion');
+        }
+        else if ($user->getType() != 2) {
+            return $this->redirectToRoute('compte');
+        }
+        $form = $this->createForm(UserEleveType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $eM->flush();
+            $this->addFlash('success', 'Profil modifié avec succès');
+            return $this->redirectToRoute('compte');
+        }
+        return $this->render('user/edit_eleve.html.twig',[
             'form'=> $form->createView(),
             'user' => $user
         ]);

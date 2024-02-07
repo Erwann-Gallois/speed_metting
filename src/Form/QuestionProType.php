@@ -13,9 +13,9 @@ class QuestionProType extends AbstractType
     {
         $builder
             ->add('question', TextareaType::class, [
-                'label' => "Qu'est qui est le plus passionnant dans votre métier ?",
+                'label' => "Qu'est-ce qui vous passionne dans votre métier ?",
                 'attr' => [
-                    'placeholder' => "Qu'est qui est le plus passionnant dans votre métier ?",
+                    'placeholder' => "Qu'est-ce qui vous passionne dans votre métier ?",
                     'class' => "form-control",
                     'rows' => 5,
                 ],

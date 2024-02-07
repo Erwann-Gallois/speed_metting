@@ -367,7 +367,7 @@ strong {
 
 /* Style au survol pour les éléments du menu déroulant */
 .dropdown-menu .dropdown-item:hover {
-  background-color: #1c1c1e; /* Fond plus foncé au survol */
+  background-color: var(--primary-color); /* Fond plus foncé au survol */
   color: var(--primary-color); /* Texte légèrement plus clair que blanc pur */
 }
 
@@ -469,7 +469,7 @@ strong {
 
 /* Style des éléments du menu déroulant au survol */
 .custom-navbar .dropdown-menu .dropdown-item:hover {
-  background-color: #333; /* Fond plus foncé pour le menu déroulant au survol */
+  background-color: var(--primary-color); /* Fond plus foncé pour le menu déroulant au survol */
   color: #fff; /* Texte en blanc */
 }
 

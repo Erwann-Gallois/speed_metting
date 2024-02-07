@@ -9,12 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserProType extends AbstractType
+class UserEleveType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom' , TextType::class, [
+        ->add('nom' , TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
                     'placeholder' => 'Nom'
@@ -43,6 +43,7 @@ class UserProType extends AbstractType
             ])
             ->add('etude', TextareaType::class, [
                 'label' => 'Etude',
+                // 'config_name' => 'my_config',
                 'attr' => [
                     'placeholder' => 'Etude',
                     'rows' => 5
