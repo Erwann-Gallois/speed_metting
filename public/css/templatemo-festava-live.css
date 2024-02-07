@@ -11,18 +11,33 @@ https://templatemo.com/tm-583-festava-live
   CUSTOM PROPERTIES ( VARIABLES )             
 -----------------------------------------*/
 :root {
-  --white-color:                  #ffffff;
-  --primary-color:                #ecc32bda;
+  /* Couleur bootstrap */
+  --primary-color:                #f1c00bf1;
   --secondary-color:              #EE5007;
   --danger-color:                 #dc3545;
+  --warning-color:                #ffc107;
   --success-color:                #28a745;
+  --info-color:                   #17a2b8;
+  --dark-color:                   #000000;
+  --white-color:                  #ffffff;
+
+  /* Couleur bouton survol */
+  --btn-primary-color-hover : #ece927;
+  --btn-secondary-color-hover : #dc8635;
+  --btn-info-color-hover : #35dcd9;
+  --btn-success-color-hover : #35dc3f;
+  --btn-danger-color-hover : #dc3535;
+  --btn-warning-color-hover : #dcd935;
+  /* Couleur personnalisée */
   --section-bg-color:             #f0f8ff;
   --custom-btn-bg-color:          #EE5007;
   --custom-btn-bg-hover-color:    #c01f27;
-  --dark-color:                   #000000;
   --p-color:                      #717275;
   --border-color:                 #7fffd4;
   --link-hover-color:             #B22727;
+
+
+
 
   --body-font-family:             'Outfit', sans-serif;
 
@@ -333,6 +348,27 @@ strong {
 }
 
 .btn-danger:hover {
+  background-color: var(--custom-btn-bg-hover-color);
+  border-color: var(--custom-btn-bg-hover-color);
+  color: var(--dark-color);
+}
+
+.btn-info {
+  background-color: var(--info-color);
+  border-color: var(--info-color);
+  color: var(--info-color);
+  background: var(--info-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 10px 20px;
+}
+
+.btn-info:hover {
   background-color: var(--custom-btn-bg-hover-color);
   border-color: var(--custom-btn-bg-hover-color);
   color: var(--dark-color);

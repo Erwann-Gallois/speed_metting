@@ -15,21 +15,18 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('heure', ChoiceType::class, [
-            //     'choices' => $this->slotRDV($options["session"]),
-            //     'label' => 'Heure du rendez-vous',
-            // ])
             ->add('pro', EntityType::class, [
                 'class' => User::class,
-                'choices' => $options['professionals'],
                 'choice_label'=> function (User $user) {
                     return $user->getNom() . ' ' . $user->getPrenom(). ' - ' . $user->getPoste();
                 },
                 'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->where('u.type = 1');
+                    ->where('u.type = :type')
+                    ->setParameter('type', 1);
                 },
                 'label' => false,
+                'required' => true,
             ])
         ;
     }
@@ -38,8 +35,6 @@ class ReservationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Session::class,
-            'session' => null,
-            'professionals' => null,
         ]);
     }
 }

@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+{% block title %}Planning : {{ user.nom }} {{ user.prenom }}{% endblock %}
+{% block body %}
+<section class="section-padding">
+    <div class="container">
+        <h1 class="text-center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <hr />
+        <table class = "table table-hover table-striped  table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Heure</th>
+                    <th scope="col">Professionnel (Nom Prenom - Poste)</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for session in sessions %}
+                <tr>
+                    <td>{{ session.heure|date('H:i') }}</td>
+                    <td>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</td>
+                    <td>
+                        <a href="" class="btn btn-sm btn-success" title = "Voir la fiche du professionnel"><i class = "bi bi-eye-fill"></i></a>
+                        <a href="" class="btn btn-sm btn-info" title = "Modifier la session"><i class="bi bi-pen-fill"></i></a>
+                        {# <a href="" class="btn btn-sm btn-danger">Supprimer</a> #}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

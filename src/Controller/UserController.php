@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Form\UserChangeMPDType;
 use App\Form\UserEleveType;
 use App\Form\UserProType;
@@ -104,6 +105,7 @@ class UserController extends AbstractController
     public function planningEleve():Response
     {
         $user = $this->security->getUser();
+        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionEleve($user->getId());
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
@@ -112,7 +114,8 @@ class UserController extends AbstractController
         }
         return $this->render('user/planning_eleve.html.twig', [
             'controller_name' => 'UserController',
-            'user' => $user
+            'user' => $user,
+            'sessions' => $sessions
         ]);
     }
 

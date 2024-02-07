@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Session;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,37 +23,51 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
-    // public function verif_nbre_place_restante($id_pro): array
-    // {
-    //     $query = $this->createQueryBuilder('s')
-    //         ->where('s.pro = :id')
-    //         ->setParameter('id', $id_pro)
-    //         ->getQuery()
-    //         ->getResult();
-    //     return $query;
-    // }
-//    /**
-//     * @return Session[] Returns an array of Session objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findUniqueSession (int $id_pro, DateTimeInterface $date, int $id_eleve): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.pro = :id_pro')
+            ->andWhere('s.heure = :date')
+            ->andWhere('s.eleve = :id_eleve')
+            ->setParameter('id_pro', $id_pro)
+            ->setParameter('date', $date)
+            ->setParameter('id_eleve', $id_eleve)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?Session
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findUniqueSessionProEleve (int $id_pro, int $id_eleve): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.pro = :id_pro')
+            ->andWhere('s.eleve = :id_eleve')
+            ->setParameter('id_pro', $id_pro)
+            ->setParameter('id_eleve', $id_eleve)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllSessionPro (int $id_pro, DateTimeInterface $heure): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.pro = :id_pro')
+            ->andWhere('s.heure = :heure')
+            ->setParameter('id_pro', $id_pro)
+            ->setParameter('heure', $heure)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllSessionEleve (int $id_eleve): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.eleve = :id_eleve')
+            ->setParameter('id_eleve', $id_eleve)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

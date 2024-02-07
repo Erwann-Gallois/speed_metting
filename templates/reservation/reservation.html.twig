@@ -11,8 +11,8 @@
                     <p class="text-center">Il faut choisir 6 professionnels</p>
                     <div class = "custom-form">
                         <div class = "container">
-                            {{ dump(form) }}
-                            {{ form_start(form) }}
+                            {% include 'flash_message.html.twig'%}
+                            {{ form_start(forms) }}
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -21,22 +21,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {# {% for reservationForm in form.reservations %}
-                                        <tr>
-                                            <td>
-                                                {{heures[loop.index0]}}
-                                            </td>
-                                            <td>
-                                                {{ form_row(form["pro_"~ loop.index0]) }}
-                                            </td>
-                                        </tr>
-                                        {% endfor %} #}
+                                        {% for form in forms.reservation %}
+                                            <tr>
+                                                <td>{{heures[loop.index0]}}</td>
+                                                <td>{{ form_widget(form.pro) }}</td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                                 <div class="d-grid gap-2 col-3 mx-auto">
                                     <button type="submit" class = "btn btn-secondary">Réserver</button>
                                 </div>
-                            {{ form_end(form) }}
+                            {{ form_end(forms) }}
                         </div>
                     </div>
                 </div>

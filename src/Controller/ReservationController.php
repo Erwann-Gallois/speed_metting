@@ -6,6 +6,7 @@ use App\Entity\Session;
 use App\Entity\User;
 use App\Form\ReservationCollectionType;
 use App\Form\ReservationType;
+use App\Repository\SessionRepository;
 use DateTimeInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +22,14 @@ class ReservationController extends AbstractController
         private Security $security, 
     )
     {
+    }
+
+    private function getMaxPlaceRDV():int
+    {
+        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $filename = $configDir . '/limite_places.txt';
+        $limite = file_get_contents($filename);
+        return $limite;
     }
 
     private function slotRDV(int $session):array
@@ -45,52 +54,52 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/reservation', name: 'reservation')]
-    public function index(): Response
+    public function reservation(Request $request, SessionRepository $srp): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
-        elseif($user->getSession() == 1) {
-            return $this->redirectToRoute('reservation_ses1');
-        }
-        elseif($user->getSession() == 2) {
-            return $this->redirectToRoute('reservation_ses2');
-        }
-        elseif($user->getType != 2) {
-            return $this->redirectToRoute('compte');
-        }
-    }
-
-    #[Route('/reservation/session_1', name: 'reservation_ses1')]
-    #[Route('/reservation/session_2', name: 'reservation_ses2')]
-    public function reservationSes1(Request $request): Response
-    {
-        $user = $this->security->getUser();
-        if (!$user) {
-            return $this->redirectToRoute('connexion');
-        }
-        elseif($user->getSession() != 1) {
-            return $this->redirectToRoute('reservation');
-        }
-        $route = $request->attributes->get('_route');
-        if ($route == 'reservation_ses1') {
-            $session = 1;
-        }
-        else {
-            $session = 2;
-        }
+        $session = $user->getSession();
         $heures = $this->slotRDV($session);
-        $form = $this->createForm(ReservationType::class, null, [
-            'professionals' => $this->doctrine->getRepository(User::class)->findBy(['type' => 1]),
-            // 'heures' => $heures,
-        ]);
+        $reservation = array();
+        for ($i = 0; $i < count($heures); $i++) {
+            $reservation['reservation'][$i] = new Session();
+        }
+        $form = $this->createForm(ReservationCollectionType::class, $reservation);
         $form->handleRequest($request);
-
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            foreach ($data['reservation'] as $key => $value) {
+                $heure = new \DateTime($heures[$key]);
+                $unique = $srp->findUniqueSession($value->getPro()->getId(), $heure, $user->getId());
+                if (count($unique) > 0) {
+                    $this->addFlash('danger', 'Vous avez déjà un rendez-vous à cette heure : '.$heure->format('H:i')." avec ce professionnel");
+                    return $this->redirectToRoute('reservation');
+                }
+                $uniquerdv = $srp->findUniqueSessionProEleve($value->getPro()->getId(), $user->getId());
+                if (count($uniquerdv) > 0) {
+                    $this->addFlash('danger', 'Vous avez déjà un rendez-vous avec ce professionnel');
+                    return $this->redirectToRoute('reservation');
+                }
+                $allrdv = $srp->findAllSessionPro($value->getPro()->getId(), $heure);
+                if (count($allrdv) >= $this->getMaxPlaceRDV()) {
+                    $this->addFlash('danger', 'Ce professionnel est déjà complet à cette heure');
+                    return $this->redirectToRoute('reservation');
+                }
+                $value->setEleve($user);
+                $value->setHeure($heure);
+                $em = $this->doctrine->getManager();
+                $em->persist($value);
+                $em->flush();
+            }
+            $this->addFlash('success', 'Rendez-vous enregistré');
+            return $this->redirectToRoute('accueil');
+        }
         return $this->render('reservation/reservation.html.twig', [
             'controller_name' => 'ReservationController',
             'user' => $user,
-            'form' => $form->createView(),
+            'forms' => $form->createView(),
             'heures' => $heures,
         ]);
     }
