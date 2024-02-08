@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
@@ -39,6 +40,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/compte/pro', name: 'compte_pro')]
+    #[IsGranted('ROLE_PROFESSIONNEL')]
     public function comptePro(): Response
     {
         $user = $this->security->getUser();
@@ -55,6 +57,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/compte/eleve', name: 'compte_eleve')]
+    #[IsGranted('ROLE_ELEVE')]
     public function compteEleve(): Response
     {
         $user = $this->security->getUser();
@@ -86,6 +89,7 @@ class UserController extends AbstractController
     }
 
     #[Route("/compte/pro/planning", name: "planning_pro")]
+    #[IsGranted('ROLE_PROFESSIONNEL')]
     public function planningPro():Response
     {
         $user = $this->security->getUser();
@@ -95,13 +99,22 @@ class UserController extends AbstractController
         else if ($user->getType() != 1) {
             return $this->redirectToRoute('planning');
         }
+        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionPro($user->getId());
+        $all_sessions_by_hour = [];
+        foreach ($sessions as $session) {
+            $date = $session->getHeure();
+            $all_sessions_by_hour[$date->format('H:i')][] = $session;
+        }
+        // dump($all_sessions_by_hour);
         return $this->render('user/planning_pro.html.twig', [
             'controller_name' => 'UserController',
-            'user' => $user
+            'user' => $user,
+            'sessions' => $all_sessions_by_hour
         ]);
     }
 
     #[Route("/compte/eleve/planning", name: "planning_eleve")]
+    #[IsGranted('ROLE_ELEVE')]
     public function planningEleve():Response
     {
         $user = $this->security->getUser();
@@ -118,6 +131,8 @@ class UserController extends AbstractController
             'sessions' => $sessions
         ]);
     }
+
+
 
     #[Route('/compte/pro/changer_mdp', name: 'pro_changer_mdp')]
     #[Route('/compte/eleve/changer_mdp', name: 'eleve_changer_mdp')]

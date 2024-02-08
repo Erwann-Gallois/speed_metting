@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}Planning : {{ user.nom }} {{ user.prenom }}{% endblock %}
+{% block body %}
+<section class="section-padding">
+    <div class="container">
+        <h1 class="text-center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <hr />
+        <table class = "table table-striped table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Heure</th>
+                    <th scope="col">Eleves du groupe</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for key, session in sessions %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>
+                        <table class = "table table-hover table-striped table-bordered table-sm">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Nom Prénom</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for session in sessions[key] %}
+                                <tr>
+                                    <td>{{ session.eleve.nom }} {{ session.eleve.prenom }}</td>
+                                    <td>
+                                        <a href="{{ path ("front_eleve", {id : session.eleve.id, nom : session.eleve.nom, prenom : session.eleve.prenom})}}" class="btn btn-sm btn-success" title = "Voir la fiche de l'eleve"><i class = "bi bi-eye-fill"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

@@ -82,7 +82,7 @@ class ReservationController extends AbstractController
                     $this->addFlash('danger', 'Vous avez déjà un rendez-vous avec ce professionnel');
                     return $this->redirectToRoute('reservation');
                 }
-                $allrdv = $srp->findAllSessionPro($value->getPro()->getId(), $heure);
+                $allrdv = $srp->findAllSessionProForOneHour($value->getPro()->getId(), $heure);
                 if (count($allrdv) >= $this->getMaxPlaceRDV()) {
                     $this->addFlash('danger', 'Ce professionnel est déjà complet à cette heure');
                     return $this->redirectToRoute('reservation');
