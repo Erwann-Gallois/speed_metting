@@ -28,6 +28,8 @@ https://templatemo.com/tm-583-festava-live
   --btn-success-color-hover : #35dc3f;
   --btn-danger-color-hover : #dc3535;
   --btn-warning-color-hover : #dcd935;
+  --btn-dark-color-hover : #01010a;
+  --btn-white-color-hover : #dcdcd9;
   /* Couleur personnalisée */
   --section-bg-color:             #f0f8ff;
   --custom-btn-bg-color:          #EE5007;
@@ -264,8 +266,8 @@ strong {
 }
 
 .btn-primary:hover {
-  background-color: var(--custom-btn-bg-hover-color);
-  border-color: var(--custom-btn-bg-hover-color);
+  background-color: var(--btn-primary-color-hover);
+  border-color: var(--btn-primary-color-hover);
   color: var(--dark-color);
 }
 
@@ -285,8 +287,8 @@ strong {
 }
 
 .btn-secondary:hover {
-  background-color: var(--custom-btn-bg-hover-color);
-  border-color: var(--custom-btn-bg-hover-color);
+  background-color: var(--btn-secondary-color-hover);
+  border-color: var(--btn-secondary-color-hover);
   color: var(--dark-color);
 }
 
@@ -306,8 +308,8 @@ strong {
 }
 
 .btn-sucess:hover {
-  background-color: var(--custom-btn-bg-hover-color);
-  border-color: var(--custom-btn-bg-hover-color);
+  background-color: var(--btn-success-color-hover);
+  border-color: var(--btn-success-color-hover);
   color: var(--dark-color);
 }
 
@@ -327,8 +329,8 @@ strong {
 }
 
 .btn-dark:hover {
-  background-color: var(--custom-btn-bg-hover-color);
-  border-color: var(--custom-btn-bg-hover-color);
+  background-color: var(--btn-dark-color-hover);
+  border-color: var(--btn-dark-color-hover);
   color: var(--dark-color);
 }
 
@@ -348,8 +350,8 @@ strong {
 }
 
 .btn-danger:hover {
-  background-color: var(--custom-btn-bg-hover-color);
-  border-color: var(--custom-btn-bg-hover-color);
+  background-color: var(--btn-danger-color-hover);
+  border-color: var(--btn-danger-color-hover);
   color: var(--dark-color);
 }
 
@@ -369,8 +371,8 @@ strong {
 }
 
 .btn-info:hover {
-  background-color: var(--custom-btn-bg-hover-color);
-  border-color: var(--custom-btn-bg-hover-color);
+  background-color: var(--btn-info-color-hover);
+  border-color: var(--btn-info-color-hover);
   color: var(--dark-color);
 }
 

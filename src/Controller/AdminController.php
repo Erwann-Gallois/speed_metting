@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Entity\User;
 use App\Form\EmailSelectionType;
 use App\Form\LimitePlacesFormType;
@@ -128,7 +129,11 @@ class AdminController extends AbstractController
     public function listeEleve(Request $request): Response
     {
         $eleves = $this->doctrine->getRepository(User::class)->findBy(["type" => 2]);
-        // dump($eleve);
+        $nbre_session = [];
+        foreach ($eleves as $key => $value) {
+            $nbre_session[$key] = count($this->doctrine->getRepository(Session::class)->findAllSessionEleve($value->getId()));
+        }
+        // dump($nbre_session);
         $emails = array_map(function ($eleve) {
             return $eleve->getEmail();
         }, $eleves);
@@ -149,6 +154,7 @@ class AdminController extends AbstractController
         return $this->render('admin/liste_eleve.html.twig', [
             'eleves' => $eleves,
             'form' => $form->createView(),
+            'nbre_session' => $nbre_session,
             // 'controller_name' => 'AdminController',
         ]);
     }

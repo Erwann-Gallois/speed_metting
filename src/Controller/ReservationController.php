@@ -103,4 +103,23 @@ class ReservationController extends AbstractController
             'heures' => $heures,
         ]);
     }
+
+    #[Route('/reservation/supprimer/{id}', name: 'supp_reservation')]
+    public function modifierReservation(Request $request, Session $session): Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('connexion');
+        }
+        if ($session->getEleve()->getId() != $user->getId()) {
+            $this->addFlash('danger', 'Vous ne pouvez pas modifier ce rendez-vous');
+            return $this->redirectToRoute('accueil');
+        }
+        
+        $em = $this->doctrine->getManager();
+        $em->remove($session);
+        $em->flush();
+        $this->addFlash('success', 'Rendez-vous supprimé');
+        return $this->redirectToRoute('planning_eleve');
+    }
 }

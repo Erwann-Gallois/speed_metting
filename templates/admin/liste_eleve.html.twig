@@ -16,6 +16,7 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Mail</th>
+                        <th>RDV pris</th>
                         {# <th>Validé</th> #}
                         <th>Actions</th>
                     </tr>
@@ -30,6 +31,7 @@
                             <td>{{ eleve.nom }}</td>
                             <td>{{ eleve.prenom }}</td>
                             <td>{{ eleve.email }}</td>
+                            <td>{{ nbre_session[loop.index0] }}</td>
                             {# <td>{{ eleve.valide }}</td> #}
                             <td>
                                 <a href="{{path ('front_eleve', {id : eleve.id, nom : eleve.nom, prenom:eleve.prenom})}}" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>

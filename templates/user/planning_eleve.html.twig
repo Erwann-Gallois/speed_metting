@@ -20,7 +20,7 @@
                     <td>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</td>
                     <td>
                         <a href="" class="btn btn-sm btn-success" title = "Voir la fiche du professionnel"><i class = "bi bi-eye-fill"></i></a>
-                        <a href="" class="btn btn-sm btn-info" title = "Modifier la session"><i class="bi bi-pen-fill"></i></a>
+                        <a href="#" data-url = "{{path ('supp_reservation', {id : session.id})}}" class="btn btn-sm btn-info" title = "Modifier la session" onclick="confirmDeletion2(this);" class="link-danger" title="Supprimer"><i class="bi bi-pen-fill"></i></a>
                         {# <a href="" class="btn btn-sm btn-danger">Supprimer</a> #}
                     </td>
                 </tr>
@@ -29,4 +29,12 @@
         </table>
     </div>
 </section>
+<script>
+    function confirmDeletion(element) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce rendez-vous ?")) {
+            var url = element.getAttribute('data-url');
+            window.location.href = url;
+        }
+    }
+</script>
 {% endblock %}
