@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserProType extends AbstractType
 {
@@ -34,6 +35,18 @@ class UserProType extends AbstractType
                     'rows' => 5,
                 ],
                 // 'required' => false,
+            ])
+            ->add("imageFile", VichFileType::class, [
+                "label" => "Image de profil",
+                "attr" => [
+                    "placeholder" => "Image de profil"
+                ],
+                "allow_delete" => true,
+                "download_label" => "Télécharger",
+                "download_uri" => true,
+                "image_uri" => true,
+                "imagine_pattern" => "squared_thumbnail_small",
+                "required" => false,
             ])
             ->add('entreprise', TextType::class, [
                 'label' => 'Entreprise',

@@ -7,9 +7,11 @@
             <hr />
             <div class = "row">
                 {% for pro in pros %}
-                    <div class = "col-md-4">
+                    <div class = "col-md-6">
                         <div class = "card">
-                            <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 100%;">
+                            <a href="{{ path('front_pro', {'id': pro.id, 'nom' : pro.nom, "prenom" : pro.prenom}) }}">
+                                <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 100%;">
+                            </a>
                             <div class = "card-body">
                                 <h5 class = "card-title">{{ pro.nom }} {{ pro.prenom }}</h5>
                                 <p class = "card-text">{{ pro.poste }}</p>
@@ -19,6 +21,7 @@
                     </div>
                 {% endfor %}
             </div>
+            
         </div>
     </section>
 {% endblock %}

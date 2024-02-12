@@ -83,6 +83,28 @@ p {
   margin: 0 auto; /* Centrer le paragraphe si besoin */
   padding: 0 10px; /* Ajouter un peu de padding pour ne pas coller aux bords */
 }
+
+.page-link {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.page-link:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.active > .page-link{
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
 /*---------------------------------------
   TYPOGRAPHY               
 -----------------------------------------*/

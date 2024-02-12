@@ -9,6 +9,7 @@ use App\Form\RegistrationProFormType;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -180,4 +181,13 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route ("/liste/eleve/{page<\d+>?1}", name: "front_liste_eleve")]
+    public function listeEleve(UserRepository $urp, PaginatorInterface $paginator,int $page, Request $request): Response
+    {
+        $eleves = $urp->findBy(['type' => 2]);
+        $pagination = $paginator->paginate($eleves, $request->query->getInt('page', $page), 10);
+        return $this->render('front/liste_eleve.html.twig', [
+            'eleves' => $pagination
+        ]);
+    }
 }

@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+{% block title %}Liste des Eleves{% endblock %}
+{% block body %}
+    <section class = "section-padding">
+        <div class = "container">
+            <h2 class = "text-center">Liste des Eleves</h2>
+            <hr />
+            <div class="navigation mbt-4">
+                {{ knp_pagination_render(eleves) }}
+            </div>
+            <div class = "row">
+                {% for eleve in eleves %}
+                    <div class = "col-md-6">
+                        <div class = "card">
+                            <a href="{{ path('front_eleve', {'id': eleve.id, 'nom' : eleve.nom, "prenom" : eleve.prenom}) }}">
+                                <img src="{{vich_uploader_asset(eleve)}}" alt="Photo de l'eleve {{eleve.nom}} {{eleve.prenom}}" class="img-fluid" style = "width: 100%;">
+                            </a>
+                            <div class = "card-body">
+                                <h5 class = "card-title">{{ eleve.nom }} {{ eleve.prenom }}</h5>
+                                <p class = "card-text">{{ eleve.poste }}</p>
+                                <a href="{{ path('front_eleve', {'id': eleve.id, 'nom' : eleve.nom, "prenom" : eleve.prenom}) }}" class = "btn btn-primary">Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="navigation mt-4">
+                {{ knp_pagination_render(eleves) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

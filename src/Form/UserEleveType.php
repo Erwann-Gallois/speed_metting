@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserEleveType extends AbstractType
 {
@@ -26,6 +27,18 @@ class UserEleveType extends AbstractType
                     'placeholder' => 'Prénom'
                 ]
             ])
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Image de profil',
+                'attr' => [
+                    'placeholder' => 'Image de profil'
+                ],
+                "allow_delete" => true,
+                "download_label" => "Télécharger",
+                "download_uri" => true,
+                "image_uri" => true,
+                "imagine_pattern" => "squared_thumbnail_small",
+                "required" => false,
+            ])
             ->add('question', TextareaType::class, [
                 'label' => "Qu'est-ce qui vous passionne dans votre métier ?",
                 'attr' => [
@@ -35,24 +48,12 @@ class UserEleveType extends AbstractType
                 ],
                 // 'required' => false,
             ])
-            ->add('entreprise', TextType::class, [
-                'label' => 'Entreprise',
-                'attr' => [
-                    'placeholder' => 'Entreprise'
-                ]
-            ])
             ->add('etude', TextareaType::class, [
                 'label' => 'Etude',
                 // 'config_name' => 'my_config',
                 'attr' => [
                     'placeholder' => 'Etude',
                     'rows' => 5
-                ]
-            ])
-            ->add('poste', TextType::class, [
-                'label' => 'Poste',
-                'attr' => [
-                    'placeholder' => 'Poste'
                 ]
             ])
         ;
