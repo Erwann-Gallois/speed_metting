@@ -32,6 +32,9 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
                                     <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
+                                    {% if afficherlien %}
+                                        <li><a href = "{{path ("reservation")}}" class = "dropdown-item">Reserver</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         {% else %}

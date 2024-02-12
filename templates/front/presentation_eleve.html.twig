@@ -14,16 +14,9 @@
                 {# <p><strong>Entreprise :</strong> {{ eleve.entreprise }}</p> #}
             </div>
             <div class="col-md-4 align-self-center">
-                <img src="{{ asset('images/personne_lambda.png') }}" alt="" class="img-fluid" style = "width: 50%;">
+                <img src="{{vich_uploader_asset(eleve)}}" alt="Photo de l'élève {{eleve.nom}} {{eleve.prenom}}" class="img-fluid" style = "width: 50%;">
             </div>
         </div>
-        {# <hr /> #}
-        {# <div class='row'>
-            <div class='col-12'>
-                <h2 class="text-center">Etude</h2>
-                <p>{{ eleve.etude }}</p>
-            </div>
-        </div> #}
         <hr />
         <div class='row'>
             <div class='col-12'>

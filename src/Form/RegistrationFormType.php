@@ -9,12 +9,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -35,17 +37,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'prenom'],
                 'label' => 'Prénom (*)',
                 'required' => true,
-            ])
-            ->add('type', ChoiceType::class, [
-                'required' => true,
-                'choices' => [
-                    'Professionnel' => 1,
-                    'Eleve' => 2,
-                    'Organisateur' => 3,
-                ],
-                'label' => 'Je suis (*)',
-                'expanded' => false,
-
             ])
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
@@ -73,6 +64,33 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                ]
+            ])
+            ->add("imageFile", VichImageType::class, 
+            [
+                'label' => 'Photo de profil (*)',
+                'help' => 'Taille maximum : 8Mo',	
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'image_uri' => false,
+                'delete_label' => 'Supprimer la photo',
+            ])
+            ->add('question', TextareaType::class, [
+                'label' => "Decrivez votre projet d'avenir (*)",
+                'attr' => [
+                    'placeholder' => "Decrivez votre projet d'avenir",
+                    'class' => "form-control",
+                    'rows' => 5,
+                ],
+                'required' => true,
+            ])
+            ->add('session', ChoiceType::class, [
+                'label' => "Quel session voudriez vous ? (les places sont limitées) (*)",
+                'required' => true,
+                "choices" => [
+                    "Session 1" => 1,
+                    "Session 2" => 2
                 ]
             ])
         ;

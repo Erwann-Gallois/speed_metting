@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <section class="contact-section section-padding" id="section_3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 mx-auto">
+                    <h2 class="text-center mb-4">Inscription</h2>
+                    <p class = "text-center">Les champs avec (*) sont obligatoire</p>
+                    <div class = "custom-form mt-4">
+                        <div class = "container">
+                            {{ form_errors(form) }}
+                            {{ form_start(form) }}
+                                <div class = "row">
+                                    <div class = "col-lg-6 col-md-12">{{form_row(form.nom)}}</div>
+                                    <div class = "col-lg-6 col-md-12">{{form_row(form.prenom)}}</div>       
+                                </div>
+                                <div class = "row">
+                                    <div class = "col-12">{{form_row(form.email)}}</div>
+                                </div>
+                                <div class = "row">
+                                    <div class = "col-lg-6 col-md-12">{{form_row(form.poste)}}</div>
+                                    <div class = "col-lg-6 col-md-12">{{form_row(form.entreprise)}}</div>    
+                                </div>
+                                <div class = "row">
+                                    <div class = "col-12">{{form_row(form.password)}}</div>
+                                    <div class = "col-12">{{form_row(form.etude)}}</div>
+                                    <div class = "col-12">{{form_row(form.question)}}</div> 
+                                    <div class = "col-12">{{form_row(form.valid)}}</div>        
+                                </div>
+                                <button type="submit" class="btn btn-primary">S'inscrire</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

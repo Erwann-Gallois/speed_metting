@@ -14,7 +14,7 @@
                 <p><strong>Entreprise :</strong> {{ pro.entreprise }}</p>
             </div>
             <div class="col-md-4 align-self-center">
-                <img src="{{ asset('images/personne_lambda.png') }}" alt="" class="img-fluid" style = "width: 50%;">
+                <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 50%;">
             </div>
         </div>
         <hr />

@@ -4,13 +4,19 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ContactFormType;
+use App\Form\QuestionProType;
+use App\Form\RegistrationProFormType;
+use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FrontController extends AbstractController
@@ -38,8 +44,28 @@ class FrontController extends AbstractController
                 'message' => $contactFormData["message"]
             ]);
         }
+        $filesystem = new Filesystem();
+        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $filename3 = $configDir . '/date_reservation.txt';
+        $date = null;
+        if ($filesystem->exists($filename3)) {
+            $date = file_get_contents($filename3);
+        }
+        try {
+            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
+            if ($date === false) {
+                throw new \Exception("La conversion de la date a échoué.");
+            }
+            // Utilisez $date comme un objet DateTime
+        } catch (\Exception $e) {
+            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
+            echo "Erreur lors du parsing de la date : " . $e->getMessage();
+        }
+        $now = new DateTime();
+        $afficherLien = $now >= $date;
         return $this->render('front/index.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'afficherlien' => $afficherLien,
         ]);
     }
 
@@ -116,6 +142,42 @@ class FrontController extends AbstractController
     public function carte(): Response
     {
         return $this->render('front/carte.html.twig');
+    }
+
+    #[Route ("inscription/pro/{token}", name : "inscription_pro")]
+    public function inscriptionPro (String $token, Request $request,  UserRepository $urp, UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $user = $urp->findOneBy(['token' => $token]);
+        $form = $this->createForm(RegistrationProFormType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setInfoValid(true);
+            $user->setToken("");
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $em = $this->doctrine->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'Votre compte a bien été créé, vous pouvez vous connecter');
+            return $this->redirectToRoute('connexion');
+        }
+
+        return $this->render('registration/inscription_pro.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route ("/liste/professionnel", name: "liste_pro")]
+    public function listePro(UserRepository $urp): Response
+    {
+        $pros = $urp->findBy(['type' => 1]);
+        return $this->render('front/liste_pro.html.twig', [
+            'pros' => $pros
+        ]);
     }
 
 }

@@ -15,14 +15,15 @@
                                 {{ form_errors(registrationForm) }}
 
                                 {{ form_start(registrationForm) }}
-                                    {{form_row(registrationForm.type) }}
                                     <div class = 'row'>
-                                    <div class = 'col-6'>{{ form_row(registrationForm.nom) }}</div>
-                                    <div class = 'col-6'>{{ form_row(registrationForm.prenom) }}</div>
+                                        <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.nom) }}</div>
+                                        <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.prenom) }}</div>
                                     </div>
                                     {{ form_row(registrationForm.email) }}
+                                    {{ form_row(registrationForm.session)}}
                                     {{ form_row(registrationForm.plainPassword) }}
-
+                                    {{ form_row(registrationForm.question) }}
+                                    {{ form_row(registrationForm.imageFile) }}
                                     {# {{ form_row(registrationForm.agreeTerms) }} #}
                                     <button type="submit" class="btn btn-primary">S'inscrire</button>
                                 {{ form_end(registrationForm) }}

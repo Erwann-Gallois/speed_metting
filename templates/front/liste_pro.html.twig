@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block title %}Liste des professionnels{% endblock %}
+{% block body %}
+    <section class = "section-padding">
+        <div class = "container">
+            <h2 class = "text-center">Liste des professionnels</h2>
+            <hr />
+            <div class = "row">
+                {% for pro in pros %}
+                    <div class = "col-md-4">
+                        <div class = "card">
+                            <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 100%;">
+                            <div class = "card-body">
+                                <h5 class = "card-title">{{ pro.nom }} {{ pro.prenom }}</h5>
+                                <p class = "card-text">{{ pro.poste }}</p>
+                                <a href="{{ path('front_pro', {'id': pro.id, 'nom' : pro.nom, "prenom" : pro.prenom}) }}" class = "btn btn-primary">Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

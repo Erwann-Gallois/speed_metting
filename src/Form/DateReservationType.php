@@ -3,23 +3,20 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+// use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuestionEleveType extends AbstractType
+class DateReservationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('question', TextareaType::class, [
-                'label' => "Decrivez votre projet d'avenir (2-3 lignes)",
-                'attr' => [
-                    'placeholder' => "Decrivez votre projet d'avenir (2-3 lignes)",
-                    'class' => "form-control",
-                    'rows' => 5,
-                ],
-                'required' => true,
+            ->add('date', DateTimeType::class, [
+                "label" => false,
+                "placeholder" => "Date pour commencer a reserver les RDVs",
+                // "view_timezone" => "Europe/Paris"
             ])
         ;
     }
