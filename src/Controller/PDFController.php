@@ -30,4 +30,16 @@ class PDFController extends AbstractController
         $html2pdf->writeHTML($html);
         $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'fiche_professionnel.pdf');  
     }
+
+    #[Route('/impression/fiche/eleve/{nom}/{prenom}/{id}' , name: 'impression_fiche_eleve')]
+    public function impressionFicheEleve(String $nom, String $prenom, int $id)
+    {
+        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+        $html = $this->renderView('pdf/fiche_eleve.html.twig', [
+            'user' => $user
+        ]);
+        $html2pdf->writeHTML($html);
+        $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'fiche_eleve.pdf');  
+    }
 }

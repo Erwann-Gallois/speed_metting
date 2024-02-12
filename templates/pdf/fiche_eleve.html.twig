@@ -1,0 +1,55 @@
+<title>PDF : {{user.nom}}-{{user.prenom}}</title>
+<style type="text/Css">
+    p {
+        /* word-wrap: break-word; */
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+    .container {
+        margin-top: 50px;
+        width: 100%;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .row {
+        margin-bottom: 20px;
+    }
+    hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1 class="text-center">Profil de {{ user.nom }} {{ user.prenom }}</h1>
+        <h2 class="text-center">Présentation</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-8 text-center align-self-center">
+                <p><strong>Nom :</strong> {{ user.nom }}</p>
+                <p><strong>Prénom :</strong> {{ user.prenom }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Filière :</strong> {{ user.filiere }}</p>
+                {# <p><strong>Entreprise :</strong> {{ user.entreprise }}</p> #}
+            </div>
+            <div class="col-md-4 align-self-center">
+                <img src="{{vich_uploader_asset(user)}}" style="width: 100px; height: 100px;">
+            </div>
+        </div>
+        <hr />
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Etude</h2>
+                <p>{{ user.etude }}</p>
+            </div>
+        </div>
+        <hr />
+        <div class='row'>
+            <div class='col-12'>
+                <h2 class="text-center">Qu'est ce qui vous passionne dans votre métier ?</h2>
+                <p>{{ user.question }}</p>
+            </div>
+        </div>
+    </div>
+</body>
