@@ -66,7 +66,7 @@ class FrontController extends AbstractController
         $afficherLien = $now >= $date;
         return $this->render('front/index.html.twig', [
             'form' => $form,
-            'afficherlien' => $afficherLien,
+            // 'afficherlien' => $afficherLien,
         ]);
     }
 

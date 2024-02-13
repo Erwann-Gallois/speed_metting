@@ -32,7 +32,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
                                     <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
-                                    {% if afficherlien %}
+                                    {% if afficherLien %}
                                         <li><a href = "{{path ("reservation")}}" class = "dropdown-item">Reserver</a></li>
                                     {% endif %}
                                 </ul>
@@ -136,13 +136,11 @@
             </div>
         </section>
 
-
-
         <section class="schedule-section section-padding" id="section_2">
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2 class="text-dark mb-4">Organisation de la journée</h2>
+                        <h2 class="text-white mb-4">Organisation de la journée</h2>
                             <div class="table-responsive">
                                 <table class="schedule-table table table-dark table-hover table-borderless">
                                     <thead>

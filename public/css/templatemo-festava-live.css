@@ -353,7 +353,7 @@ strong {
 .btn-dark:hover {
   background-color: var(--btn-dark-color-hover);
   border-color: var(--btn-dark-color-hover);
-  color: var(--dark-color);
+  color: var(--white-color);
 }
 
 .btn-danger {
@@ -936,11 +936,13 @@ strong {
   SCHEDULE              
 -----------------------------------------*/
 .schedule-section {
-  background-image: url('../images/fond_2.jpg');
+  background-image: url('../images/fond_3.jpg');
   background-color: #242424;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  position: relative;
+  /* opacity: 0.9;  */
 }
 .table-responsive {
 	filter: drop-shadow(2px 2px 4px #606060);

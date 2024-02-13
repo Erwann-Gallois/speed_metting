@@ -86,6 +86,9 @@ https://templatemo.com/tm-583-festava-live
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
                                     <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
+                                    {% if afficherLien %}
+                                        <li><a class="dropdown-item" href="{{path ('reservation')}}">Reservation</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         {% endif %}
