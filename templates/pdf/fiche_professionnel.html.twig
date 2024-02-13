@@ -33,9 +33,9 @@
                 <p><strong>Intitulé du poste :</strong> {{ user.poste }}</p>
                 <p><strong>Entreprise :</strong> {{ user.entreprise }}</p>
             </div>
-            {# <div class="col-md-4 align-self-center">
-                <img src="{{ asset ('/images/personne_lambda.png') }}" style="width: 100px; height: 100px;">
-            </div> #}
+            <div class="col-md-4 align-self-center">
+                <img src="{{vich_uploader_asset(user)}}">
+            </div>
         </div>
         <hr />
         <div class='row'>
