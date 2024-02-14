@@ -3,6 +3,7 @@
 {% block body %}
 <section class="section-padding">
     <div class="container">
+        {% include "flash_message.html.twig" %}
         <h1 class="text-center">Profil : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
         <div class='row justify-content-center'>
@@ -14,9 +15,6 @@
             </div>
             <div class='col-3'>
                 <a href="{{path ('eleve_changer_mdp')}}" class="btn btn-sm btn-primary">Modifier mot de passe</a>
-            </div>
-            <div class='col-3'>
-                <a href="" class="btn btn-sm btn-primary">Modifier image de profil</a>
             </div>
         </div>
         <hr />
@@ -32,7 +30,7 @@
                 {# <p><strong>Entreprise :</strong> {{ user.entreprise }}</p> #}
             </div>
             <div class="col-md-4">
-                <img src="{{ asset('images/Fisson.jpg') }}" alt="" class="img-fluid">
+                <img src="{{ vich_uploader_asset(user) }}" alt="Photo - {{user.nom}} {{user.prenom}}" class="img-fluid">
             </div>
         </div>
         {# <hr /> #}
@@ -46,7 +44,7 @@
         <div class='row'>
             <div class='col-12'>
                 <h2 class="text-center">Decrivez votre projet d'avenir</h2>
-                <p>{{ user.question }}</p>
+                <p>{{ user.question | nl2br }}</p>
             </div>
         </div>
     </div>

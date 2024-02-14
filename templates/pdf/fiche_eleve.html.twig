@@ -1,55 +1,65 @@
-<title>PDF : {{user.nom}}-{{user.prenom}}</title>
-<style type="text/Css">
-    p {
-        /* word-wrap: break-word; */
-        overflow-wrap: break-word;
-        white-space: normal;
-    }
-    .container {
-        margin-top: 50px;
-        width: 100%;
-    }
-    .text-center {
-        text-align: center;
-    }
-    .row {
-        margin-bottom: 20px;
-    }
-    hr {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-</style>
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    {# <meta name="viewport" content="width=device-width, initial-scale=1"> #}
+    <title>PDF : {{ user.nom }}-{{ user.prenom }}</title>
+    <style type="text/css">
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        table {
+            width: 100%;
+        }
+        .text-cell {
+            width: 75%;
+        }
+        .image-cell {
+            width: 25%;
+        }
+        .image-cell img {
+            width: auto; /* Adjust as necessary */
+            height: 120px; /* Adjust as necessary */
+            display: block; /* This will make the image align right */
+            margin-left: auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
 <body>
-    <div class="container">
-        <h1 class="text-center">Profil de {{ user.nom }} {{ user.prenom }}</h1>
-        <h2 class="text-center">Présentation</h2>
-        <hr />
-        <div class="row">
-            <div class="col-md-8 text-center align-self-center">
+    <div class="header">
+        <h1>Profil de {{ user.nom }} {{ user.prenom }}</h1>
+        <h2>Présentation</h2>
+    </div>
+    <hr />
+    <table>
+        <tr>
+            <td class="text-cell">
                 <p><strong>Nom :</strong> {{ user.nom }}</p>
                 <p><strong>Prénom :</strong> {{ user.prenom }}</p>
                 <p><strong>Email :</strong> {{ user.email }}</p>
+                {# <p><strong>Intitulé du poste :</strong> {{ user.poste }}</p> #}
                 <p><strong>Filière :</strong> {{ user.filiere }}</p>
-                {# <p><strong>Entreprise :</strong> {{ user.entreprise }}</p> #}
-            </div>
-            <div class="col-md-4 align-self-center">
-                <img src="{{vich_uploader_asset(user)}}" style="width: 100px; height: 100px;">
-            </div>
-        </div>
-        <hr />
-        <div class='row'>
-            <div class='col-12'>
-                <h2 class="text-center">Etude</h2>
-                <p>{{ user.etude }}</p>
-            </div>
-        </div>
-        <hr />
-        <div class='row'>
-            <div class='col-12'>
-                <h2 class="text-center">Qu'est ce qui vous passionne dans votre métier ?</h2>
-                <p>{{ user.question }}</p>
-            </div>
-        </div>
+            </td>
+            <td class="image-cell">
+                <img src="{{ imagePath }}" alt="Photo - {{ user.nom }} {{ user.prenom }}">
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <div class="content-section">
+        {# <h2 class="header">Etude</h2>
+        <p>{{ user.etude|nl2br }}</p>
+        <hr /> #}
+        <h2 class="header"> ?</h2>
+        <p>{{ user.question|nl2br}}</p>
     </div>
 </body>
+</html>

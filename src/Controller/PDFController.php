@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Spipu\Html2Pdf\Html2Pdf;
 
@@ -20,12 +20,15 @@ class PDFController extends AbstractController
     {
     }
     #[Route('/impression/fiche/professionnel/{nom}/{prenom}/{id}' , name: 'impression_fiche_professionnel')]
-    public function impressionFicheProfessionnel(String $nom, String $prenom, int $id)
+    public function impressionFicheProfessionnel(String $nom, String $prenom, int $id, UserRepository $urp)
     {
-        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>1, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $user = $urp->findBy(["id"=>$id, "type"=>1, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $imagePath = $this->getParameter('kernel.project_dir').'/public/image_profil/';
+        $imagePath .= $user->getImageName();
         $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
         $html = $this->renderView('pdf/fiche_professionnel.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'imagePath' => $imagePath
         ]);
         $html2pdf->writeHTML($html);
         $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'fiche_professionnel.pdf');  
@@ -41,5 +44,38 @@ class PDFController extends AbstractController
         ]);
         $html2pdf->writeHTML($html);
         $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'fiche_eleve.pdf');  
+    }
+
+    #[Route('/impression/planning/{nom}/{prenom}/{id}' , name: 'impression_planning_eleve')]
+    public function impressionPlanningEleve(String $nom, String $prenom, int $id)
+    {
+        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionEleve($user->getId());
+        $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+        $html = $this->renderView('pdf/planning_eleve.html.twig', [
+            'user' => $user,
+            'sessions' => $sessions
+        ]);
+        $html2pdf->writeHTML($html);
+        $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'planning.pdf');  
+    }
+
+    #[Route('/impression/planning/professionnel/{nom}/{prenom}/{id}' , name: 'impression_planning_professionnel')]
+    public function impressionPlanningProfessionnel(String $nom, String $prenom, int $id)
+    {
+        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>1, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionPro($user->getId());
+        $all_sessions_by_hour = [];
+        foreach ($sessions as $session) {
+            $date = $session->getHeure();
+            $all_sessions_by_hour[$date->format('H:i')][] = $session;
+        }
+        $html2pdf = new Html2Pdf('L', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+        $html = $this->renderView('pdf/planning_professionnel.html.twig', [
+            'user' => $user,
+            'sessions' => $all_sessions_by_hour
+        ]);
+        $html2pdf->writeHTML($html);
+        $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'planning.pdf');  
     }
 }

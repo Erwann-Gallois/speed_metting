@@ -44,8 +44,8 @@ class UserProType extends AbstractType
                 "allow_delete" => true,
                 "download_label" => "Télécharger",
                 "download_uri" => true,
-                "image_uri" => true,
-                "imagine_pattern" => "squared_thumbnail_small",
+                // "image_uri" => true,
+                // "imagine_pattern" => "squared_thumbnail_small",
                 "required" => false,
             ])
             ->add('entreprise', TextType::class, [

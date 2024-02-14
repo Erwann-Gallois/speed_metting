@@ -179,6 +179,13 @@ class UserController extends AbstractController
         $form = $this->createForm(UserProType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get("imageFile")->getData() != null) {
+                $file = $form->get('imageFile')->getData();
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $user->setImageName($fileName);
+            }
+            $eM->persist($user);
             $eM->flush();
             $this->addFlash('success', 'Profil modifié avec succès');
             return $this->redirectToRoute('compte');
@@ -202,6 +209,14 @@ class UserController extends AbstractController
         $form = $this->createForm(UserEleveType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // $data = $form->getData();
+            if ($form->get("imageFile")->getData() != null) {
+                $file = $form->get('imageFile')->getData();
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $user->setImageName($fileName);
+            }
+            $eM->persist($user);
             $eM->flush();
             $this->addFlash('success', 'Profil modifié avec succès');
             return $this->redirectToRoute('compte');

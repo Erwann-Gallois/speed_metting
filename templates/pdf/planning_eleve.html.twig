@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <title>Planning : {{user.nom}} {{user.prenom}} </title>
+
+    <style type="text/css">
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        table {
+            width: 100%;
+            align-items: center;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .container {
+            margin-top: 20px;
+            align-items: center;
+        }
+        th {
+            padding: 10px;
+            border: 1px solid #000;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <hr />
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Heure</th>
+                    <th scope="col">Professionnel (Nom Prenom - Poste)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td>{{ session.heure|date('H:i') }}</td>
+                    <td>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

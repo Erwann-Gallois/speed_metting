@@ -8,9 +8,9 @@
             <div class = "row">
                 {% for pro in pros %}
                     <div class = "col-md-6">
-                        <div class = "card">
+                        <div class = "card text-center mt-4">
                             <a href="{{ path('front_pro', {'id': pro.id, 'nom' : pro.nom, "prenom" : pro.prenom}) }}">
-                                <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 100%;">
+                                <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" style = "width: 50%;" class = "img-fluid">
                             </a>
                             <div class = "card-body">
                                 <h5 class = "card-title">{{ pro.nom }} {{ pro.prenom }}</h5>
@@ -21,7 +21,6 @@
                     </div>
                 {% endfor %}
             </div>
-            
         </div>
     </section>
 {% endblock %}

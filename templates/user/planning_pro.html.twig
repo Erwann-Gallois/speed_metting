@@ -40,6 +40,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <a href="{{ path('impression_planning_professionnel', {id : user.id, nom : user.nom, prenom : user.prenom})}}" class="btn btn-info" target = "_blank"><i class = "bi bi-printer-fill"></i></a>
     </div>
 </section>
 {% endblock %}

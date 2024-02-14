@@ -21,11 +21,19 @@ class UserEleveType extends AbstractType
                     'placeholder' => 'Nom'
                 ]
             ])
+        ->add("filiere", TextType::class, [
+                'label' => "Filière",
+                'attr' => [
+                    'placeholder' => "Filière"
+                ],
+                "required" => false,
+            ])
             ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
                     'placeholder' => 'Prénom'
-                ]
+                ],
+                "required" => false,
             ])
             ->add('imageFile', VichFileType::class, [
                 'label' => 'Image de profil',
@@ -35,26 +43,19 @@ class UserEleveType extends AbstractType
                 "allow_delete" => true,
                 "download_label" => "Télécharger",
                 "download_uri" => true,
-                "image_uri" => true,
-                "imagine_pattern" => "squared_thumbnail_small",
+                // "image_uri" => true,
+                // "imagine_pattern" => "squared_thumbnail_small",
                 "required" => false,
+                "mapped" => false,
             ])
             ->add('question', TextareaType::class, [
-                'label' => "Qu'est-ce qui vous passionne dans votre métier ?",
+                'label' => "Decrivez votre projet d'avenir",
                 'attr' => [
-                    'placeholder' => "Qu'est-ce qui vous passionne dans votre métier ?",
+                    'placeholder' => "Decrivez votre projet d'avenir",
                     'class' => "form-control",
                     'rows' => 5,
                 ],
-                // 'required' => false,
-            ])
-            ->add('etude', TextareaType::class, [
-                'label' => 'Etude',
-                // 'config_name' => 'my_config',
-                'attr' => [
-                    'placeholder' => 'Etude',
-                    'rows' => 5
-                ]
+                'required' => false,
             ])
         ;
     }
