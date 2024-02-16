@@ -6,39 +6,38 @@
     <div class="container">
         <h1 class="text-center">Liste des professionnels</h1>
         <hr />
-        {{ form_start(form, {'method': 'POST'}) }}
-            <table class="table table-striped table-hover table-responsive">
-                <thead class = "table-dark">
+        <table class="table table-striped table-hover table-responsive">
+            <thead class = "table-dark">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Mail</th>
+                <th>Inscrit</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pro in pros %}
                 <tr>
-                    <th>Selection</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Mail</th>
-                    {# <th>Validé</th> #}
-                    <th>Actions</th>
+                    <td>{{ pro.nom }}</td>
+                    <td>{{ pro.prenom }}</td>
+                    <td>{{ pro.email }}</td>
+                    <td>
+                        {% if pro.infovalid == 1 %}
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                        {% else %}
+                            <i class="bi bi-x-circle-fill text-danger"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{path ("front_pro", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
+                        <a href="mailto:{{pro.email}}" class="btn btn-sm btn-secondary"><i class="bi bi-envelope-at-fill"></i></a>
+                        <a href="{{path ("impression_fiche_professionnel", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-warning" target="_blank"><i class="bi bi-printer-fill"></i></a>
+                        <a href="{{path ("supprimer", {id:pro.id})}}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for pro in pros %}
-                    {# {% set cpt = loop.index0 %} #}
-                    <tr>
-                        <td>
-                            {{ form_row(form["email_"~ loop.index0]) }}
-                        </td>
-                        <td>{{ pro.nom }}</td>
-                        <td>{{ pro.prenom }}</td>
-                        <td>{{ pro.email }}</td>
-                        {# <td>{{ pro.valide }}</td> #}
-                        <td>
-                            <a href="{{path ("front_pro", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
-                            <a href="" class="btn btn-sm btn-secondary"><i class="bi bi-envelope-at-fill"></i></a>
-                            <a href="{{path ("impression_fiche_professionnel", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-warning" target="_blank"><i class="bi bi-printer-fill"></i></a>
-                            <a href="" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {{ form_end(form) }}
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

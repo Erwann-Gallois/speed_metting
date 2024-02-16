@@ -9,6 +9,7 @@ use App\Form\EmailSelectionType;
 use App\Form\LimitePlacesFormType;
 use App\Form\LimiteSessionFormType;
 use App\Form\ProfessionnelType;
+use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use DateTimeZone;
@@ -37,6 +38,7 @@ class AdminController extends AbstractController
     )
     {
     }
+
     #[Route('', name: 'admin')]
     public function index(Request $request, UserRepository $urp): Response
     {
@@ -137,63 +139,63 @@ class AdminController extends AbstractController
     }
 
     #[Route('/liste/professionnel', name: 'liste_professionnel')]
-    public function listeProfessionnel(Request $request): Response
+    public function listeProfessionnel(Request $request, MailerInterface $mailer): Response
     {
         $pros = $this->doctrine->getRepository(User::class)->findBy(["type" => 1]);
-        // dump($pro);
-        $emails = array_map(function ($pro) {
-            return $pro->getEmail();
-        }, $pros);
-        $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
-        $form->handleRequest($request);
+        // // dump($pro);
+        // $emails = array_map(function ($pro) {
+        //     return $pro->getEmail();
+        // }, $pros);
+        // $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
+        // $form->handleRequest($request);
     
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
-            $selectedEmails = [];
-            foreach ($emails as $index => $email) {
-                $checkboxField = 'email_' . $index;
-                if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
-                    $selectedEmails[] = $email;
-                }
-            }
-            dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
-        }
+        // if ($form->isSubmitted() && $form->isValid()) 
+        // {
+        //     $selectedEmails = [];
+        //     foreach ($emails as $index => $email) {
+        //         $checkboxField = 'email_' . $index;
+        //         if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
+        //             $selectedEmails[] = $email;
+        //         }
+        //     }
+
+        // }
         return $this->render('admin/liste_professionnel.html.twig', [
             'pros' => $pros,
-            'form' => $form->createView(),
+            // 'form' => $form->createView(),
             // 'controller_name' => 'AdminController',
         ]);
     }
 
     #[Route('/liste/eleve', name: 'liste_eleve')]
-    public function listeEleve(Request $request): Response
+    public function listeEleve(SessionRepository $urp): Response
     {
         $eleves = $this->doctrine->getRepository(User::class)->findBy(["type" => 2]);
         $nbre_session = [];
         foreach ($eleves as $key => $value) {
-            $nbre_session[$key] = count($this->doctrine->getRepository(Session::class)->findAllSessionEleve($value->getId()));
+            $nbre_session[$key] = count($urp->findAllSessionEleve($value->getId()));
         }
-        // dump($nbre_session);
-        $emails = array_map(function ($eleve) {
-            return $eleve->getEmail();
-        }, $eleves);
-        $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
-        $form->handleRequest($request);
+        // // dump($nbre_session);
+        // $emails = array_map(function ($eleve) {
+        //     return $eleve->getEmail();
+        // }, $eleves);
+        // $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
+        // $form->handleRequest($request);
     
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
-            $selectedEmails = [];
-            foreach ($emails as $index => $email) {
-                $checkboxField = 'email_' . $index;
-                if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
-                    $selectedEmails[] = $email;
-                }
-            }
-            dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
-        }
+        // if ($form->isSubmitted() && $form->isValid()) 
+        // {
+        //     $selectedEmails = [];
+        //     foreach ($emails as $index => $email) {
+        //         $checkboxField = 'email_' . $index;
+        //         if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
+        //             $selectedEmails[] = $email;
+        //         }
+        //     }
+        //     dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
+        // }
         return $this->render('admin/liste_eleve.html.twig', [
             'eleves' => $eleves,
-            'form' => $form->createView(),
+            // 'form' => $form->createView(),
             'nbre_session' => $nbre_session,
             // 'controller_name' => 'AdminController',
         ]);
@@ -204,26 +206,26 @@ class AdminController extends AbstractController
     {
         $organisateurs = $this->doctrine->getRepository(User::class)->findBy(["type" => 3]);
         // dump($organisateur);
-        $emails = array_map(function ($organisateur) {
-            return $organisateur->getEmail();
-        }, $organisateurs);
-        $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
-        $form->handleRequest($request);
+        // $emails = array_map(function ($organisateur) {
+        //     return $organisateur->getEmail();
+        // }, $organisateurs);
+        // $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
+        // $form->handleRequest($request);
     
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
-            $selectedEmails = [];
-            foreach ($emails as $index => $email) {
-                $checkboxField = 'email_' . $index;
-                if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
-                    $selectedEmails[] = $email;
-                }
-            }
-            dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
-        }
+        // if ($form->isSubmitted() && $form->isValid()) 
+        // {
+        //     $selectedEmails = [];
+        //     foreach ($emails as $index => $email) {
+        //         $checkboxField = 'email_' . $index;
+        //         if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
+        //             $selectedEmails[] = $email;
+        //         }
+        //     }
+        //     dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
+        // }
         return $this->render('admin/liste_organisateur.html.twig', [
             'organisateurs' => $organisateurs,
-            'form' => $form->createView(),
+            // 'form' => $form->createView(),
             // 'controller_name' => 'AdminController',
         ]);
     }
@@ -276,4 +278,15 @@ class AdminController extends AbstractController
             "form" => $form->createView(),
         ]);
     }   
+
+    #[Route("/supprimer/{id}", name: "supprimer")]
+    public function supprimerPro(int $id): Response
+    {
+        $em = $this->doctrine->getManager();
+        $pro = $this->doctrine->getRepository(User::class)->find($id);
+        $em->remove($pro);
+        $em->flush();
+        $this->addFlash("success", "L'utilisateur a été supprimé");
+        return $this->redirectToRoute("admin");
+    }
 }
