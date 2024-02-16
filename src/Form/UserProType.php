@@ -47,6 +47,7 @@ class UserProType extends AbstractType
                 // "image_uri" => true,
                 // "imagine_pattern" => "squared_thumbnail_small",
                 "required" => false,
+                "mapped" => false,
             ])
             ->add('entreprise', TextType::class, [
                 'label' => 'Entreprise',

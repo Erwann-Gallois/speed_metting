@@ -55,23 +55,24 @@ https://templatemo.com/tm-583-festava-live
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link-class click-scroll" href="">Présentation</a>
+                            {% if route != "accueil" %}
+                                <a class="nav-link-class" href="{{path ('accueil')}}">Accueil</a>
+                            {% else %}
+                                <a class="nav-link-class click-scroll" href="#presentation">Presentation</a>
+                            {% endif %}
                         </li>
-                        {# <li class="nav-item">
-                            <a class="nav-link click-scroll" href="">Professionnels</a>
-                        </li> #}
                         <li class="nav-item">
                             {% if route != "accueil" %}
                                 <a class="nav-link-class" href="{{path ('organisation')}}">Organisation</a>
                             {% else %}
-                                <a class="nav-link-class click-scroll" href="">Organisation</a>
+                                <a class="nav-link-class click-scroll" href="#organisation">Organisation</a>
                             {% endif %}
                         </li>
                         <li class="nav-item">
                             {% if route != "accueil" %}
                                 <a class="nav-link-class" href="{{path ('contact')}}">Contact</a>
                             {% else %}
-                                <a class="nav-link-class click-scroll" href="">Contact</a>
+                                <a class="nav-link-class click-scroll" href="#contact">Contact</a>
                             {% endif %}
                         </li>
                         <li class="nav-item dropdown">
@@ -103,7 +104,6 @@ https://templatemo.com/tm-583-festava-live
                     {% else %}
                         <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-block d-none">Connexion</a>
                     {% endif %}
-                    
                 </div>
             </div>
         </nav>
@@ -243,10 +243,8 @@ https://templatemo.com/tm-583-festava-live
             </div>
         </div> #}
     </footer>
-    <script src="{{asset ('js/jquery.min.js')}}"></script>
-    {# <script src="{{asset ('js/bootstrap.min.js')}}"></script> #}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="{{asset ('js/jquery.sticky.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>    <script src="{{asset ('js/jquery.sticky.js')}}"></script>
     <script src="{{asset ('js/click-scroll.js')}}"></script>
     <script src="{{asset ('js/custom.js')}}"></script></body>
 </html>

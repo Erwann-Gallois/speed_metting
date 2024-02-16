@@ -39,6 +39,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function rand():array
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->setMaxResults(4)
+        ->andWhere('a.type = 1')
+        ->orderBy('RAND ()');
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

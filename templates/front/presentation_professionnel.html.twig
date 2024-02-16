@@ -7,14 +7,14 @@
         <a href = "{{path ('impression_fiche_professionnel', {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" role = 'button' class = "btn btn-info btn-sm" target = "_blank"><i class="bi bi-printer-fill"></i></a>
         <hr />
         <div class="row">
-            <div class="col-md-8 text-center align-self-center">
+            <div class="col-lg-8 col-md-12 text-center align-self-center">
                 <p><strong>Nom :</strong> {{ pro.nom }}</p>
                 <p><strong>Prénom :</strong> {{ pro.prenom }}</p>
                 <p><strong>Email :</strong> {{ pro.email }}</p>
                 <p><strong>Intitulé du poste :</strong> {{ pro.poste }}</p>
                 <p><strong>Entreprise :</strong> {{ pro.entreprise }}</p>
             </div>
-            <div class="col-md-4 align-self-center">
+            <div class="col-lg-4 col-md-12 align-self-center">
                 <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 50%;">
             </div>
         </div>

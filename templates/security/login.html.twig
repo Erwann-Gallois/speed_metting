@@ -7,11 +7,11 @@
 {% endblock %}
 {% block body %}
     {% include 'flash_message.html.twig' %}
-    <section class="contact-section section-padding">
+    <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="text-center mb-4">Connexion</h2>
+                    <h2 class="text-center mb-3">Connexion</h2>
                         <form method="post">
                             <div class="container custom-form">
                                 {% if error %}
@@ -43,13 +43,13 @@
                             #}
                             <div class = "container text-center">
                                 <div class = "row justify-content-center">
-                                    <div class = "col-4">
+                                    <div class = "col-lg-4 col-md-12 mb-3">
                                         <a href="{{path ("inscription")}}" role = "button" class = "btn btn-primary">Pas encore inscrit ?</a>
                                     </div>
-                                    <div class = "col-4">
+                                    <div class = "col-lg-4 col-md-12 mb-3">
                                         <a href="" role = "button" class = "btn btn-success">Mot de passe oublié ?</a>
                                     </div>
-                                    <div class = "col-4">
+                                    <div class = "col-lg-4 col-md-12 mb-3">
                                         <button class="btn btn-secondary" type="submit">Connexion</button>
                                     </div>
                                 </div>

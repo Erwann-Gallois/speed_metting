@@ -30,7 +30,7 @@ class FrontController extends AbstractController
     }
     
     #[Route('/', name: 'accueil')]
-    public function index(Request $request): Response
+    public function index(Request $request, UserRepository $urp): Response
     {
         //Formulaire de contact
         $form = $this->createForm(ContactFormType::class, null, ['method' => 'POST']);
@@ -45,27 +45,10 @@ class FrontController extends AbstractController
                 'message' => $contactFormData["message"]
             ]);
         }
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/config';
-        $filename3 = $configDir . '/date_reservation.txt';
-        $date = null;
-        if ($filesystem->exists($filename3)) {
-            $date = file_get_contents($filename3);
-        }
-        try {
-            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
-            if ($date === false) {
-                throw new \Exception("La conversion de la date a échoué.");
-            }
-            // Utilisez $date comme un objet DateTime
-        } catch (\Exception $e) {
-            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
-            echo "Erreur lors du parsing de la date : " . $e->getMessage();
-        }
-        $now = new DateTime();
-        $afficherLien = $now >= $date;
+        $pros = $urp->rand();
         return $this->render('front/index.html.twig', [
             'form' => $form,
+            'pros' => $pros
             // 'afficherlien' => $afficherLien,
         ]);
     }
