@@ -27,20 +27,22 @@
                                 <label for="username">Email</label>
                                 <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
                                 <label for="password">Mot de passe</label>
-                                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
+                                {# <label for="inputPassword">Mot de passe</label> #}
+                                <div class="input-group">
+                                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                                    <div class="input-group-append">
+                                        <button id="togglePassword" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button>
+                                    </div>
+                                </div>
+                                
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            </div>
-                            {#
-                                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                                See https://symfony.com/doc/current/security/remember_me.html
-
+                            
                                 <div class="checkbox mb-3">
                                     <label>
-                                        <input type="checkbox" name="_remember_me"> Remember me
+                                        <input type="checkbox" name="_remember_me"> Se souvenir de moi
                                     </label>
                                 </div>
-                            #}
+                            </div>
                             <div class = "container text-center">
                                 <div class = "row justify-content-center">
                                     <div class = "col-lg-4 col-md-12 mb-3">
@@ -60,5 +62,23 @@
         </div>
     </section>
 
+    <script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        var passwordInput = document.getElementById('password');
+        var passwordIcon = this.querySelector('i'); // Sélection de l'icône à l'intérieur du bouton
 
+        // Bascule entre les types 'text' et 'password' pour le champ de mot de passe
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Bascule la classe de l'icône
+        if (type === 'password') {
+            passwordIcon.classList.remove('bi-eye-slash-fill');
+            passwordIcon.classList.add('bi-eye-fill');
+        } else {
+            passwordIcon.classList.remove('bi-eye-fill');
+            passwordIcon.classList.add('bi-eye-slash-fill');
+        }
+    });
+</script>
 {% endblock %}

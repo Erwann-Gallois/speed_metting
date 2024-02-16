@@ -18,7 +18,8 @@ class UserChangeMPDType extends AbstractType
                 'label' => 'Ancien mot de passe',
                 'attr' => [
                     'placeholder' => 'Ancien mot de passe'
-                ]
+                ],
+                "toggle" => true
             ])
             ->add('nouveau_mdp', RepeatedType::class, [
                 'type' => PasswordType::class,

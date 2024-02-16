@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\QuestionEleveType;
 use App\Form\QuestionProType;
 use App\Form\RegistrationFormType;
+use App\Form\RegistrationProFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -44,12 +45,20 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setRoles(['ROLE_ELEVE']);
             $user->setType(2);
-            $user->setPassword(
-                $hasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            if ($form->get('plainPassword1')->getData() != $form->get('plainPassword2')->getData()) {
+                $this->addFlash('danger', "Les mots de passe ne correspondent pas");
+                return $this->redirectToRoute('inscription');
+            }
+            $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
+            if ($form->get('imageFile')->getData() != null) {
+                $file = $form->get('imageFile')->getData();
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $user->setImageName($fileName);
+            }
+            else {
+                $user->setImageName('personne_lambda.png');
+            }
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', "Votre compte a bien été créé, vous pouvez vous connecter");
@@ -57,6 +66,41 @@ class RegistrationController extends AbstractController
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route ("inscription/pro/{token}", name : "inscription_pro")]
+    public function inscriptionPro (String $token, Request $request,  UserRepository $urp, UserPasswordHasherInterface $hasher)
+    {
+        $user = $urp->findOneBy(['token' => $token]);
+        $form = $this->createForm(RegistrationProFormType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setInfoValid(true);
+            $user->setToken("");
+            if ($form->get('plainPassword1')->getData() != $form->get('plainPassword2')->getData()) {
+                $this->addFlash('danger', "Les mots de passe ne correspondent pas");
+                return $this->redirectToRoute('inscription');
+            }
+            $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
+            if ($form->get('imageFile')->getData() != null) {
+                $file = $form->get('imageFile')->getData();
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $user->setImageName($fileName);
+            }
+            else {
+                $user->setImageName('personne_lambda.png');
+            }
+            $em = $this->doctrine->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'Votre compte a bien été créé, vous pouvez vous connecter');
+            return $this->redirectToRoute('connexion');
+        }
+
+        return $this->render('registration/inscription_pro.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

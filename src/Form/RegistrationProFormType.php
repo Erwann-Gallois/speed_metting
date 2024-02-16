@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegistrationProFormType extends AbstractType
 {
@@ -38,13 +41,51 @@ class RegistrationProFormType extends AbstractType
                 "label" => "Intitulé du poste (*)",
                 "required"=> false
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe doivent être identiques.',
-                'options' => ['attr' => ['class' => 'password-field']],
+            ->add('plainPassword1', PasswordType::class, [
+                'label' => 'Mot de Passe (*)', 
+                'attr' => ['id' => 'new-password'],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe (*)'],
-                'second_options' => ['label' => 'Répétez le mot de passe (*)'],
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrer un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
+            ->add('plainPassword2', PasswordType::class, [
+                'label' => 'Mot de Passe (*)', 
+                'attr' => ['id' => 'repeat-password'],
+                'required' => true,
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrer un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
+            ->add("imageFile", VichImageType::class, 
+            [
+                'label' => 'Photo de profil',
+                'help' => 'Taille maximum : 8Mo',	
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'image_uri' => false,
+                'delete_label' => 'Supprimer la photo',
+                "required" => false,
+                "mapped" => false,
             ])
             ->add('question', TextareaType::class, [
                 'label' => "Qu'est-ce qui vous passionne dans votre métier ? (*)",

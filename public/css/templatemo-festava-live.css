@@ -293,6 +293,26 @@ strong {
   color: var(--dark-color);
 }
 
+.btn-toogle {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--dark-color);
+  background: var(--secondary-color);
+  border: 2px solid transparent;
+  color: var(--white-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 12px 20px;
+}
+
+.btn-toogle:hover {
+  background-color: var(--btn-secondary-color-hover);
+  border-color: var(--btn-secondary-color-hover);
+  color: var(--dark-color);
+}
+
 .btn-secondary {
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);

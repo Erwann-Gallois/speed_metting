@@ -21,7 +21,16 @@
                                     </div>
                                     {{ form_row(registrationForm.email) }}
                                     {{ form_row(registrationForm.session)}}
-                                    {{ form_row(registrationForm.plainPassword) }}
+                                    <label>Mot de passe (*)</label>
+                                    <div class = 'row'>
+                                        <div class = "col-11">{{ form_widget(registrationForm.plainPassword1) }} </div>
+                                        <div class = 'col-1'><button id="togglePassword" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button></div>
+                                    </div>
+                                    <label>Repeter le mot de passe (*)</label>
+                                    <div class = 'row'>
+                                        <div class = "col-11">{{ form_widget(registrationForm.plainPassword2) }} </div>
+                                        <div class = 'col-1'><button id="togglePassword2" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button></div>
+                                    </div>
                                     {{ form_row(registrationForm.question) }}
                                     {{ form_row(registrationForm.imageFile) }}
                                     {# {{ form_row(registrationForm.agreeTerms) }} #}
@@ -33,4 +42,38 @@
             </div>
         </div>
     </section>
+    <script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        var passwordInput = document.getElementById('registration_form_plainPassword1');
+        var passwordIcon = this.querySelector('i'); // Sélection de l'icône à l'intérieur du bouton
+
+        // Bascule entre les types 'text' et 'password' pour le champ de mot de passe
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        // Bascule la classe de l'icône
+        if (type === 'password') {
+            passwordIcon.classList.remove('bi-eye-slash-fill');
+            passwordIcon.classList.add('bi-eye-fill');
+        } else {
+            passwordIcon.classList.remove('bi-eye-fill');
+            passwordIcon.classList.add('bi-eye-slash-fill');
+        }
+    });
+    document.getElementById('togglePassword2').addEventListener('click', function (e) {
+        var passwordInput = document.getElementById('registration_form_plainPassword2');
+        var passwordIcon = this.querySelector('i'); // Sélection de l'icône à l'intérieur du bouton
+
+        // Bascule entre les types 'text' et 'password' pour le champ de mot de passe
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        // Bascule la classe de l'icône
+        if (type === 'password') {
+            passwordIcon.classList.remove('bi-eye-slash-fill');
+            passwordIcon.classList.add('bi-eye-fill');
+        } else {
+            passwordIcon.classList.remove('bi-eye-fill');
+            passwordIcon.classList.add('bi-eye-slash-fill');
+        }
+    });
+    </script>
 {% endblock %}

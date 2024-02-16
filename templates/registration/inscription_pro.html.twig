@@ -24,12 +24,22 @@
                                     <div class = "col-lg-6 col-md-12">{{form_row(form.poste)}}</div>
                                     <div class = "col-lg-6 col-md-12">{{form_row(form.entreprise)}}</div>    
                                 </div>
+                                <label>Mot de passe (*)</label>
+                                    <div class = 'row'>
+                                        <div class = "col-11">{{ form_widget(form.plainPassword1) }} </div>
+                                        <div class = 'col-1'><button id="togglePassword" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button></div>
+                                    </div>
+                                    <label>Repeter le mot de passe (*)</label>
+                                    <div class = 'row'>
+                                        <div class = "col-11">{{ form_widget(form.plainPassword2) }} </div>
+                                        <div class = 'col-1'><button id="togglePassword2" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button></div>
+                                    </div>
                                 <div class = "row">
-                                    <div class = "col-12">{{form_row(form.password)}}</div>
                                     <div class = "col-12">{{form_row(form.etude)}}</div>
                                     <div class = "col-12">{{form_row(form.question)}}</div> 
                                     <div class = "col-12">{{form_row(form.valid)}}</div>        
                                 </div>
+
                                 <button type="submit" class="btn btn-primary">S'inscrire</button>
                             {{ form_end(form) }}
                         </div>
@@ -38,4 +48,38 @@
             </div>
         </div>
     </section>
+    <script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        var passwordInput = document.getElementById('registration_pro_form_plainPassword1');
+        var passwordIcon = this.querySelector('i'); // Sélection de l'icône à l'intérieur du bouton
+
+        // Bascule entre les types 'text' et 'password' pour le champ de mot de passe
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        // Bascule la classe de l'icône
+        if (type === 'password') {
+            passwordIcon.classList.remove('bi-eye-slash-fill');
+            passwordIcon.classList.add('bi-eye-fill');
+        } else {
+            passwordIcon.classList.remove('bi-eye-fill');
+            passwordIcon.classList.add('bi-eye-slash-fill');
+        }
+    });
+    document.getElementById('togglePassword2').addEventListener('click', function (e) {
+        var passwordInput = document.getElementById('registration_pro_form_plainPassword2');
+        var passwordIcon = this.querySelector('i'); // Sélection de l'icône à l'intérieur du bouton
+
+        // Bascule entre les types 'text' et 'password' pour le champ de mot de passe
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        // Bascule la classe de l'icône
+        if (type === 'password') {
+            passwordIcon.classList.remove('bi-eye-slash-fill');
+            passwordIcon.classList.add('bi-eye-fill');
+        } else {
+            passwordIcon.classList.remove('bi-eye-fill');
+            passwordIcon.classList.add('bi-eye-slash-fill');
+        }
+    });
+    </script>
 {% endblock %}

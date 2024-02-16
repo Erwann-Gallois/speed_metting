@@ -34,7 +34,8 @@ class UserController extends AbstractController
         else if ($user->getType() == 1) {
             return $this->redirectToRoute('compte_pro');
         }
-        else if ($user->getType() == 2) {
+        else if ($user->getType() == 2 || $user->getType() == 3)
+        {
             return $this->redirectToRoute('compte_eleve');
         }
     }
@@ -64,8 +65,8 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
-        elseif ($user->getType() != 2) {
-            return $this->redirectToRoute('compte');
+        elseif ($user->getType() == 1){
+            return $this->redirectToRoute('accueil');
         }
         return $this->render('user/compte_eleve.html.twig', [
             'controller_name' => 'UserController',
