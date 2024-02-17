@@ -139,9 +139,9 @@ class AdminController extends AbstractController
     }
 
     #[Route('/liste/professionnel', name: 'liste_professionnel')]
-    public function listeProfessionnel(Request $request, MailerInterface $mailer): Response
+    public function listeProfessionnel(UserRepository $urp): Response
     {
-        $pros = $this->doctrine->getRepository(User::class)->findBy(["type" => 1]);
+        $pros = $urp->findBy(["type" => 1]);
         // // dump($pro);
         // $emails = array_map(function ($pro) {
         //     return $pro->getEmail();
@@ -168,12 +168,12 @@ class AdminController extends AbstractController
     }
 
     #[Route('/liste/eleve', name: 'liste_eleve')]
-    public function listeEleve(SessionRepository $urp): Response
+    public function listeEleve(SessionRepository $srp, UserRepository $urp): Response
     {
-        $eleves = $this->doctrine->getRepository(User::class)->findBy(["type" => 2]);
+        $eleves = $urp->findBy(["type" => 2]);
         $nbre_session = [];
         foreach ($eleves as $key => $value) {
-            $nbre_session[$key] = count($urp->findAllSessionEleve($value->getId()));
+            $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));
         }
         // // dump($nbre_session);
         // $emails = array_map(function ($eleve) {
@@ -202,9 +202,9 @@ class AdminController extends AbstractController
     }
 
     #[Route('/liste/organisateur', name: 'liste_organisateur')]
-    public function listeorganisateur(Request $request): Response
+    public function listeorganisateur(UserRepository $urp): Response
     {
-        $organisateurs = $this->doctrine->getRepository(User::class)->findBy(["type" => 3]);
+        $organisateurs = $urp->findBy(["type" => 3]);
         // dump($organisateur);
         // $emails = array_map(function ($organisateur) {
         //     return $organisateur->getEmail();
@@ -280,10 +280,10 @@ class AdminController extends AbstractController
     }   
 
     #[Route("/supprimer/{id}", name: "supprimer")]
-    public function supprimerPro(int $id): Response
+    public function supprimerPro(int $id, UserRepository $urp): Response
     {
         $em = $this->doctrine->getManager();
-        $pro = $this->doctrine->getRepository(User::class)->find($id);
+        $pro = $urp->find($id);
         $em->remove($pro);
         $em->flush();
         $this->addFlash("success", "L'utilisateur a été supprimé");

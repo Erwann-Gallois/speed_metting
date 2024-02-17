@@ -6,6 +6,7 @@ use App\Entity\Session;
 use App\Form\UserChangeMPDType;
 use App\Form\UserEleveType;
 use App\Form\UserProType;
+use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,14 +85,14 @@ class UserController extends AbstractController
         else if ($user->getType() == 1) {
             return $this->redirectToRoute('planning_pro');
         }
-        else if ($user->getType() == 2) {
+        else if ($user->getType() == 2 || $user->getType() == 3){
             return $this->redirectToRoute('planning_eleve');
         }
     }
 
     #[Route("/compte/pro/planning", name: "planning_pro")]
     #[IsGranted('ROLE_PROFESSIONNEL')]
-    public function planningPro():Response
+    public function planningPro(SessionRepository $srp):Response
     {
         $user = $this->security->getUser();
         if (!$user) {
@@ -100,7 +101,7 @@ class UserController extends AbstractController
         else if ($user->getType() != 1) {
             return $this->redirectToRoute('planning');
         }
-        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionPro($user->getId());
+        $sessions = $srp->findAllSessionPro($user->getId());
         $all_sessions_by_hour = [];
         foreach ($sessions as $session) {
             $date = $session->getHeure();
@@ -116,14 +117,14 @@ class UserController extends AbstractController
 
     #[Route("/compte/eleve/planning", name: "planning_eleve")]
     #[IsGranted('ROLE_ELEVE')]
-    public function planningEleve():Response
+    public function planningEleve(SessionRepository $srp):Response
     {
         $user = $this->security->getUser();
-        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionEleve($user->getId());
+        $sessions = $srp->findAllSessionEleve($user->getId());
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
-        else if ($user->getType() != 2) {
+        else if ($user->getType() == 1) {
             return $this->redirectToRoute('planning');
         }
         return $this->render('user/planning_eleve.html.twig', [

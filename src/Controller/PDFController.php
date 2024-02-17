@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Entity\User;
+use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,9 +36,9 @@ class PDFController extends AbstractController
     }
 
     #[Route('/impression/fiche/eleve/{nom}/{prenom}/{id}' , name: 'impression_fiche_eleve')]
-    public function impressionFicheEleve(String $nom, String $prenom, int $id)
+    public function impressionFicheEleve(String $nom, String $prenom, int $id, UserRepository $urp)
     {
-        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $user = $urp->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
         $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
         $html = $this->renderView('pdf/fiche_eleve.html.twig', [
             'user' => $user
@@ -47,10 +48,10 @@ class PDFController extends AbstractController
     }
 
     #[Route('/impression/planning/{nom}/{prenom}/{id}' , name: 'impression_planning_eleve')]
-    public function impressionPlanningEleve(String $nom, String $prenom, int $id)
+    public function impressionPlanningEleve(String $nom, String $prenom, int $id, UserRepository $urp, SessionRepository $srp)
     {
-        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
-        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionEleve($user->getId());
+        $user = $urp->findBy(["id"=>$id,"nom"=>$nom, "prenom"=>$prenom])[0];
+        $sessions = $srp->findAllSessionEleve($user->getId());
         $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
         $html = $this->renderView('pdf/planning_eleve.html.twig', [
             'user' => $user,
@@ -61,10 +62,10 @@ class PDFController extends AbstractController
     }
 
     #[Route('/impression/planning/professionnel/{nom}/{prenom}/{id}' , name: 'impression_planning_professionnel')]
-    public function impressionPlanningProfessionnel(String $nom, String $prenom, int $id)
+    public function impressionPlanningProfessionnel(String $nom, String $prenom, int $id, UserRepository $urp, SessionRepository $srp)
     {
-        $user = $this->doctrine->getRepository(User::class)->findBy(["id"=>$id, "type"=>1, "nom"=>$nom, "prenom"=>$prenom])[0];
-        $sessions = $this->doctrine->getRepository(Session::class)->findAllSessionPro($user->getId());
+        $user = $urp->findBy(["id"=>$id, "type"=>1, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $sessions = $srp->findAllSessionPro($user->getId());
         $all_sessions_by_hour = [];
         foreach ($sessions as $session) {
             $date = $session->getHeure();

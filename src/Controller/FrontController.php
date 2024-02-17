@@ -81,9 +81,9 @@ class FrontController extends AbstractController
     }
 
     #[Route("/presentation/professionnel/{nom}/{prenom}/{id}", name: "front_pro")]
-    public function presentationProfessionnel(String $nom, String $prenom, int $id): Response
+    public function presentationProfessionnel(String $nom, String $prenom, int $id, UserRepository $urp): Response
     {
-        $pro = $this->doctrine->getRepository(User::class)->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 1, "id" => $id]);
+        $pro = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 1, "id" => $id]);
         if ($pro === null) {
             throw $this->createNotFoundException('Professionnel non trouvé');
         }
@@ -93,9 +93,9 @@ class FrontController extends AbstractController
     }
 
     #[Route ("/presentation/eleve/{nom}/{prenom}/{id}", name: "front_eleve")]
-    public function presentationEleve(String $nom, String $prenom, int $id): Response
+    public function presentationEleve(String $nom, String $prenom, int $id, UserRepository $urp): Response
     {
-        $eleve = $this->doctrine->getRepository(User::class)->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
+        $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
         return $this->render('front/presentation_eleve.html.twig', [
             'eleve' => $eleve
         ]);

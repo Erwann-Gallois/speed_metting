@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7566b12b6586ac94f6897fe90742a27a",
+    "content-hash": "e203b3d82fd4b824c6dd2ab218c900ae",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -66,60 +66,6 @@
                 "source": "https://github.com/beberlei/DoctrineExtensions/tree/master"
             },
             "time": "2024-02-08T15:12:55+00:00"
-        },
-        {
-            "name": "brunty/faker-buzzword-jobs",
-            "version": "0.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Brunty/faker-buzzword-job-titles.git",
-                "reference": "fb385e3a979159d224179fbb716d5a75bf08164c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Brunty/faker-buzzword-job-titles/zipball/fb385e3a979159d224179fbb716d5a75bf08164c",
-                "reference": "fb385e3a979159d224179fbb716d5a75bf08164c",
-                "shasum": ""
-            },
-            "require": {
-                "fzaninotto/faker": "^1.5",
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Brunty\\Faker\\": "src/",
-                    "Tests\\Brunty\\Faker\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matt Brunt",
-                    "email": "matt@mfyu.co.uk",
-                    "homepage": "https://mfyu.co.uk"
-                }
-            ],
-            "description": "A Buzzword Job Title provider for Faker.",
-            "keywords": [
-                "buzzword",
-                "buzzwords",
-                "faker",
-                "job descriptions",
-                "job titles"
-            ],
-            "support": {
-                "issues": "https://github.com/Brunty/faker-buzzword-job-titles/issues",
-                "source": "https://github.com/Brunty/faker-buzzword-job-titles/tree/develop"
-            },
-            "abandoned": true,
-            "time": "2018-10-29T12:44:01+00:00"
         },
         {
             "name": "composer/semver",
@@ -1590,63 +1536,6 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
-        },
-        {
-            "name": "fzaninotto/faker",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5"
-            },
-            "suggest": {
-                "ext-intl": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Faker\\": "src/Faker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Zaninotto"
-                }
-            ],
-            "description": "Faker is a PHP library that generates fake data for you.",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "support": {
-                "issues": "https://github.com/fzaninotto/Faker/issues",
-                "source": "https://github.com/fzaninotto/Faker/tree/master"
-            },
-            "abandoned": true,
-            "time": "2015-05-29T06:29:14+00:00"
         },
         {
             "name": "jms/metadata",

@@ -6,26 +6,28 @@
     <style type="text/css">
         body {
             font-family: 'Outfit', sans-serif;
-        }
-        table {
-            width: 100%;
-            align-items: center;
-        }
-        .text-center {
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block; /* Utilisez block au lieu de flex pour body */
         }
         .container {
-            margin-top: 20px;
-            align-items: center;
+            width: 100%; /* Assurez-vous que le conteneur occupe toute la largeur */
+            text-align: center;
+            padding: 20px; /* Ajoutez du padding si nécessaire */
         }
-        th {
-            padding: 10px;
+        table {
+            width: 100%; /* La table occupe toute la largeur du conteneur */
+            border-collapse: collapse; /* Pour éviter les doubles bordures */
+            padding: 0;
+            margin: 0;
+            page-break-inside: avoid; /* Pour éviter les sauts de page à l'intérieur du tableau */
+        }
+        th, td {
+            padding: 5px;
             border: 1px solid #000;
+            text-align: left; /* Alignement du texte à gauche pour les cellules */
         }
-        td {
-            padding: 10px;
-            border: 1px solid #000;
-        }
+
     </style>
 </head>
 <body>

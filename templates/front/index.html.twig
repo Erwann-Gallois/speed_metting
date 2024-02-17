@@ -3,8 +3,9 @@
 {% block title %}Acceuil{% endblock %}
 
 {% block body %}
+    {% include 'flash_message.html.twig' %}
     <section class="hero-section" id="">
-            <div class="section-overlay"></div>
+        <div class="section-overlay"></div>
             <div class="container d-flex justify-content-center align-items-center">
                 <div class="row">
                     <div class="col-12 mt-auto mb-5 text-center">
@@ -83,36 +84,72 @@
                 </video>
             </div> #}
         </section>
-        {% include 'flash_message.html.twig' %}
-        <section class="artists-section section-padding" id="presentation">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-12 text-center">
-                        <h2 class="mb-4 text-white">Rencontrer les professionnels</h1>
-                    </div>
-                    {% for pro in pros %}
-                        <div class="col-lg-5 col-12">
-                            <a href="{{path ('front_pro', {'id': pro.id, "nom" : pro.nom, 'prenom' : pro.prenom })}}">
-                                <div class="artists-thumb">
-                                    <div class="artists-image-wrap d-flex justify-content-center">
-                                        <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="artists-image img-fluid" style = "width: 50%;">
-                                    </div>
-                                    <div class="artists-hover">
-                                        <p><strong>Nom : </strong>{{pro.nom}}</p>
-                                        <p><strong>Prenom:</strong>{{pro.prenom}}</p>
-                                        <p><strong>Intitulé du poste:</strong>{{pro.poste}}</p>
-                                    </div>
-                                </div>
-                            </a>
+        {% if pros is empty %}
+            <section class="about-section section-padding" id="presentation">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-12 mb-4 mb-lg-0 d-flex align-items-center">
+                            <div class="services-info">
+                                <h2 class="text-white mb-4">A propos des speed meetings</h2>
+                                <p class="text-white">
+                                    Les speed meetings sont des rencontres de 10 minutes entre les élèves de L3 et les professionnels.
+                                </p>
+                                <h6 class="text-white mt-4">Comment cela va se passer ?</h6>
+                                <p class="text-white">
+                                    Avant la date du speed meeting, vous recevrez un mail pour vous prévenir de l'ouverture des inscriptions sur les créneaux.
+                                    Attention, les places sont limitées !
+                                </p>
+                                <h6 class="text-white mt-4">Quand et Où</h6>
+                                <p class="text-white">Le 21 mai 2024 de 14h à 17h30, 31 cours Blaise Pascal, 91000 Evry-Courcouronnes</p>
+                            </div>
                         </div>
-                    {% endfor %}
+                        <div class="col-lg-6 col-12">
+                            <div class="about-text-wrap d-none d-md-block">
+                                <img src="{{asset ('images/fond_1.jpg')}}" class="about-image img-fluid">
+                                {# <div class="about-text-info d-flex">
+                                    <div class="d-flex">
+                                        <i class="about-text-icon bi-person"></i>
+                                    </div>
+                                    <div class="ms-4">
+                                        <h3>Un moment de rencontre</h3>
+                                        <p class="mb-0">Construisez votre avenir avec nous</p>
+                                    </div>
+                                </div> #}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center mt-5">
-                <a href="" class="btn btn-dark">Liste Complète</a>
-            </div>
-        </section>
-
+            </section>
+        {% else %}
+            <section class="artists-section section-padding" id="presentation">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center">
+                            <h2 class="mb-4 text-white">Rencontrer les professionnels</h1>
+                        </div>
+                        {% for pro in pros %}
+                            <div class="col-lg-5 col-12">
+                                <a href="{{path ('front_pro', {'id': pro.id, "nom" : pro.nom, 'prenom' : pro.prenom })}}">
+                                    <div class="artists-thumb">
+                                        <div class="artists-image-wrap d-flex justify-content-center">
+                                            <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="artists-image img-fluid" style = "width: 50%;">
+                                        </div>
+                                        <div class="artists-hover">
+                                            <p><strong>Nom : </strong>{{pro.nom}}</p>
+                                            <p><strong>Prenom:</strong>{{pro.prenom}}</p>
+                                            <p><strong>Intitulé du poste:</strong>{{pro.poste}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="" class="btn btn-dark">Liste Complète</a>
+                </div>
+            </section>
+        {% endif %}
         <section class="schedule-section section-padding" id="organisation">
             <div class="container">
                 <div class="row">
@@ -169,7 +206,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-12 mx-auto">
-                        <h2 class="text-center mb-4">Nous Contactez</h2>
+                        <h2 class="text-center mb-4">Nous Contacter</h2>
                         <nav class="d-flex justify-content-center">
                             <div class="nav nav-tabs align-items-baseline justify-content-center" id="nav-tab"
                                 role="tablist">
