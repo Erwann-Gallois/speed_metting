@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -83,6 +84,14 @@ class RegistrationFormType extends AbstractType
                 'delete_label' => 'Supprimer la photo',
                 "required" => false,
                 "mapped" => false,
+            ])
+            ->add('filiere', TextType::class, [
+                'label' => "Filière (*)",
+                'attr' => [
+                    'placeholder' => "Filière",
+                    'class' => "form-control",
+                ],
+                'required' => true,
             ])
             ->add('question', TextareaType::class, [
                 'label' => "Decrivez votre projet d'avenir (*)",

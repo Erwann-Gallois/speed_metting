@@ -20,7 +20,10 @@
                                         <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.prenom) }}</div>
                                     </div>
                                     {{ form_row(registrationForm.email) }}
-                                    {{ form_row(registrationForm.session)}}
+                                    <div class = 'row'>
+                                        <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.session)}}</div>
+                                        <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.filiere) }}</div>
+                                    </div>
                                     <label>Mot de passe (*)</label>
                                     <div class = 'row'>
                                         <div class = "col-11">{{ form_widget(registrationForm.plainPassword1) }} </div>

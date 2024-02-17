@@ -77,7 +77,17 @@ class FrontController extends AbstractController
     #[Route('/organisation', name: 'organisation')]
     public function organisation(): Response
     {
-        return $this->render('front/organisation.html.twig');
+        $filesystem = new Filesystem();
+        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $filename = $configDir . '/limite_places.txt';
+        if ($filesystem->exists($filename)) {
+            $limite = file_get_contents($filename);
+        } else {
+            $limite = 0;
+        }
+        return $this->render('front/organisation.html.twig', [
+            'limite' => $limite
+        ]);
     }
 
     #[Route("/presentation/professionnel/{nom}/{prenom}/{id}", name: "front_pro")]
