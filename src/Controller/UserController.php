@@ -182,6 +182,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get("imageFile")->getData() != null) {
+                $name = $user->getImageName();
+                if ($name != "personne_lambda.jpg") {
+                    unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
+                }
                 $file = $form->get('imageFile')->getData();
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
