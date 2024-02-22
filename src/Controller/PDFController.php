@@ -39,9 +39,12 @@ class PDFController extends AbstractController
     public function impressionFicheEleve(String $nom, String $prenom, int $id, UserRepository $urp)
     {
         $user = $urp->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
+        $imagePath = $this->getParameter('kernel.project_dir').'/public/image_profil/';
+        $imagePath .= $user->getImageName();
         $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
         $html = $this->renderView('pdf/fiche_eleve.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'imagePath' => $imagePath
         ]);
         $html2pdf->writeHTML($html);
         $html2pdf->output($user->getNom().'_'.$user->getPrenom().'_'.'fiche_eleve.pdf');  

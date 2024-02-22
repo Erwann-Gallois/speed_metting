@@ -185,7 +185,9 @@ class UserController extends AbstractController
                 $file = $form->get('imageFile')->getData();
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/'.$fileName);
                 $user->setImageName($fileName);
+                $user->setImageSize($size);
             }
             $eM->persist($user);
             $eM->flush();
@@ -213,10 +215,16 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // $data = $form->getData();
             if ($form->get("imageFile")->getData() != null) {
+                $name = $user->getImageName();
+                if ($name != "personne_lambda.jpg") {
+                    unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
+                }
                 $file = $form->get('imageFile')->getData();
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/'.$fileName);
                 $user->setImageName($fileName);
+                $user->setImageSize($size);
             }
             $eM->persist($user);
             $eM->flush();

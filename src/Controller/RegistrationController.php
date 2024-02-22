@@ -54,10 +54,14 @@ class RegistrationController extends AbstractController
                 $file = $form->get('imageFile')->getData();
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/'.$fileName);
                 $user->setImageName($fileName);
+                $user->setImageSize($size);
             }
             else {
                 $user->setImageName('personne_lambda.png');
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/personne_lambda.png');
+                $user->setImageSize($size);
             }
             $entityManager->persist($user);
             $entityManager->flush();
@@ -87,10 +91,14 @@ class RegistrationController extends AbstractController
                 $file = $form->get('imageFile')->getData();
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('kernel.project_dir').'/public/image_profil', $fileName);
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/'.$fileName);
                 $user->setImageName($fileName);
+                $user->setImageSize($size);
             }
             else {
                 $user->setImageName('personne_lambda.png');
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/personne_lambda.png');
+                $user->setImageSize($size);
             }
             $em = $this->doctrine->getManager();
             $em->persist($user);
