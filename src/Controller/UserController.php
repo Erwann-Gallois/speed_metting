@@ -183,7 +183,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get("imageFile")->getData() != null) {
                 $name = $user->getImageName();
-                if ($name != "personne_lambda.jpg") {
+                if ($name != "personne_lambda.png") {
                     unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
                 }
                 $file = $form->get('imageFile')->getData();
@@ -220,7 +220,7 @@ class UserController extends AbstractController
             // $data = $form->getData();
             if ($form->get("imageFile")->getData() != null) {
                 $name = $user->getImageName();
-                if ($name != "personne_lambda.jpg") {
+                if ($name != "personne_lambda.png") {
                     unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
                 }
                 $file = $form->get('imageFile')->getData();
