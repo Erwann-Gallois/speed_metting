@@ -2,54 +2,27 @@
 <html lang="fr">
 <head>
     <title>Planning : {{user.nom}} {{user.prenom}} </title>
-
-    <style type="text/css">
-        body {
-            font-family: 'Outfit', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: block; /* Utilisez block au lieu de flex pour body */
-        }
-        .container {
-            width: 100%; /* Assurez-vous que le conteneur occupe toute la largeur */
+    <style>
+        .center {
             text-align: center;
-            padding: 20px; /* Ajoutez du padding si nécessaire */
         }
-        table {
-            width: 100%; /* La table occupe toute la largeur du conteneur */
-            border-collapse: collapse; /* Pour éviter les doubles bordures */
-            padding: 0;
-            margin: 0;
-            page-break-inside: avoid; /* Pour éviter les sauts de page à l'intérieur du tableau */
-        }
-        th, td {
-            padding: 5px;
-            border: 1px solid #000;
-            text-align: left; /* Alignement du texte à gauche pour les cellules */
-        }
-
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">Heure</th>
-                    <th scope="col">Professionnel (Nom Prenom - Poste)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for session in sessions %}
-                <tr>
-                    <td>{{ session.heure|date('H:i') }}</td>
-                    <td>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <h1 class="center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <hr />
+        <br />
+        <div class = "row">
+            {% for session in sessions %}
+                <div class = "col-2"><strong>Heure : </strong>{{ session.heure|date('H:i') }}</div>
+                <div class = "col-10" ><strong>Professionnel :</strong>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</div>
+                <br />
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

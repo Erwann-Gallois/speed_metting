@@ -2,76 +2,22 @@
 <html lang="fr">
 <head>
     <title>Planning : {{ user.nom }} {{ user.prenom }} </title>
-    <style type="text/css">
-        body {
-            font-family: 'Outfit', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: block; /* Utilisez block au lieu de flex pour body */
-        }
-        .container {
-            width: 100%; /* Assurez-vous que le conteneur occupe toute la largeur */
-            text-align: center;
-            padding: 20px; /* Ajoutez du padding si nécessaire */
-        }
-        table {
-            width: 100%; /* La table occupe toute la largeur du conteneur */
-            border-collapse: collapse; /* Pour éviter les doubles bordures */
-            padding: 0;
-            margin: 0;
-            page-break-inside: avoid; /* Pour éviter les sauts de page à l'intérieur du tableau */
-        }
-        th, td {
-            padding: 5px;
-            border: 1px solid #000;
-            text-align: left; /* Alignement du texte à gauche pour les cellules */
-        }
-        /* Supprimer les marges et les paddings du tableau imbriqué si nécessaire */
-        .nested-table {
-            width: 100%; /* La table imbriquée occupe toute la largeur de sa cellule parent */
-            border-collapse: collapse;
-        }
-        .nested-table th, .nested-table td {
-            padding: 5px; /* Ajuster le padding pour les tables imbriquées si nécessaire */
-            border: 1px solid #000;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>Planning : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
-        <table>
-            <thead>
-                <tr>
-                    <th>Heure</th>
-                    <th>Eleves du groupe</th>
-                </tr>
-            </thead>
-            <tbody>
+            <div class = "row">
                 {% for key, session in sessions %}
-                <tr>
-                    <td>{{ key }}</td>
-                    <td>
-                        <table class="nested-table">
-                            <thead>
-                                <tr>
-                                    <th>Nom Prénom</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for session in sessions[key] %}
-                                <tr>
-                                    <td>{{ session.eleve.nom }} {{ session.eleve.prenom }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+                    <strong>Heure : </strong>{{ key }}
+                    {% for session in sessions[key] %}
+                        <br />
+                        <strong>Eleve :</strong>
+                        {{ session.eleve.nom }} {{ session.eleve.prenom }}
+                    {% endfor %}
+                    <hr />
                 {% endfor %}
-            </tbody>
-        </table>
+            </div>
     </div>
 </body>
 </html>
