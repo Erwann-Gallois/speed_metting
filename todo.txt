@@ -1,6 +1,6 @@
-- Ajouter numéro etudiant
+- Ajouter numéro etudiant -> Fait
     - Si numéro etudiant est dans LDD ajouter role organisateur
-- Unicité numéro etudiant
+- Unicité numéro etudiant -> Fait
 - Bloquer site aux personnes non connectée
 - Integrer l'impression des planning pro dans l'admin
 - Vérifier les regles RGPD

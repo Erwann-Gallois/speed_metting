@@ -10,6 +10,7 @@ use App\Form\RegistrationProFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +37,19 @@ class RegistrationController extends AbstractController
         return $limite;
     }    
 
+    private function getNumEtud(int $num_etud_compare):bool
+    {
+        $publicDir = $this->getParameter('kernel.project_dir') . '/public';
+        $filename = $publicDir . '/donnee/num_etud.json';
+        $num_etud = json_decode(file_get_contents($filename), true);
+        foreach ($num_etud as $num) {
+            if ($num_etud_compare == $num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     #[Route('/inscription', name: 'inscription')]
     public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
@@ -47,6 +61,11 @@ class RegistrationController extends AbstractController
             $user->setType(2);
             if ($form->get('plainPassword1')->getData() != $form->get('plainPassword2')->getData()) {
                 $this->addFlash('danger', "Les mots de passe ne correspondent pas");
+                return $this->redirectToRoute('inscription');
+            }
+            $num_etud_exist = $this->getNumEtud($form->get('numetud')->getData());
+            if (!$num_etud_exist) {
+                $this->addFlash('danger', "Le numéro étudiant n'existe pas");
                 return $this->redirectToRoute('inscription');
             }
             $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));

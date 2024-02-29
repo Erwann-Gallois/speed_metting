@@ -5,10 +5,10 @@
 {% block body %}
     <section class="contact-section section-padding" id="section_3">
         <div class="container">
-            {% include 'flash_message.html.twig' %}
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
                     <h2 class="text-center mb-4">Inscription</h2>
+                        {% include 'flash_message.html.twig' %}
                         <p class = "text-center">Les champs avec (*) sont obligatoire</p>
                         <div class = "custom-form">
                             <div class = "container">
@@ -19,7 +19,10 @@
                                         <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.nom) }}</div>
                                         <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.prenom) }}</div>
                                     </div>
-                                    {{ form_row(registrationForm.email) }}
+                                    <div class = 'row'>
+                                        <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.email)}}</div>
+                                        <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.numetud) }}</div>
+                                    </div>
                                     <div class = 'row'>
                                         <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.session)}}</div>
                                         <div class = 'col-lg-6 col-md-12'>{{ form_row(registrationForm.filiere) }}</div>

@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email.')]
+#[UniqueEntity(fields: ['numetud'], message: 'Il existe déjà un compte avec ce numéro étudiant.')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -85,6 +86,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'pro', targetEntity: Session::class)]
     private Collection $sessions;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\Length(min: 8, max: 8, exactMessage: "Le numéro étudiant doit contenir 8 chiffres.",)]
+    private ?int $numetud = null;
 
     public function __construct()
     {
@@ -364,6 +369,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $session->setPro(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumetud(): ?int
+    {
+        return $this->numetud;
+    }
+
+    public function setNumetud(?int $numetud): static
+    {
+        $this->numetud = $numetud;
 
         return $this;
     }

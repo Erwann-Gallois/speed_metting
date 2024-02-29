@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -72,6 +73,14 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('numetud', IntegerType::class, [
+                'label' => "Numéro étudiant (*)",
+                'attr' => [
+                    'placeholder' => "Numéro étudiant",
+                    'class' => "form-control",
+                ],
+                'required' => true,
             ])
             ->add("imageFile", VichImageType::class, 
             [

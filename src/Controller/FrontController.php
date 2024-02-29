@@ -90,26 +90,6 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route("/presentation/professionnel/{nom}/{prenom}/{id}", name: "front_pro")]
-    public function presentationProfessionnel(String $nom, String $prenom, int $id, UserRepository $urp): Response
-    {
-        $pro = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 1, "id" => $id]);
-        if ($pro === null) {
-            throw $this->createNotFoundException('Professionnel non trouvé');
-        }
-        return $this->render('front/presentation_professionnel.html.twig', [
-            'pro' => $pro
-        ]);
-    }
-
-    #[Route ("/presentation/eleve/{nom}/{prenom}/{id}", name: "front_eleve")]
-    public function presentationEleve(String $nom, String $prenom, int $id, UserRepository $urp): Response
-    {
-        $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
-        return $this->render('front/presentation_eleve.html.twig', [
-            'eleve' => $eleve
-        ]);
-    }
 
     #[Route("/contact", name: "contact")]
     public function page_contact(Request $request): Response
@@ -174,13 +154,4 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route ("/liste/eleve/{page<\d+>?1}", name: "front_liste_eleve")]
-    public function listeEleve(UserRepository $urp, PaginatorInterface $paginator,int $page, Request $request): Response
-    {
-        $eleves = $urp->findBy(['type' => 2]);
-        $pagination = $paginator->paginate($eleves, $request->query->getInt('page', $page), 10);
-        return $this->render('front/liste_eleve.html.twig', [
-            'eleves' => $pagination
-        ]);
-    }
 }
