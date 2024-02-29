@@ -23,4 +23,14 @@ class ProfessionnelController extends AbstractController
             'pro' => $pro
         ]);
     }  
+
+    
+    #[Route ("/liste/professionnel", name: "liste_pro")]
+    public function listePro(UserRepository $urp): Response
+    {
+        $pros = $urp->findBy(['type' => 1]);
+        return $this->render('professionnel/liste_pro.html.twig', [
+            'pros' => $pros
+        ]);
+    }
 }

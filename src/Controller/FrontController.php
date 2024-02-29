@@ -145,13 +145,5 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route ("/liste/professionnel", name: "liste_pro")]
-    public function listePro(UserRepository $urp): Response
-    {
-        $pros = $urp->findBy(['type' => 1]);
-        return $this->render('front/liste_pro.html.twig', [
-            'pros' => $pros
-        ]);
-    }
 
 }
