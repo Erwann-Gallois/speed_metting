@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Form\UserChangeMPDType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -20,7 +24,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     public function __construct(
-        private ManagerRegistry $doctrine,
+        private ManagerRegistry $doctrine, 
+        private Security $security, 
     )
     {
     }
@@ -131,6 +136,57 @@ class SecurityController extends AbstractController
             $this->addFlash('danger', 'Le lien est invalide');
             return $this->redirectToRoute('accueil');
         }
+    }
+
+    #[Route('/compte/pro/changer_mdp', name: 'pro_changer_mdp')]
+    #[Route('/compte/eleve/changer_mdp', name: 'eleve_changer_mdp')]
+    public function editPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $eM): Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('connexion');
+        }
+        $form = $this->createForm(UserChangeMPDType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $oldPassword = $form->get('ancien_mdp')->getData();
+            if ($hasher->isPasswordValid($user, $oldPassword)) {
+                if ($form->get('plainPassword1')->getData() == $form->get('plainPassword2')->getData()) {
+                    $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
+                    $eM->persist($user);
+                    $eM->flush();
+                    $this->addFlash('success', 'Mot de passe modifié avec succès');
+                    if ($user->getType() == 1) {
+                        return $this->redirectToRoute('compte_pro');
+                    }
+                    else {
+                        return $this->redirectToRoute('compte_eleve');
+                    }
+                }
+                else {
+                    $this->addFlash('danger', 'Les mots de passe ne correspondent pas');
+                    if ($user->getType() == 1) {
+                        return $this->redirectToRoute('pro_changer_mdp');
+                    }
+                    else {
+                        return $this->redirectToRoute('eleve_changer_mdp');
+                    }
+                }
+            }
+            else {
+                $this->addFlash('danger', 'Ancien mot de passe incorrect');
+                if ($user->getType() == 1) {
+                    return $this->redirectToRoute('pro_changer_mdp');
+                }
+                else {
+                    return $this->redirectToRoute('eleve_changer_mdp');
+                }
+            }
+        }
+        return $this->render('security/edit_Password.html.twig',[
+            'form'=> $form->createView(),
+            'user' => $user
+        ]);
     }
     
 }

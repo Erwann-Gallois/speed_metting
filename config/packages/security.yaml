@@ -1,7 +1,13 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+            algorithm: auto # Garder auto pour choisir le meilleur algorithme disponible
+            # Pour bcrypt
+            cost: 12 # Un coût entre 10 et 14 est généralement recommandé
+            # Pour argon2id (si disponible et choisi automatiquement)
+            time_cost: 4 # Augmenter pour plus de sécurité, en fonction de la performance acceptable
+            memory_cost: 65536 # Augmenter pour utiliser plus de mémoire lors du hachage
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -18,7 +24,7 @@ security:
             provider: app_user_provider
             form_login:
                 login_path: connexion
-                # check_path: connexion
+                check_path: connexion
                 enable_csrf: true
             logout:
                 path: deconnexion
@@ -45,15 +51,3 @@ security:
         ROLE_ELEVE, ROLE_PROFESSIONNEL : ROLE_FREEACCESS
 
 
-when@test:
-    security:
-        password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
-            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
-                algorithm: auto
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon

@@ -19,9 +19,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    App\EventListener\AccessDeniedListener:
-        tags:
-            - { name: kernel.event_subscriber }
 
     # App\Form\DataTransformer\TimeToStringTransformer: ~
     # add more service definitions when explicit configuration is needed

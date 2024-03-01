@@ -145,5 +145,35 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route('/compte', name: 'compte')]
+    public function redirection_compte(): Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('connexion');
+        }
+        else if ($user->getType() == 1) {
+            return $this->redirectToRoute('compte_pro');
+        }
+        else if ($user->getType() == 2 || $user->getType() == 3)
+        {
+            return $this->redirectToRoute('compte_eleve');
+        }
+    }
+
+    #[Route("/compte/planning", name: "planning")]
+    public function redirection_planning():Response
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('connexion');
+        }
+        else if ($user->getType() == 1) {
+            return $this->redirectToRoute('planning_pro');
+        }
+        else if ($user->getType() == 2 || $user->getType() == 3){
+            return $this->redirectToRoute('planning_eleve');
+        }
+    }
 
 }
