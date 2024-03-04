@@ -149,11 +149,11 @@ class ProfessionnelController extends AbstractController
         ]);
     }
     
-    #[Route("/compte/pro/planning", name: "planning_pro")]
+    #[Route("/compte/pro/planning/{nom}/{prenom}/{id}", name: "planning_pro")]
     #[IsGranted('ROLE_PROFESSIONNEL')]
-    public function planningPro(SessionRepository $srp):Response
+    public function planningPro(String $nom, String $prenom, int $id, SessionRepository $srp, UserRepository $urp):Response
     {
-        $user = $this->security->getUser();
+        $user = $urp->findOneBy(['id' => $id, 'nom' => $nom, 'prenom' => $prenom, 'type' => 1]);
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
@@ -171,5 +171,24 @@ class ProfessionnelController extends AbstractController
             'user' => $user,
             'sessions' => $all_sessions_by_hour
         ]);
+    }
+
+    #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_pro_front")]
+    public function supprimerPro(int $id, String $nom, String $prenom, UserRepository $urp): Response
+    {
+        $em = $this->doctrine->getManager();
+        $pro = $urp->findOneBy(['id' => $id, 'type' => 1, 'nom' => $nom, 'prenom' => $prenom]);
+        $name = $pro->getImageName();
+        if ($name != "personne_lambda.png") {
+            unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
+        }
+        for ($i = 0; $i < count($pro->getSessions()); $i++) {
+            $session = $pro->getSessions()[$i];
+            $em->remove($session);
+        }
+        $em->remove($pro);
+        $em->flush();
+        $this->addFlash("success", "Votre compte a été supprimé");
+        return $this->redirectToRoute("accueil");
     }
 }

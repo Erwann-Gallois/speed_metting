@@ -284,9 +284,14 @@ class AdminController extends AbstractController
     {
         $em = $this->doctrine->getManager();
         $pro = $urp->find($id);
+        for ($i = 0; $i < count($pro->getSessions()); $i++) {
+            $session = $pro->getSessions()[$i];
+            $em->remove($session);
+        }
         $em->remove($pro);
         $em->flush();
         $this->addFlash("success", "L'utilisateur a été supprimé");
         return $this->redirectToRoute("admin");
     }
+
 }

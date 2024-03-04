@@ -6,238 +6,158 @@
     {% include 'flash_message.html.twig' %}
     {% if (afficherLien) and (pro == false) and (pro is not null) %}
         <section class="hero-section" id="">
-        <div class="section-overlay"></div>
-            <div class="container d-flex justify-content-center align-items-center">
-                <div class="row">
-                    <div class="col-12 mt-auto mb-5 text-center">
-                        <small>Speed Meetings 2024</small>
-                        <h1 class="text-white mb-5">La réservation des rencontres est disponible</h1>
-                        {% if app.user %}
-                            <a class="btn btn-secondary" href="{{path ("reservation")}}">Reserver</a>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
-                        {% endif %}
-                        {% if app.user %}
-                            <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
-                        <div class="date-wrap">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-clock me-2"></i>
-                                21 Mai 2024
-                            </h5>
+            <div class="section-overlay"></div>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="row">
+                        <div class="col-12 mt-auto mb-5 text-center">
+                            <small>Speed Meetings 2024</small>
+                            <h1 class="text-white mb-5">La réservation des rencontres est disponible</h1>
+                            {% if app.user %}
+                                <a class="btn btn-secondary" href="{{path ("reservation")}}">Reserver</a>
+                            {% else %}
+                                <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
+                            {% endif %}
+                            {% if app.user %}
+                                <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
+                            {% else %}
+                                <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
+                            {% endif %}
                         </div>
 
-                        <div class="location-wrap mx-auto py-3 py-lg-0">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-geo-alt me-2"></i>
-                                31 cours Blaise Pascal, 91000 Évry-Courcouronnes
-                            </h5>
-                        </div>
+                        <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
+                            <div class="date-wrap">
+                                <h5 class="text-white">
+                                    <i class="custom-icon bi-clock me-2"></i>
+                                    21 Mai 2024
+                                </h5>
+                            </div>
 
-                        <div class="social-share">
-                            <ul class="social-icon d-flex align-items-center justify-content-center">
-                                <span class="text-white me-3">Social:</span>
+                            <div class="location-wrap mx-auto py-3 py-lg-0">
+                                <h5 class="text-white">
+                                    <i class="custom-icon bi-geo-alt me-2"></i>
+                                    31 cours Blaise Pascal, 91000 Évry-Courcouronnes
+                                </h5>
+                            </div>
 
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-facebook"></span>
-                                    </a>
-                                </li>
+                            <div class="social-share">
+                                <ul class="social-icon d-flex align-items-center justify-content-center">
+                                    <span class="text-white me-3">Social:</span>
 
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-twitter"></span>
-                                    </a>
-                                </li>
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link">
+                                            <span class="bi-facebook"></span>
+                                        </a>
+                                    </li>
 
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-instagram"></span>
-                                    </a>
-                                </li>
-                            </ul>
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link">
+                                            <span class="bi-twitter"></span>
+                                        </a>
+                                    </li>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link">
+                                            <span class="bi-instagram"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class = "image-wrap">
-                <img src="{{asset ("images/header.jpg")}}" alt="...">
-            </div>
-            {# <div class="video-wrap">
-                <video autoplay="" loop="" muted="" class="custom-video" poster="">
-                    <source src="video/pexels-2022395.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div> #}
+                <div class = "image-wrap">
+                    <img src="{{asset ("images/header.jpg")}}" alt="...">
+                </div>
+                {# <div class="video-wrap">
+                    <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                        <source src="video/pexels-2022395.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div> #}
         </section>
     {% else %}
-            <section class="hero-section" id="">
-        <div class="section-overlay"></div>
-            <div class="container d-flex justify-content-center align-items-center">
-                <div class="row">
-                    <div class="col-12 mt-auto mb-5 text-center">
-                        <small>Colloque EvryBio présente : </small>
-                        <h1 class="text-white mb-5">Speed Meetings 2024</h1>
-                        {% if app.user %}
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn custom-btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Mon compte</button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
-                                    <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
-                                    {% if (afficherLien) and (pro == false) and (pro is not null) %}
-                                        <li><a href = "{{path ("reservation")}}" class = "dropdown-item">Reserver</a></li>
-                                    {% endif %}
+        <section class="hero-section" id="">
+            <div class="section-overlay"></div>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="row">
+                        <div class="col-12 mt-auto mb-5 text-center">
+                            <small>Colloque EvryBio présente : </small>
+                            <h1 class="text-white mb-5">Speed Meetings 2024</h1>
+                            {% if app.user %}
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn custom-btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Mon compte</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
+                                        <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
+                                        {% if (afficherLien) and (pro == false) and (pro is not null) %}
+                                            <li><a href = "{{path ("reservation")}}" class = "dropdown-item">Reserver</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
+                            {% endif %}
+                            {% if app.user %}
+                                <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
+                            {% else %}
+                                <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
+                            <div class="date-wrap">
+                                <h5 class="text-white">
+                                    <i class="custom-icon bi-clock me-2"></i>
+                                    21 Mai 2024
+                                </h5>
+                            </div>
+
+                            <div class="location-wrap mx-auto py-3 py-lg-0">
+                                <h5 class="text-white">
+                                    <i class="custom-icon bi-geo-alt me-2"></i>
+                                    31 cours Blaise Pascal, 91000 Évry-Courcouronnes
+                                </h5>
+                            </div>
+
+                            <div class="social-share">
+                                <ul class="social-icon d-flex align-items-center justify-content-center">
+                                    <span class="text-white me-3">Social:</span>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link">
+                                            <span class="bi-facebook"></span>
+                                        </a>
+                                    </li>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link">
+                                            <span class="bi-twitter"></span>
+                                        </a>
+                                    </li>
+
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link">
+                                            <span class="bi-instagram"></span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
-                        {% endif %}
-                        {% if app.user %}
-                            <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
-                        <div class="date-wrap">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-clock me-2"></i>
-                                21 Mai 2024
-                            </h5>
-                        </div>
-
-                        <div class="location-wrap mx-auto py-3 py-lg-0">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-geo-alt me-2"></i>
-                                31 cours Blaise Pascal, 91000 Évry-Courcouronnes
-                            </h5>
-                        </div>
-
-                        <div class="social-share">
-                            <ul class="social-icon d-flex align-items-center justify-content-center">
-                                <span class="text-white me-3">Social:</span>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-facebook"></span>
-                                    </a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-twitter"></span>
-                                    </a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-instagram"></span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class = "image-wrap">
-                <img src="{{asset ("images/header.jpg")}}" alt="...">
-            </div>
-            {# <div class="video-wrap">
-                <video autoplay="" loop="" muted="" class="custom-video" poster="">
-                    <source src="video/pexels-2022395.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div> #}
+                <div class = "image-wrap">
+                    <img src="{{asset ("images/header.jpg")}}" alt="...">
+                </div>
+                {# <div class="video-wrap">
+                    <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                        <source src="video/pexels-2022395.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div> #}
         </section>
     {% endif %}
-    <section class="hero-section" id="">
-        <div class="section-overlay"></div>
-            <div class="container d-flex justify-content-center align-items-center">
-                <div class="row">
-                    <div class="col-12 mt-auto mb-5 text-center">
-                        <small>Colloque EvryBio présente : </small>
-                        <h1 class="text-white mb-5">Speed Meetings 2024</h1>
-                        {% if app.user %}
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn custom-btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Mon compte</button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
-                                    <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
-                                    {% if (afficherLien) and (pro == false) and (pro is not null) %}
-                                        <li><a href = "{{path ("reservation")}}" class = "dropdown-item">Reserver</a></li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
-                        {% endif %}
-                        {% if app.user %}
-                            <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
-                        <div class="date-wrap">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-clock me-2"></i>
-                                21 Mai 2024
-                            </h5>
-                        </div>
-
-                        <div class="location-wrap mx-auto py-3 py-lg-0">
-                            <h5 class="text-white">
-                                <i class="custom-icon bi-geo-alt me-2"></i>
-                                31 cours Blaise Pascal, 91000 Évry-Courcouronnes
-                            </h5>
-                        </div>
-
-                        <div class="social-share">
-                            <ul class="social-icon d-flex align-items-center justify-content-center">
-                                <span class="text-white me-3">Social:</span>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-facebook"></span>
-                                    </a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-twitter"></span>
-                                    </a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link">
-                                        <span class="bi-instagram"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class = "image-wrap">
-                <img src="{{asset ("images/header.jpg")}}" alt="...">
-            </div>
-            {# <div class="video-wrap">
-                <video autoplay="" loop="" muted="" class="custom-video" poster="">
-                    <source src="video/pexels-2022395.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div> #}
-        </section>
         {% if (pros is empty ) or (app.user is null) %}
             <section class="about-section section-padding" id="presentation">
                 <div class="container">

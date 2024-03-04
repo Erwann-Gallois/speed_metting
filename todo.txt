@@ -2,7 +2,7 @@
     - Si numéro etudiant est dans LDD ajouter role organisateur
 - Unicité numéro etudiant -> Fait
 - Bloquer site aux personnes non connectée -> Fait
-- Integrer l'impression des planning pro dans l'admin
+- Integrer l'impression des planning pro dans l'admin -> Fait
 - Ajouter supression de compte
 - Vérifier les regles RGPD
 - Preparer formulaire pro

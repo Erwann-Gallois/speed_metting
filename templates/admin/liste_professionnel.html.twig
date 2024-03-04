@@ -33,7 +33,7 @@
                         <a href="{{path ("front_pro", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-primary" title = "Fiche du professionnel"><i class="bi bi-eye-fill"></i></a>
                         <a href="mailto:{{pro.email}}" class="btn btn-sm btn-secondary" title = "Envoyer un mail"><i class="bi bi-envelope-at-fill"></i></a>
                         <a href="{{path ("impression_fiche_professionnel", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-warning" title = "Imprimer la fiche du professionnel" target="_blank"><i class="bi bi-printer-fill"></i></a>
-                        <a href="" class="btn btn-sm btn-info" title = "Voir le planning du professionnel"><i class="bi bi-calendar2-range"></i></a>
+                        <a href="{{path ("planning_pro", {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" class="btn btn-sm btn-info" title = "Voir le planning du professionnel"><i class="bi bi-calendar2-range"></i></a>
                         <a href="{{path ("supprimer", {id:pro.id})}}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>
                     </td>
                 </tr>

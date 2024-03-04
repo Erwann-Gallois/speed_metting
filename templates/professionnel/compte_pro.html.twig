@@ -1,19 +1,24 @@
 {% extends "base.html.twig" %}
 {% block title %} Profil : {{ user.nom }} - {{ user.prenom }}{% endblock %}
 {% block body %}
-<section class="section-padding">
+<section class = "section-padding">
     <div class="container">
         {% include "flash_message.html.twig" %}
         <h1 class="text-center">Profil : {{ user.nom }} - {{ user.prenom }}</h1>
         <hr />
-        <div class='row justify-content-center'>
-            <div class='col-3'>
-                <a href="{{path ('pro_modifier')}}" class="btn btn-sm btn-primary">Modifier</a>
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class='col-lg-4 col-md-12'>
+                        <a href="{{path ('pro_modifier')}}" class="btn btn-sm btn-primary">Modifier son profil</a>
+                    </div>
+                    <div class='col-lg-4 col-md-12 align-self-center'>
+                        <a href="{{path ('pro_changer_mdp')}}" role = "button" class="btn btn-sm btn-secondary">Modifier mot de passe</a>
+                    </div>
+                    <div class='col-lg-4 col-md-12'>
+                        <a href = "#" data-url="{{path ('supprimer_pro_front',{ id : user.id, nom : user.nom, prenom : user.prenom})}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">Supprimer son compte</a>
+                    </div>
+                </div>
             </div>
-            <div class='col-3'>
-                <a href="{{path ('pro_changer_mdp')}}" class="btn btn-sm btn-primary">Modifier mot de passe</a>
-            </div>
-        </div>
         <hr />
         <h2 class="text-center">Présentation</h2>
         <hr />
@@ -45,4 +50,15 @@
         </div>
     </div>
 </section>
+<script>
+    function confirmDeletion(element) 
+    {
+        if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ?")) {
+            var url = element.getAttribute('data-url');
+            window.location.href = url;
+        }
+    }
+</script>
+
+
 {% endblock %}

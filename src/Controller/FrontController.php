@@ -169,7 +169,7 @@ class FrontController extends AbstractController
             return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() == 1) {
-            return $this->redirectToRoute('planning_pro');
+            return $this->redirectToRoute('planning_pro', ['id' => $user->getId(), 'nom' => $user->getNom(), 'prenom' => $user->getPrenom()]);
         }
         else if ($user->getType() == 2 || $user->getType() == 3){
             return $this->redirectToRoute('planning_eleve');
