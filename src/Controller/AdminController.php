@@ -248,6 +248,7 @@ class AdminController extends AbstractController
             $user->setNom($data["nom"]);
             $user->setPrenom($data["prenom"]);
             $user->setEmail($data["email"]);
+            $user->setEntreprise($data["entreprise"]);
             $user->setRoles(["ROLE_PROFESSIONNEL"]);
             $user->setType(1);
             $user->setPoste($data["poste"]);
