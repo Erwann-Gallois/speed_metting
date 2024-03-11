@@ -66,14 +66,21 @@ class EleveController extends AbstractController
         return $slots;
     }
 
-    private function getNumEtud(int $num_etud_compare):bool
+    private function getNumEtud(int $num_etud_compare):int|bool
     {
         $publicDir = $this->getParameter('kernel.project_dir') . '/public';
         $filename = $publicDir . '/donnee/num_etud.json';
+        $filename2 = $publicDir . '/donnee/num_etud_orga.json';
         $num_etud = json_decode(file_get_contents($filename), true);
+        $num_etud_orga = json_decode(file_get_contents($filename2), true);
+        foreach ($num_etud_orga as $num) {
+            if ($num_etud_compare == $num) {
+                return 1;
+            }
+        }
         foreach ($num_etud as $num) {
             if ($num_etud_compare == $num) {
-                return true;
+                return 2;
             }
         }
         return false;
@@ -86,9 +93,6 @@ class EleveController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(['ROLE_ELEVE']);
-            $user->setType(2);
-
             // NOTE Vérification de la correspondance des mots de passe + hachage
             if ($form->get('plainPassword1')->getData() != $form->get('plainPassword2')->getData()) {
                 $this->addFlash('danger', "Les mots de passe ne correspondent pas");
@@ -104,9 +108,21 @@ class EleveController extends AbstractController
             }
             // NOTE Vérification de l'existence du numéro étudiant
             $num_etud_exist = $this->getNumEtud($form->get('numetud')->getData());
-            if (!$num_etud_exist) {
-                $this->addFlash('danger', "Le numéro étudiant n'existe pas");
-                return $this->redirectToRoute('inscription');
+            switch ($num_etud_exist) {
+                case 1: 
+                    $user->setNumEtud($form->get('numetud')->getData());
+                    $user->setRoles(["ROLE_ORGANISATEUR"]);
+                    $user->setType(3);
+                    break;
+                case 2:
+                    $user->setNumEtud($form->get('numetud')->getData());
+                    $user->setRoles(['ROLE_ELEVE']);
+                    $user->setType(2);
+                    break;
+                default:
+                    $this->addFlash('danger', "Numéro étudiant inconnu");
+                    return $this->redirectToRoute('inscription');
+                    break;
             }
             
             // NOTE Vérification de l'image de profil
