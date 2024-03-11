@@ -3,7 +3,7 @@
 - Unicité numéro etudiant -> Fait
 - Bloquer site aux personnes non connectée -> Fait
 - Integrer l'impression des planning pro dans l'admin -> Fait
-- Ajouter supression de compte
+- Ajouter supression de compte -> Fait
 - Vérifier les regles RGPD
-- Preparer formulaire pro
+- Preparer formulaire pro -> Fait
 - Preparer template de reservation en mail (avec un lien ?)
