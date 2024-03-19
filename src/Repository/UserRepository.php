@@ -44,6 +44,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $qb = $this->createQueryBuilder('a');
         $qb->setMaxResults(4)
         ->andWhere('a.type = 1')
+        ->andWhere("a.info_valid = 1")
         ->orderBy('RAND ()');
         return $qb->getQuery()->getResult();
     }

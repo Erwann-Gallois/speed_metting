@@ -52,7 +52,7 @@ class ProfessionnelController extends AbstractController
             $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page');
             return $this->redirectToRoute('connexion');
         }
-        $pros = $urp->findBy(['type' => 1]);
+        $pros = $urp->findBy(['type' => 1, "info_valid" => 1]);
         return $this->render('professionnel/liste_pro.html.twig', [
             'pros' => $pros
         ]);
