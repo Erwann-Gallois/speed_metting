@@ -14,7 +14,7 @@
                 <a href="{{path ('eleve_changer_mdp')}}" class="btn btn-sm btn-primary">Modifier mon mot de passe</a>
             </div>
             <div class='col-3'>
-                <a href = "#" data-url="{{path ('supprimer_eleve_front'), {id : user.id, nom : user.nom, prenom : user.prenom}}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">Supprimer mon compte</a>
+                <a href = "#" data-url="{{path ('supprimer_eleve_front', {id : user.id, nom : user.nom, prenom : user.prenom})}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">Supprimer mon compte</a>
             </div>
         </div>
         <hr />

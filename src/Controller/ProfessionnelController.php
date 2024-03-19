@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfessionnelController extends AbstractController
@@ -174,12 +175,22 @@ class ProfessionnelController extends AbstractController
     }
 
     #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_pro_front")]
-    public function supprimerPro(int $id, String $nom, String $prenom, UserRepository $urp): Response
+    public function supprimerPro(int $id, String $nom, String $prenom, UserRepository $urp, Request $request, TokenStorageInterface $tokenStorage): Response
     {
         $em = $this->doctrine->getManager();
         $pro = $urp->findOneBy(['id' => $id, 'type' => 1, 'nom' => $nom, 'prenom' => $prenom]);
+        if (!$pro) {
+            $this->addFlash("error", "Professionnel non trouvé.");
+            return $this->redirectToRoute("accueil");
+        }
+        // Avant la suppression, déconnectez l'utilisateur si c'est l'utilisateur actuellement connecté
+        if ($this->getUser() && $this->getUser()->getId() === $pro->getId()) {
+            // Déconnexion de l'utilisateur
+            $tokenStorage->setToken(null);
+            $request->getSession()->invalidate();
+        }
         $name = $pro->getImageName();
-        if ($name != "personne_lambda.png") {
+        if ($name != "personne_lambda.png" && $name != null) {
             unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
         }
         for ($i = 0; $i < count($pro->getSessions()); $i++) {

@@ -17,11 +17,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 class EleveController extends AbstractController
 {
     public function __construct(
@@ -334,21 +335,32 @@ class EleveController extends AbstractController
     }
 
     #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_eleve_front")]
-    public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp): Response
+    public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp, Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage): Response
     {
-        $em = $this->doctrine->getManager();
         $eleve = $urp->findOneBy(['id' => $id, 'type' => 2, 'nom' => $nom, 'prenom' => $prenom]);
+        if (!$eleve) {
+            $this->addFlash("error", "Élève non trouvé.");
+            return $this->redirectToRoute("accueil");
+        }
+        // Avant la suppression, déconnectez l'utilisateur si c'est l'utilisateur actuellement connecté
+        if ($this->getUser() && $this->getUser()->getId() === $eleve->getId()) {
+            // Déconnexion de l'utilisateur
+            $tokenStorage->setToken(null);
+            $request->getSession()->invalidate();
+        }
+        // Logique de suppression de l'utilisateur ici
         $name = $eleve->getImageName();
-        if ($name != "personne_lambda.png") {
+        if ($name != "personne_lambda.png" && $name != null) {
             unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
         }
-        for ($i = 0; $i < count($srp->findAllSessionEleve($eleve->getId())); $i++) {
-            $session = $srp->findAllSessionEleve($eleve->getId())[$i];
+        $sessionsEleve = $srp->findAllSessionEleve($eleve->getId());
+        foreach ($sessionsEleve as $session) {
             $em->remove($session);
         }
         $em->remove($eleve);
         $em->flush();
-        $this->addFlash("success", "Votre compte a été supprimé");
+        $this->addFlash("success", "Le compte a été supprimé.");
+        // Redirection vers l'accueil ou une page de confirmation
         return $this->redirectToRoute("accueil");
     }
 
