@@ -12,10 +12,12 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -87,7 +89,7 @@ class EleveController extends AbstractController
     }
 
     #[Route('/inscription', name: 'inscription')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher, MailerInterface $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -139,17 +141,47 @@ class EleveController extends AbstractController
                 $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/personne_lambda.png');
                 $user->setImageSize($size);
             }
-            
+            $token = uniqid('', true);
+            $user->setToken($token);
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success', "Votre compte a bien été créé, vous pouvez vous connecter");
-            return $this->redirectToRoute('connexion');
+            $message = (new TemplatedEmail())
+            ->from(new Address("no.reply.speed.meetings2024@gmail.com", "Speed Meetings 2024"))
+            ->to($user->getEmail())
+            ->subject("Validation de votre compte Speed Meetings 2024")
+            // path of the Twig template to render
+            ->htmlTemplate('mail/lien_validation.html.twig')
+            // pass variables (name => value) to the template
+            ->context([
+                "user" => $user,
+                "token" => $token
+            ]);
+            $mailer->send($message);
+            $this->addFlash('info', "Un mail de confirmation vous a été envoyé, Verifiez vos spams");
+            return $this->redirectToRoute('accueil');
         }
         return $this->render('eleve/inscription_eleve.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
     
+    #[Route("/validation/{token}", name: "validation")]
+    public function validation(String $token, UserRepository $urp): Response
+    {
+        $user = $urp->findOneBy(['token' => $token]);
+        if ($user) {
+            $user->setInfoValid(true);
+            $user->setToken("");
+            $em = $this->doctrine->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'Votre compte a été validé');
+            return $this->redirectToRoute('connexion');
+        }
+        $this->addFlash('danger', 'Votre compte n\'a pas été validé');
+        return $this->redirectToRoute('accueil');
+    }
+
     #[Route ("/presentation/eleve/{nom}/{prenom}/{id}", name: "front_eleve")]
     public function presentationEleve(String $nom, String $prenom, int $id, UserRepository $urp): Response
     {   
