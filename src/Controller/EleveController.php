@@ -300,4 +300,24 @@ class EleveController extends AbstractController
             'heures' => $heures,
         ]);
     }
+
+    #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_eleve_front")]
+    public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp): Response
+    {
+        $em = $this->doctrine->getManager();
+        $eleve = $urp->findOneBy(['id' => $id, 'type' => 2, 'nom' => $nom, 'prenom' => $prenom]);
+        $name = $eleve->getImageName();
+        if ($name != "personne_lambda.png") {
+            unlink($this->getParameter('kernel.project_dir').'/public/image_profil/'.$name);
+        }
+        for ($i = 0; $i < count($srp->findAllSessionEleve($eleve->getId())); $i++) {
+            $session = $srp->findAllSessionEleve($eleve->getId())[$i];
+            $em->remove($session);
+        }
+        $em->remove($eleve);
+        $em->flush();
+        $this->addFlash("success", "Votre compte a été supprimé");
+        return $this->redirectToRoute("accueil");
+    }
+
 }

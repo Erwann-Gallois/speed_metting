@@ -8,10 +8,13 @@
         <hr />
         <div class='row justify-content-center'>
             <div class='col-3'>
-                <a href="{{path ('eleve_modifier')}}" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="{{path ('eleve_modifier')}}" class="btn btn-sm btn-primary">Modifier mon profil</a>
             </div>
             <div class='col-3'>
-                <a href="{{path ('eleve_changer_mdp')}}" class="btn btn-sm btn-primary">Modifier mot de passe</a>
+                <a href="{{path ('eleve_changer_mdp')}}" class="btn btn-sm btn-primary">Modifier mon mot de passe</a>
+            </div>
+            <div class='col-3'>
+                <a href = "#" data-url="{{path ('supprimer_eleve_front'), {id : user.id, nom : user.nom, prenom : user.prenom}}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">Supprimer mon compte</a>
             </div>
         </div>
         <hr />
@@ -46,4 +49,13 @@
         </div>
     </div>
 </section>
+<script>
+    function confirmDeletion(element) 
+    {
+        if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ?")) {
+            var url = element.getAttribute('data-url');
+            window.location.href = url;
+        }
+    }
+</script>
 {% endblock %}
