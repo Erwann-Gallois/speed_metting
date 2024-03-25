@@ -175,24 +175,6 @@ class AdminController extends AbstractController
         foreach ($eleves as $key => $value) {
             $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));
         }
-        // // dump($nbre_session);
-        // $emails = array_map(function ($eleve) {
-        //     return $eleve->getEmail();
-        // }, $eleves);
-        // $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
-        // $form->handleRequest($request);
-    
-        // if ($form->isSubmitted() && $form->isValid()) 
-        // {
-        //     $selectedEmails = [];
-        //     foreach ($emails as $index => $email) {
-        //         $checkboxField = 'email_' . $index;
-        //         if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
-        //             $selectedEmails[] = $email;
-        //         }
-        //     }
-        //     dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
-        // }
         return $this->render('admin/liste_eleve.html.twig', [
             'eleves' => $eleves,
             // 'form' => $form->createView(),

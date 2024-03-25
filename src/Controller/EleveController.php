@@ -192,6 +192,13 @@ class EleveController extends AbstractController
             return $this->redirectToRoute('connexion');
         }
         $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
+        if (!$eleve) {
+            $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 3, "id" => $id]);
+        }
+        if (!$eleve) {
+            $this->addFlash('danger', 'Élève non trouvé');
+            return $this->redirectToRoute('accueil');
+        }
         return $this->render('eleve/presentation_eleve.html.twig', [
             'eleve' => $eleve
         ]);
@@ -338,6 +345,9 @@ class EleveController extends AbstractController
     public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp, Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage): Response
     {
         $eleve = $urp->findOneBy(['id' => $id, 'type' => 2, 'nom' => $nom, 'prenom' => $prenom]);
+        if (!$eleve) {
+            $eleve = $urp->findOneBy(['id' => $id, 'type' => 3, 'nom' => $nom, 'prenom' => $prenom]);
+        }
         if (!$eleve) {
             $this->addFlash("error", "Élève non trouvé.");
             return $this->redirectToRoute("accueil");
