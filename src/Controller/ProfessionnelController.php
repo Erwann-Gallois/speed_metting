@@ -50,7 +50,7 @@ class ProfessionnelController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page');
+            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
             return $this->redirectToRoute('connexion');
         }
         $pros = $urp->findBy(['type' => 1, "info_valid" => 1]);

@@ -209,7 +209,7 @@ class EleveController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page');
+            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
             return $this->redirectToRoute('connexion');
         }
         $eleves = $urp->findBy(['type' => 2]);
@@ -242,7 +242,8 @@ class EleveController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
-        else if ($user->getType() != 2) {
+        else if ($user->getType() != 2 && $user->getType() != 3){
+            $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
             return $this->redirectToRoute('compte');
         }
         $form = $this->createForm(UserEleveType::class, $user);
