@@ -192,6 +192,13 @@ class EleveController extends AbstractController
             return $this->redirectToRoute('connexion');
         }
         $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
+        if (!$eleve) {
+            $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 3, "id" => $id]);
+        }
+        if (!$eleve) {
+            $this->addFlash('danger', 'Élève non trouvé');
+            return $this->redirectToRoute('accueil');
+        }
         return $this->render('eleve/presentation_eleve.html.twig', [
             'eleve' => $eleve
         ]);
@@ -202,7 +209,7 @@ class EleveController extends AbstractController
     {
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page');
+            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
             return $this->redirectToRoute('connexion');
         }
         $eleves = $urp->findBy(['type' => 2]);
@@ -235,7 +242,8 @@ class EleveController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
-        else if ($user->getType() != 2) {
+        else if ($user->getType() != 2 && $user->getType() != 3){
+            $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
             return $this->redirectToRoute('compte');
         }
         $form = $this->createForm(UserEleveType::class, $user);
@@ -338,6 +346,9 @@ class EleveController extends AbstractController
     public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp, Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage): Response
     {
         $eleve = $urp->findOneBy(['id' => $id, 'type' => 2, 'nom' => $nom, 'prenom' => $prenom]);
+        if (!$eleve) {
+            $eleve = $urp->findOneBy(['id' => $id, 'type' => 3, 'nom' => $nom, 'prenom' => $prenom]);
+        }
         if (!$eleve) {
             $this->addFlash("error", "Élève non trouvé.");
             return $this->redirectToRoute("accueil");
