@@ -23,7 +23,7 @@ class DateReservationSubscriber extends AbstractController  implements EventSubs
     public function onKernelRequest(RequestEvent $event): void
     {
         $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
         $filename3 = $configDir . '/date_reservation.txt';
         $date = null;
         if ($filesystem->exists($filename3)) {
