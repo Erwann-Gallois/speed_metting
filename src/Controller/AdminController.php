@@ -55,7 +55,7 @@ class AdminController extends AbstractController
         $form3->handleRequest($request);
         // Mettre à jour le fichier de configuration ou un fichier spécifique
         $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
         $filename = $configDir . '/limite_places.txt';
         $filename2 = $configDir . '/limite_place_session.txt';
         $filename3 = $configDir . '/date_reservation.txt';
@@ -64,7 +64,7 @@ class AdminController extends AbstractController
 
             // Mettre à jour le fichier de configuration ou un fichier spécifique
             $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/config';
+            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
             $filename = $configDir . '/limite_places.txt';
 
             try {
@@ -82,7 +82,7 @@ class AdminController extends AbstractController
 
             // Mettre à jour le fichier de configuration ou un fichier spécifique
             $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/config';
+            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
             $filename2 = $configDir . '/limite_place_session.txt';
 
             try {
@@ -100,7 +100,7 @@ class AdminController extends AbstractController
             $date = $form3->get('date')->getData();
             // $date = new DateTime($date, new DateTimeZone("Europe/Paris"));
             $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/config';
+            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
             $filename3 = $configDir . '/date_reservation.txt';
             
             try {
@@ -142,28 +142,8 @@ class AdminController extends AbstractController
     public function listeProfessionnel(UserRepository $urp): Response
     {
         $pros = $urp->findBy(["type" => 1]);
-        // // dump($pro);
-        // $emails = array_map(function ($pro) {
-        //     return $pro->getEmail();
-        // }, $pros);
-        // $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
-        // $form->handleRequest($request);
-    
-        // if ($form->isSubmitted() && $form->isValid()) 
-        // {
-        //     $selectedEmails = [];
-        //     foreach ($emails as $index => $email) {
-        //         $checkboxField = 'email_' . $index;
-        //         if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
-        //             $selectedEmails[] = $email;
-        //         }
-        //     }
-
-        // }
         return $this->render('admin/liste_professionnel.html.twig', [
             'pros' => $pros,
-            // 'form' => $form->createView(),
-            // 'controller_name' => 'AdminController',
         ]);
     }
 
@@ -177,9 +157,7 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/liste_eleve.html.twig', [
             'eleves' => $eleves,
-            // 'form' => $form->createView(),
             'nbre_session' => $nbre_session,
-            // 'controller_name' => 'AdminController',
         ]);
     }
 
@@ -187,28 +165,8 @@ class AdminController extends AbstractController
     public function listeorganisateur(UserRepository $urp): Response
     {
         $organisateurs = $urp->findBy(["type" => 3]);
-        // dump($organisateur);
-        // $emails = array_map(function ($organisateur) {
-        //     return $organisateur->getEmail();
-        // }, $organisateurs);
-        // $form = $this->createForm(EmailSelectionType::class, null, ['emails' => $emails]);
-        // $form->handleRequest($request);
-    
-        // if ($form->isSubmitted() && $form->isValid()) 
-        // {
-        //     $selectedEmails = [];
-        //     foreach ($emails as $index => $email) {
-        //         $checkboxField = 'email_' . $index;
-        //         if ($form->has($checkboxField) && $form->get($checkboxField)->getData() === true) {
-        //             $selectedEmails[] = $email;
-        //         }
-        //     }
-        //     dump($selectedEmails); // Cela devrait maintenant vous montrer les e-mails sélectionnés
-        // }
         return $this->render('admin/liste_organisateur.html.twig', [
             'organisateurs' => $organisateurs,
-            // 'form' => $form->createView(),
-            // 'controller_name' => 'AdminController',
         ]);
     }
 
@@ -243,7 +201,7 @@ class AdminController extends AbstractController
             $em->flush();
 
             $message = (new TemplatedEmail())
-            ->from(new Address("no.reply.speed.meetings2024@gmail.com", "Speed Meetings 2024"))
+            ->from(new Address("no.reply.speed.meetings2024@univ-evry.fr", "Speed Meetings 2024"))
             ->to($data["email"])
             ->subject("Lien de connexion pour remplir le formulaire de présentation")
             // path of the Twig template to render

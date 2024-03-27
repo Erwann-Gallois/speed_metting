@@ -78,7 +78,7 @@ class SecurityController extends AbstractController
                 $em->persist($user);
                 $em->flush();
                 $message = (new TemplatedEmail())
-                ->from(new Address("no.reply.speed.meetings2024@gmail.com", "Speed Meetings 2024"))
+                ->from(new Address("no.reply.speed.meetings2024@univ-evry.fr", "Speed Meetings 2024"))
                 ->to($data["email"])
                 ->subject("Réinitialisation de votre mot de passe")
                 // path of the Twig template to render

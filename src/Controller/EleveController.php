@@ -34,7 +34,7 @@ class EleveController extends AbstractController
 
     private function getMaxPlaceSession():int
     {
-        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
         $filename = $configDir . '/limite_place_session.txt';
         $limite = file_get_contents($filename);
         return $limite;
@@ -42,7 +42,7 @@ class EleveController extends AbstractController
 
     private function getMaxPlaceRDV():int
     {
-        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
         $filename = $configDir . '/limite_places.txt';
         $limite = file_get_contents($filename);
         return $limite;
@@ -147,7 +147,7 @@ class EleveController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $message = (new TemplatedEmail())
-            ->from(new Address("no.reply.speed.meetings2024@gmail.com", "Speed Meetings 2024"))
+            ->from(new Address("no.reply.speed.meetings2024@univ-evry.fr", "Speed Meetings 2024"))
             ->to($user->getEmail())
             ->subject("Validation de votre compte Speed Meetings 2024")
             // path of the Twig template to render
@@ -188,7 +188,7 @@ class EleveController extends AbstractController
     {   
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page');
+            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
             return $this->redirectToRoute('connexion');
         }
         $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);

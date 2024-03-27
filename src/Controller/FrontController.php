@@ -118,33 +118,6 @@ class FrontController extends AbstractController
         return $this->render('front/carte.html.twig');
     }
 
-    // #[Route ("inscription/pro/{token}", name : "inscription_pro")]
-    // public function inscriptionPro (String $token, Request $request,  UserRepository $urp, UserPasswordHasherInterface $userPasswordHasher)
-    // {
-    //     $user = $urp->findOneBy(['token' => $token]);
-    //     $form = $this->createForm(RegistrationProFormType::class, $user);
-    //     $form->handleRequest($request);
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $user->setInfoValid(true);
-    //         $user->setToken("");
-    //         $user->setPassword(
-    //             $userPasswordHasher->hashPassword(
-    //                 $user,
-    //                 $form->get('password')->getData()
-    //             )
-    //         );
-    //         $em = $this->doctrine->getManager();
-    //         $em->persist($user);
-    //         $em->flush();
-    //         $this->addFlash('success', 'Votre compte a bien été créé, vous pouvez vous connecter');
-    //         return $this->redirectToRoute('connexion');
-    //     }
-
-    //     return $this->render('registration/inscription_pro.html.twig', [
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
-
     #[Route('/compte', name: 'compte')]
     public function redirection_compte(): Response
     {
