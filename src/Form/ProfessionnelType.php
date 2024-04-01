@@ -14,23 +14,23 @@ class ProfessionnelType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => "Nom du professionnel",
+                'label' => "form.nom",
                 "required" => true,
             ])
             ->add('prenom', TextType::class, [
-                'label' => "Prénom du professionnel",
+                'label' => "form.prenom",
                 "required" => true,
             ])
             ->add("email", EmailType::class, [
-                "label" => "Email du professionnel",
+                "label" => "form.mail",
                 "required" => true
             ])
             ->add('poste', TextType::class, [
-                "label" => "Intitulé du poste",
+                "label" => "form.poste",
                 "required"=> false
             ])
             ->add('entreprise', TextType::class, [
-                "label" => "Nom de l'entreprise",
+                "label" => "form.entreprise",
                 "required"=> false
             ])
         ;

@@ -53,7 +53,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/contact/{nom}/{email}/{sujet}/{message}', name: 'mail_contact')]
+    #[Route('/{_locale}/contact/{nom}/{email}/{sujet}/{message}', name: 'mail_contact')]
     public function contact(String $nom, String $email, String $sujet, String $message, MailerInterface $mailer): Response
     {
         $message = (new TemplatedEmail())
@@ -74,7 +74,7 @@ class FrontController extends AbstractController
         return $this->redirectToRoute('accueil');
     }
 
-    #[Route('/organisation', name: 'organisation')]
+    #[Route('/{_locale}/organisation', name: 'organisation')]
     public function organisation(): Response
     {
         $filesystem = new Filesystem();
@@ -91,7 +91,7 @@ class FrontController extends AbstractController
     }
 
 
-    #[Route("/contact", name: "contact")]
+    #[Route("/{_locale}/contact", name: "contact")]
     public function page_contact(Request $request): Response
     {   
         $form = $this->createForm(ContactFormType::class, null, ['method' => 'POST']);
@@ -112,13 +112,13 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route("/nous-trouvez", name: "carte")]
+    #[Route("/{_locale}/nous-trouvez", name: "carte")]
     public function carte(): Response
     {
         return $this->render('front/carte.html.twig');
     }
 
-    #[Route('/compte', name: 'compte')]
+    #[Route('/{_locale}/compte', name: 'compte')]
     public function redirection_compte(): Response
     {
         $user = $this->security->getUser();
@@ -134,7 +134,7 @@ class FrontController extends AbstractController
         }
     }
 
-    #[Route("/compte/planning", name: "planning")]
+    #[Route("/{_locale}/compte/planning", name: "planning")]
     public function redirection_planning():Response
     {
         $user = $this->security->getUser();

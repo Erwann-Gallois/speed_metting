@@ -26,23 +26,27 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['autocomplete' => 'email'],
-                'label' => 'Email (*)',
+                'label' => 'form.mail',
+                'attr' => [
+                    "placeholder" => "form.mail"
+                ],
                 'required' => true,
             ])
             ->add('nom', TextType::class, [
-                'attr' => ['autocomplete' => 'nom'],
-                'label' => 'Nom (*)',
+                'label' => 'form.nom',
+                'attr' => [
+                    "placeholder" => "form.nom"
+                ],
                 'required' => true,
             ])
             ->add('prenom', TextType::class, [
-                'attr' => ['autocomplete' => 'prenom'],
-                'label' => 'Prénom (*)',
+                'attr' => ['placeholder' => 'form.prenom'],
+                'label' => 'form.prenom',
                 'required' => true,
             ])
             ->add('plainPassword1', PasswordType::class, [
-                'label' => 'Mot de Passe (*)', 
-                'attr' => ['id' => 'new-password'],
+                'label' => 'form.mdp1', 
+                'attr' => ['placeholder' => "form.mdp1"],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
@@ -58,8 +62,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword2', PasswordType::class, [
-                'label' => 'Mot de Passe (*)', 
-                'attr' => ['id' => 'repeat-password'],
+                'label' => 'form.mdp2', 
+                'attr' => ['placeholder' => 'form.mdp2'],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
@@ -75,16 +79,16 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('numetud', IntegerType::class, [
-                'label' => "Numéro étudiant (*)",
+                'label' => "form.numetud",
                 'attr' => [
-                    'placeholder' => "Numéro étudiant",
+                    'placeholder' => "form.numetud",
                     'class' => "form-control",
                 ],
                 'required' => true,
             ])
             ->add("imageFile", VichImageType::class, 
             [
-                'label' => 'Photo de profil',
+                'label' => 'form.img',
                 'help' => 'Taille maximum : 8Mo',	
                 'required' => false,
                 'allow_delete' => true,
@@ -95,24 +99,24 @@ class RegistrationFormType extends AbstractType
                 "mapped" => false,
             ])
             ->add('filiere', TextType::class, [
-                'label' => "Filière (*)",
+                'label' => "form.filiere",
                 'attr' => [
-                    'placeholder' => "Filière",
+                    'placeholder' => "form.filiere",
                     'class' => "form-control",
                 ],
                 'required' => true,
             ])
             ->add('question', TextareaType::class, [
-                'label' => "Decrivez votre projet d'avenir (*)",
+                'label' => "form.quest_etud",
                 'attr' => [
-                    'placeholder' => "Decrivez votre projet d'avenir",
+                    'placeholder' => "form.quest_etud",
                     'class' => "form-control",
                     'rows' => 5,
                 ],
                 'required' => true,
             ])
             ->add('session', ChoiceType::class, [
-                'label' => "Quel session voudriez vous ? (les places sont limitées) (*)",
+                'label' => "form.session",
                 'required' => true,
                 "choices" => [
                     "Session 1" => 1,

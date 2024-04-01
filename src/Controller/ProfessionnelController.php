@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/{_locale}', requirements:["_locale" => "fr|en"])]
 class ProfessionnelController extends AbstractController
 {
     public function __construct(

@@ -1,0 +1,19 @@
+Nom Complet : Nom complet
+Email : Email
+Sujet : Sujet
+Message : Message
+
+form.nom : Nom (*)
+form.prenom : Prénom (*)
+form.mail : Email (*)
+form.poste : Intitulé du Poste (*)
+form.entreprise : Entreprise (*)
+
+form.mdp1 : Mot de passe (*)
+form.mdp2 : Confirmer le mot de passe (*)
+form.numetud : Numéro étudiant (*)
+form.img : Photo de profil 
+form.filiere : Filière (*)
+form.quest_etud : Décrivez votre projet d'avenir (*)
+form.session : Quel session voudriez vous ? (les places sont limitées) (*) 	
+

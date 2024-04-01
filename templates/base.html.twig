@@ -104,12 +104,22 @@ https://templatemo.com/tm-583-festava-live
                                 </ul>
                             </li>
                         {% endif %}
+                        <li class="nav-item dropdown d-none d-lg-block">
+                            <a class="nav-link dropdown-toggle d-lg-block d-sm-none d-md-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Langue
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ path('change_langage', {'_locale': 'fr'}) }}">Français</a></li>
+                                <li><a class="dropdown-item" href="{{ path('change_langage', {'_locale': 'en'}) }}">English</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     {% if app.user %}
                         <a href="{{path ('deconnexion')}}" class="btn custom-btn d-lg-block d-none">Deconnexion</a>
                     {% else %}
                         <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-block d-none">Connexion</a>
                     {% endif %}
+                    
                 </div>
             </div>
         </nav>

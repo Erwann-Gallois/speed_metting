@@ -1,0 +1,18 @@
+Nom Complet : Full Name
+Email : Email
+Sujet : Subject
+Message : Message
+
+form.nom : Lastname (*)
+form.prenom : Firstname (*)
+form.mail : Email (*)
+form.poste : Job Title (*)
+form.entreprise : Company (*)
+
+form.mdp1 : Password (*)
+form.mdp2 : Confirm Password (*)
+form.numetud : Student Number (*)
+form.img : Profile Picture
+form.filiere : Major (*)
+form.quest_etud : Describe your future project (*)
+form.session : Which session would you like to attend? (places are limited) (*) 
