@@ -23,6 +23,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/{_locale}', requirements:["_locale" => "fr|en"])]
 class EleveController extends AbstractController
@@ -92,7 +93,7 @@ class EleveController extends AbstractController
     }
 
     #[Route('/inscription', name: 'inscription')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher, MailerInterface $mailer): Response
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -100,7 +101,7 @@ class EleveController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // NOTE Vérification de la correspondance des mots de passe + hachage
             if ($form->get('plainPassword1')->getData() != $form->get('plainPassword2')->getData()) {
-                $this->addFlash('danger', "Les mots de passe ne correspondent pas");
+                $this->addFlash('danger', $translator->trans("flash.mdp_dif"));
                 return $this->redirectToRoute('inscription');
             }
             $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
@@ -108,7 +109,7 @@ class EleveController extends AbstractController
             // NOTE Verification du nombre de place dans la session
             $nbre_session = $entityManager->getRepository(User::class)->count(['session' => $form->get('session')->getData()]);
             if ($nbre_session >= $this->getMaxPlaceSession()) {
-                $this->addFlash('danger', "La session est complète");
+                $this->addFlash('danger', $translator->trans("flash.session_complet"));
                 return $this->redirectToRoute('inscription');
             }
             // NOTE Vérification de l'existence du numéro étudiant
@@ -125,7 +126,7 @@ class EleveController extends AbstractController
                     $user->setType(2);
                     break;
                 default:
-                    $this->addFlash('danger', "Numéro étudiant inconnu");
+                    $this->addFlash('danger', $translator->trans("flash.numetud_wrong"));
                     return $this->redirectToRoute('inscription');
                     break;
             }
@@ -141,7 +142,7 @@ class EleveController extends AbstractController
             }
             else {
                 $user->setImageName('personne_lambda.png');
-                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/personne_lambda.png');
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/images/personne_lambda.png');
                 $user->setImageSize($size);
             }
             $token = uniqid('', true);
@@ -160,7 +161,7 @@ class EleveController extends AbstractController
                 "token" => $token
             ]);
             $mailer->send($message);
-            $this->addFlash('info', "Un mail de confirmation vous a été envoyé, Verifiez vos spams");
+            $this->addFlash('info', $translator->trans("flash.mail_valid"));
             return $this->redirectToRoute('accueil');
         }
         return $this->render('eleve/inscription_eleve.html.twig', [
@@ -169,7 +170,7 @@ class EleveController extends AbstractController
     }
     
     #[Route("/validation/{token}", name: "validation")]
-    public function validation(String $token, UserRepository $urp): Response
+    public function validation(String $token, UserRepository $urp, TranslatorInterface $translator): Response
     {
         $user = $urp->findOneBy(['token' => $token]);
         if ($user) {
@@ -178,19 +179,19 @@ class EleveController extends AbstractController
             $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', 'Votre compte a été validé');
+            $this->addFlash('success', $translator->trans("flash.compte_valid"));
             return $this->redirectToRoute('connexion');
         }
-        $this->addFlash('danger', 'Votre compte n\'a pas été validé');
+        $this->addFlash('danger', $translator->trans("flash.compte_non_valid"));
         return $this->redirectToRoute('accueil');
     }
 
     #[Route ("/presentation/eleve/{nom}/{prenom}/{id}", name: "front_eleve")]
-    public function presentationEleve(String $nom, String $prenom, int $id, UserRepository $urp): Response
+    public function presentationEleve(String $nom, String $prenom, int $id, UserRepository $urp, TranslatorInterface $translator): Response
     {   
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
+            $this->addFlash('warning', $translator->trans("flash.no_connect"));
             return $this->redirectToRoute('connexion');
         }
         $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 2, "id" => $id]);
@@ -198,7 +199,7 @@ class EleveController extends AbstractController
             $eleve = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 3, "id" => $id]);
         }
         if (!$eleve) {
-            $this->addFlash('danger', 'Élève non trouvé');
+            $this->addFlash('danger', $translator->trans("flash.student_not_found"));
             return $this->redirectToRoute('accueil');
         }
         return $this->render('eleve/presentation_eleve.html.twig', [
@@ -207,11 +208,11 @@ class EleveController extends AbstractController
     }
 
     #[Route ("/liste/eleve/{page<\d+>?1}", name: "front_liste_eleve")]
-    public function listeEleve(UserRepository $urp, PaginatorInterface $paginator,int $page, Request $request): Response
+    public function listeEleve(UserRepository $urp, PaginatorInterface $paginator,int $page, Request $request, TranslatorInterface $translator): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
+            $this->addFlash('warning', $translator->trans("flash.no_connect"));
             return $this->redirectToRoute('connexion');
         }
         $eleves = $urp->findBy(['type' => 2]);
@@ -238,14 +239,14 @@ class EleveController extends AbstractController
     }
 
     #[Route('/compte/eleve/modifier', name: 'eleve_modifier')]
-    public function editEleve(Request $request, EntityManagerInterface $eM): Response
+    public function editEleve(Request $request, EntityManagerInterface $eM, TranslatorInterface $translator): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
         else if ($user->getType() != 2 && $user->getType() != 3){
-            $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
+            $this->addFlash('danger', $translator->trans("flash.not_access"));
             return $this->redirectToRoute('compte');
         }
         $form = $this->createForm(UserEleveType::class, $user);
@@ -266,7 +267,7 @@ class EleveController extends AbstractController
             }
             $eM->persist($user);
             $eM->flush();
-            $this->addFlash('success', 'Profil modifié avec succès');
+            $this->addFlash('success', $translator->trans("flash.modf_profil"));
             return $this->redirectToRoute('compte');
         }
         return $this->render('eleve/edit_eleve.html.twig',[
@@ -295,7 +296,7 @@ class EleveController extends AbstractController
     }
 
     #[Route('/reservation', name: 'reservation')]
-    public function reservation(Request $request, SessionRepository $srp): Response
+    public function reservation(Request $request, SessionRepository $srp, TranslatorInterface $translator): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
@@ -315,17 +316,17 @@ class EleveController extends AbstractController
                 $heure = new \DateTime($heures[$key]);
                 $unique = $srp->findUniqueSession($value->getPro()->getId(), $heure, $user->getId());
                 if (count($unique) > 0) {
-                    $this->addFlash('danger', 'Vous avez déjà un rendez-vous à cette heure : '.$heure->format('H:i')." avec ce professionnel");
+                    $this->addFlash('danger', $translator->trans("flash.rdvalreadywithpro") . $heure->format("H:i:s")) ;
                     return $this->redirectToRoute('reservation');
                 }
                 $uniquerdv = $srp->findUniqueSessionProEleve($value->getPro()->getId(), $user->getId());
                 if (count($uniquerdv) > 0) {
-                    $this->addFlash('danger', 'Vous avez déjà un rendez-vous avec ce professionnel');
+                    $this->addFlash('danger', $translator->trans("flash.rdvalreadytake"));
                     return $this->redirectToRoute('reservation');
                 }
                 $allrdv = $srp->findAllSessionProForOneHour($value->getPro()->getId(), $heure);
                 if (count($allrdv) >= $this->getMaxPlaceRDV()) {
-                    $this->addFlash('danger', 'Ce professionnel est déjà complet à cette heure');
+                    $this->addFlash('danger', $translator->trans("flash.rdvfull"));
                     return $this->redirectToRoute('reservation');
                 }
                 $value->setEleve($user);

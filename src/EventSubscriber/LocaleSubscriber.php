@@ -2,19 +2,16 @@
 
 namespace App\EventSubscriber;
 
-use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
+    // Langue par défaut
     private $defaultLocale;
 
-    public function __construct(string $defaultLocale = 'fr')
+    public function __construct($defaultLocale = 'fr')
     {
         $this->defaultLocale = $defaultLocale;
     }
@@ -26,19 +23,19 @@ class LocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // Utilisez la locale définie dans la session de l'utilisateur s'il en existe une
-        if ($locale = $request->getSession()->get('_locale')) {
+        // On vérifie si la langue est passée en paramètre de l'URL
+        if ($locale = $request->query->get('_locale')) {
             $request->setLocale($locale);
         } else {
-            // Sinon, utilisez la locale par défaut
-            $request->setLocale($this->defaultLocale);
+            // Sinon on utilise celle de la session
+            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => 'onKernelRequest',
+            KernelEvents::REQUEST => [['onKernelRequest', 20]],
         ];
     }
 }

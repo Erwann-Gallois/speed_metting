@@ -17,3 +17,5 @@ form.filiere : Filière (*)
 form.quest_etud : Décrivez votre projet d'avenir (*)
 form.session : Quel session voudriez vous ? (les places sont limitées) (*) 	
 
+mdp.dif : Les mots de passe ne correspondent pas
+

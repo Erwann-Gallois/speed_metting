@@ -16,3 +16,5 @@ form.img : Profile Picture
 form.filiere : Major (*)
 form.quest_etud : Describe your future project (*)
 form.session : Which session would you like to attend? (places are limited) (*) 
+
+mdp.dif : Password are not the same
