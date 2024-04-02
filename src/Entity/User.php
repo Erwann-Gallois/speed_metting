@@ -15,8 +15,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email.')]
-#[UniqueEntity(fields: ['numetud'], message: 'Il existe déjà un compte avec ce numéro étudiant.')]
+#[UniqueEntity(fields: ['email'], message: 'entity.unique_email')]
+#[UniqueEntity(fields: ['numetud'], message: 'entity.unique_numetud')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -88,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $sessions;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Length(min: 8, max: 8, exactMessage: "Le numéro étudiant doit contenir 8 chiffres.",)]
+    #[Assert\Length(min: 8, max: 8, exactMessage: "assert.length_num_etud",)]
     private ?int $numetud = null;
 
     public function __construct()

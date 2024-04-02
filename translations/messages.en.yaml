@@ -1,14 +1,11 @@
-Nom Complet : Full Name
-Email : Email
-Sujet : Subject
-Message : Message
-
+# ---------------------------------------------------------------------------- #
+#                                  Formulaire                                  #
+# ---------------------------------------------------------------------------- #
 form.nom : Lastname (*)
 form.prenom : Firstname (*)
 form.mail : Email (*)
 form.poste : Job Title (*)
 form.entreprise : Company (*)
-
 form.mdp1 : Password (*)
 form.mdp2 : Confirm Password (*)
 form.numetud : Student Number (*)
@@ -16,5 +13,51 @@ form.img : Profile Picture
 form.filiere : Major (*)
 form.quest_etud : Describe your future project (*)
 form.session : Which session would you like to attend? (places are limited) (*) 
+Nom Complet : Full Name
+Email : Email
+Sujet : Subject
+Message : Message
+label.delete_img : Delete the image
+help.size_img : The image must be less than 8Mo
+form.last_mdp : Last password
+form.new_mdp : New password
+form.new_repeat_mdp : Repeat new password
+form.quest_pro1 : What do you love about your job?
+form.quest_pro2 : Studys
+label.download : Download the image
+# ---------------------------------------------------------------------------- #
+#                            Contrainte Formulaire :                           #
+# ---------------------------------------------------------------------------- #
+form.constraint.new_mdp.limit : The password must contain at least {{limit}} characters
+form.constraint.new_mdp.notblank : The password cannot be empty
+form.contraint.mdp1.limit : The password must contain at least {{limit}} characters
+form.contraint.mdp1.not_blank : The password cannot be empty
 
-mdp.dif : Password are not the same
+# ---------------------------------------------------------------------------- #
+#                                  Controller                                  #
+# ---------------------------------------------------------------------------- #
+flash.compte_non_valid  : Your account is not validated yet
+flash.compte_valid : Your account is now validated and you can now log in
+flash.mail_valid : We have sent you an email to validate your account, verify your spam folder
+flash.mdp_dif : Passwords do not match
+flash.modf_profil : Profile modified
+flash.no_connect : You must be connected to access this page
+flash.not_access : You do not have the right to access at this page
+flash.numetud_wrong : Student number is incorrect
+flash.rdvalreadytake : You have already registered with this profesionnal
+flash.rdvalreadywithpro : You have already registered a meeting with this profesionnal at this hour - 
+flash.rdvfull : This profesionnal is already full at this hour
+flash.rdvgood : Your meeting is registered
+flash.session_complet : This session is full
+flash.student_not_found : Student not found
+flash.supp_compte : Your account has been deleted
+flash.pro_not_found : Professional not found
+flash_compte_pro_creer : Professional account created
+flash.send_mail : The email has been sent
+
+# ---------------------------------------------------------------------------- #
+#                               Contrainte Entity                              #
+# ---------------------------------------------------------------------------- #
+assert.length_num_etud : The student number must contain 8 digits
+entity.unique_email : This email is already used
+entity.unique_numetud : This student number is already used

@@ -16,32 +16,32 @@ class UserEleveType extends AbstractType
     {
         $builder
         ->add('nom' , TextType::class, [
-                'label' => 'Nom',
+                'label' => 'form.nom',
                 'attr' => [
-                    'placeholder' => 'Nom'
+                    'placeholder' => 'form.nom'
                 ]
             ])
         ->add("filiere", TextType::class, [
-                'label' => "Filière",
+                'label' => "form.filiere",
                 'attr' => [
-                    'placeholder' => "Filière"
+                    'placeholder' => "form.filiere"
                 ],
                 "required" => false,
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'form.prenom',
                 'attr' => [
-                    'placeholder' => 'Prénom'
+                    'placeholder' => 'form.prenom'
                 ],
                 "required" => false,
             ])
             ->add('imageFile', VichFileType::class, [
-                'label' => 'Image de profil',
+                'label' => 'form.img',
                 'attr' => [
-                    'placeholder' => 'Image de profil'
+                    'placeholder' => 'form.img'
                 ],
                 "allow_delete" => true,
-                "download_label" => "Télécharger",
+                "download_label" => "label.download",
                 "download_uri" => true,
                 // "image_uri" => true,
                 // "imagine_pattern" => "squared_thumbnail_small",
@@ -49,9 +49,9 @@ class UserEleveType extends AbstractType
                 "mapped" => false,
             ])
             ->add('question', TextareaType::class, [
-                'label' => "Decrivez votre projet d'avenir",
+                'label' => "form.quest_etud",
                 'attr' => [
-                    'placeholder' => "Decrivez votre projet d'avenir",
+                    'placeholder' => "form.quest_etud",
                     'class' => "form-control",
                     'rows' => 5,
                 ],

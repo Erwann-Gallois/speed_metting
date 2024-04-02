@@ -1,21 +1,63 @@
-Nom Complet : Nom complet
-Email : Email
-Sujet : Sujet
-Message : Message
-
+# ---------------------------------------------------------------------------- #
+#                                  Formulaire                                  #
+# ---------------------------------------------------------------------------- #
 form.nom : Nom (*)
 form.prenom : Prénom (*)
 form.mail : Email (*)
-form.poste : Intitulé du Poste (*)
+form.poste : Intitulé du poste (*)
 form.entreprise : Entreprise (*)
-
 form.mdp1 : Mot de passe (*)
-form.mdp2 : Confirmer le mot de passe (*)
+form.mdp2 : Confirmation du mot de passe (*)
 form.numetud : Numéro étudiant (*)
-form.img : Photo de profil 
+form.img : Image de profil
 form.filiere : Filière (*)
 form.quest_etud : Décrivez votre projet d'avenir (*)
-form.session : Quel session voudriez vous ? (les places sont limitées) (*) 	
+form.session : Quelle session voudriez vous ? (les places sont limitées) (*)
+Nom Complet : Nom Complet
+Email : Email
+Sujet : Sujet
+Message : Message
+label.delete_img : Supprimer l'image
+help.size_img : L'image doit faire moins de 8Mo
+form.last_mdp : Ancien mot de passe
+form.new_mdp : Nouveau mot de passe
+form.new_repeat_mdp : Répéter le nouveau mot de passe
+form.quest_pro1 : Qu'est-ce qui vous passionne dans votre métier ?
+form.quest_pro2 : Etudes
+label.download : Télécharger l'image
+# ---------------------------------------------------------------------------- #
+#                            Contrainte Formulaire :                           #
+# ---------------------------------------------------------------------------- #
+form.constraint.new_mdp.limit : Le mot de passe doit contenir au moins {{limit}} caractères
+form.constraint.new_mdp.notblank : Le mot de passe ne peut pas être vide
+form.contraint.mdp1.limit : Le mot de passe doit contenir au moins {{limit}} caractère
+form.contraint.mdp1.not_blank : Le mot de passe ne peut pas être vide
 
-mdp.dif : Les mots de passe ne correspondent pas
+# ---------------------------------------------------------------------------- #
+#                                  Controller                                  #
+# ---------------------------------------------------------------------------- #
+flash.compte_non_valid  : Votre compte n'est pas encore validé
+flash.compte_valid : Votre compte est maintenant validé et vous pouvez vous connecter
+flash.mail_valid : Nous vous avons envoyé un mail pour valider votre compte, vérifiez votre dossier spam
+flash.mdp_dif : Les mots de passe ne correspondent pas
+flash.modf_profil : Profil modifié
+flash.no_connect : Vous devez être connecté pour accéder à cette page
+flash.not_access : Vous n'avez pas le droit d'accéder à cette page
+flash.numetud_wrong : Le numéro étudiant est incorrect
+flash.rdvalreadytake : Vous avez déjà enregistré un rendez vous avec ce profesionnel
+flash.rdvalreadywithpro : Vous avez déjà enregistré un rendez vous avec ce profesionnel à cette heure - 
+flash.rdvfull : Ce profesionnel est déjà complet à cette heure
+flash.rdvgood : Votre rendez vous est enregistré
+flash.session_complet : Cette session est complète
+flash.student_not_found : Etudiant non trouvé
+flash.supp_compte : Votre compte a été supprimé
+flash.pro_not_found : Profesionnel non trouvé
+flash_compte_pro_creer : Compte profesionnel créé
+flash.send_mail : L'email a été envoyé
 
+# ---------------------------------------------------------------------------- #
+#                               Contrainte Entity                              #
+# ---------------------------------------------------------------------------- #
+assert.length_num_etud : Le numéro étudiant doit contenir 8 chiffres
+entity.unique_email : Cet email est déjà utilisé
+entity.unique_numetud : Ce numéro étudiant est déjà utilisé

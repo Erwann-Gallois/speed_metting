@@ -12,11 +12,11 @@ class LangageController extends AbstractController
 {
     #[Route('/change-langage/{locale}', name: 'change_langage')]
     public function changeLocale($locale, Request $request)
-{
-    // On stocke la langue dans la session
-    $request->getSession()->set('_locale', $locale);
+    {
+        // On stocke la langue dans la session
+        $request->getSession()->set('_locale', $locale);
 
-    // On revient sur la page précédente
-    return $this->redirectToRoute("accueil");
-}
+        // On revient sur la page précédente
+        return $this->redirectToRoute("accueil");
+    }
 }

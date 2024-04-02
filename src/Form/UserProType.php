@@ -16,33 +16,33 @@ class UserProType extends AbstractType
     {
         $builder
             ->add('nom' , TextType::class, [
-                'label' => 'Nom',
+                'label' => 'form.nom',
                 'attr' => [
-                    'placeholder' => 'Nom'
+                    'placeholder' => 'form.nom'
                 ]
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'form.prenom',
                 'attr' => [
-                    'placeholder' => 'Prénom'
+                    'placeholder' => 'form.prenom'
                 ]
             ])
             ->add('question', TextareaType::class, [
-                'label' => "Qu'est-ce qui vous passionne dans votre métier ?",
+                'label' => "form.quest_pro1",
                 'attr' => [
-                    'placeholder' => "Qu'est-ce qui vous passionne dans votre métier ?",
+                    'placeholder' => "form.quest_pro1",
                     'class' => "form-control",
                     'rows' => 5,
                 ],
                 // 'required' => false,
             ])
             ->add("imageFile", VichFileType::class, [
-                "label" => "Image de profil",
+                "label" => "form.img",
                 "attr" => [
-                    "placeholder" => "Image de profil"
+                    "placeholder" => "form.img"
                 ],
                 "allow_delete" => true,
-                "download_label" => "Télécharger",
+                "download_label" => "label.download",
                 "download_uri" => true,
                 // "image_uri" => true,
                 // "imagine_pattern" => "squared_thumbnail_small",
@@ -50,22 +50,22 @@ class UserProType extends AbstractType
                 "mapped" => false,
             ])
             ->add('entreprise', TextType::class, [
-                'label' => 'Entreprise',
+                'label' => 'form.entreprise',
                 'attr' => [
-                    'placeholder' => 'Entreprise'
+                    'placeholder' => 'form.entreprise'
                 ]
             ])
             ->add('etude', TextareaType::class, [
-                'label' => 'Etude',
+                'label' => 'form.quest_pro2',
                 'attr' => [
-                    'placeholder' => 'Etude',
+                    'placeholder' => 'form.quest_pro2',
                     'rows' => 5
                 ]
             ])
             ->add('poste', TextType::class, [
-                'label' => 'Poste',
+                'label' => 'form.poste',
                 'attr' => [
-                    'placeholder' => 'Poste'
+                    'placeholder' => 'form.poste'
                 ]
             ])
         ;

@@ -22,54 +22,54 @@ class RegistrationProFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => "Nom (*)",
+                'label' => "form.nom",
                 "required" => true,
             ])
             ->add('prenom', TextType::class, [
-                'label' => "Prénom (*)",
+                'label' => "form.prenom",
                 "required" => true,
             ])
             ->add("email", EmailType::class, [
-                "label" => "Email (*)",
+                "label" => "form.mail",
                 "required" => true
             ])
             ->add('entreprise', TextType::class, [
-                "label" => "Nom de l'entreprise (*)",
+                "label" => "form.entreprise",
                 "required" => true,
             ])
             ->add('poste', TextType::class, [
-                "label" => "Intitulé du poste (*)",
+                "label" => "form.poste",
                 "required"=> false
             ])
             ->add('plainPassword1', PasswordType::class, [
-                'label' => 'Mot de Passe (*)', 
+                'label' => 'form.mdp1', 
                 'attr' => ['id' => 'new-password'],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer un mot de passe',
+                        'message' => 'form.contraint.mdp1.not_blank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'form.contraint.mdp1.limit',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
             ->add('plainPassword2', PasswordType::class, [
-                'label' => 'Mot de Passe (*)', 
+                'label' => 'form.mdp2', 
                 'attr' => ['id' => 'repeat-password'],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer un mot de passe',
+                        'message' => 'form.contraint.mdp1.not_blank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'form.contraint.mdp1.limit',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -78,28 +78,28 @@ class RegistrationProFormType extends AbstractType
             ->add("imageFile", VichImageType::class, 
             [
                 'label' => 'Photo de profil',
-                'help' => 'Taille maximum : 8Mo',	
+                'help' => 'help.size_img',	
                 'required' => false,
                 'allow_delete' => true,
                 'download_uri' => false,
                 'image_uri' => false,
-                'delete_label' => 'Supprimer la photo',
+                'delete_label' => 'label.delete_img',
                 "required" => false,
                 "mapped" => false,
             ])
             ->add('question', TextareaType::class, [
-                'label' => "Qu'est-ce qui vous passionne dans votre métier ? (*)",
+                'label' => "form.quest_pro1",
                 'attr' => [
-                    'placeholder' => "Qu'est-ce qui vous passionne dans votre métier ?",
+                    'placeholder' => "form.quest_pro1",
                     'class' => "form-control",
                     'rows' => 5,
                 ],
                 'required' => true,
             ])
             ->add("etude", TextareaType::class, [
-                "label" => "Quel est votre parcours d'étude ? (*)",
+                "label" => "form.quest_pro2",
                 "attr" => [
-                    "placeholder" => "Quel est votre parcours d'étude ?",
+                    "placeholder" => "form.quest_pro2",
                     "class" => "form-control",
                     "rows" => 5,
                 ],
@@ -107,7 +107,7 @@ class RegistrationProFormType extends AbstractType
             ])
             
             ->add("valid", CheckboxType::class, [
-                "label" => "Je valide mes réponses et les champs sont correctement remplis (*)",
+                "label" => "label.valid_info",
                 "required" => true,
                 "mapped" => false,
             ])

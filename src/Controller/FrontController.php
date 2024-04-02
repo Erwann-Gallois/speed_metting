@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FrontController extends AbstractController
 {
@@ -53,8 +54,8 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/{_locale}/contact/{nom}/{email}/{sujet}/{message}', name: 'mail_contact')]
-    public function contact(String $nom, String $email, String $sujet, String $message, MailerInterface $mailer): Response
+    #[Route('/contact/{nom}/{email}/{sujet}/{message}', name: 'mail_contact')]
+    public function contact(String $nom, String $email, String $sujet, String $message, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
         $message = (new TemplatedEmail())
             ->from($email)
@@ -70,11 +71,11 @@ class FrontController extends AbstractController
                 'message' => $message
             ]);
         $mailer->send($message);
-        $this->addFlash('success', 'Votre message a été envoyé');
+        $this->addFlash('success', $translator->trans('flash.send_mail'));
         return $this->redirectToRoute('accueil');
     }
 
-    #[Route('/{_locale}/organisation', name: 'organisation')]
+    #[Route('/organisation', name: 'organisation')]
     public function organisation(): Response
     {
         $filesystem = new Filesystem();
@@ -91,7 +92,7 @@ class FrontController extends AbstractController
     }
 
 
-    #[Route("/{_locale}/contact", name: "contact")]
+    #[Route("/contact", name: "contact")]
     public function page_contact(Request $request): Response
     {   
         $form = $this->createForm(ContactFormType::class, null, ['method' => 'POST']);
@@ -112,7 +113,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route("/{_locale}/nous-trouvez", name: "carte")]
+    #[Route("/nous-trouvez", name: "carte")]
     public function carte(): Response
     {
         return $this->render('front/carte.html.twig');
@@ -134,7 +135,7 @@ class FrontController extends AbstractController
         }
     }
 
-    #[Route("/{_locale}/compte/planning", name: "planning")]
+    #[Route("/compte/planning", name: "planning")]
     public function redirection_planning():Response
     {
         $user = $this->security->getUser();

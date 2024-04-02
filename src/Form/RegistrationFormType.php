@@ -51,11 +51,11 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer un mot de passe',
+                        'message' => 'form.contraint.mdp1.not_blank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'form.contraint.mdp1.limit',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -68,11 +68,11 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer un mot de passe',
+                        'message' => 'form.contraint.mdp1.not_blank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'form.contraint.mdp1.limit',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -89,12 +89,12 @@ class RegistrationFormType extends AbstractType
             ->add("imageFile", VichImageType::class, 
             [
                 'label' => 'form.img',
-                'help' => 'Taille maximum : 8Mo',	
+                'help' => 'help.size_img',	
                 'required' => false,
                 'allow_delete' => true,
                 'download_uri' => false,
                 'image_uri' => false,
-                'delete_label' => 'Supprimer la photo',
+                'delete_label' => 'label.delete_img',
                 "required" => false,
                 "mapped" => false,
             ])

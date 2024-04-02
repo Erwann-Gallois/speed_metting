@@ -335,7 +335,7 @@ class EleveController extends AbstractController
                 $em->persist($value);
                 $em->flush();
             }
-            $this->addFlash('success', 'Rendez-vous enregistré');
+            $this->addFlash('success', $translator->trans("flash.rdvgood"));
             return $this->redirectToRoute('accueil');
         }
         return $this->render('eleve/reservation.html.twig', [
@@ -346,7 +346,7 @@ class EleveController extends AbstractController
     }
 
     #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_eleve_front")]
-    public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp, Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage): Response
+    public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp, Request $request, TranslatorInterface $translator, EntityManagerInterface $em, TokenStorageInterface $tokenStorage): Response
     {
         $eleve = $urp->findOneBy(['id' => $id, 'type' => 2, 'nom' => $nom, 'prenom' => $prenom]);
         if (!$eleve) {
@@ -373,7 +373,7 @@ class EleveController extends AbstractController
         }
         $em->remove($eleve);
         $em->flush();
-        $this->addFlash("success", "Le compte a été supprimé.");
+        $this->addFlash("success", $translator->trans("flash.supp_compte"));
         // Redirection vers l'accueil ou une page de confirmation
         return $this->redirectToRoute("accueil");
     }

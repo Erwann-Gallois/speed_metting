@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -29,16 +30,16 @@ class ProfessionnelController extends AbstractController
     }
 
     #[Route("/presentation/professionnel/{nom}/{prenom}/{id}", name: "front_pro")]
-    public function presentationProfessionnel(String $nom, String $prenom, int $id, UserRepository $urp): Response
+    public function presentationProfessionnel(String $nom, String $prenom, int $id, UserRepository $urp, TranslatorInterface $transaltor): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
+            $this->addFlash('warning', $transaltor->trans("flash.no_connect"));
             return $this->redirectToRoute('connexion');
         }
         $pro = $urp->findOneBy(['nom' => $nom, 'prenom' => $prenom, "type" => 1, "id" => $id]);
         if ($pro === null) {
-            throw $this->createNotFoundException('Professionnel non trouvé');
+            throw $this->createNotFoundException($transaltor->trans("flash.pro_not_found"));
         }
         return $this->render('professionnel/presentation_professionnel.html.twig', [
             'pro' => $pro
@@ -47,11 +48,11 @@ class ProfessionnelController extends AbstractController
 
     
     #[Route ("/liste/professionnel", name: "liste_pro")]
-    public function listePro(UserRepository $urp): Response
+    public function listePro(UserRepository $urp, TranslatorInterface $transaltor): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page');
+            $this->addFlash('warning', $transaltor->trans("flash.no_connect"));
             return $this->redirectToRoute('connexion');
         }
         $pros = $urp->findBy(['type' => 1, "info_valid" => 1]);
@@ -61,7 +62,7 @@ class ProfessionnelController extends AbstractController
     }
 
     #[Route ("inscription/pro/{token}", name : "inscription_pro")]
-    public function inscriptionPro (String $token, Request $request,  UserRepository $urp, UserPasswordHasherInterface $hasher)
+    public function inscriptionPro (String $token, Request $request,  UserRepository $urp, UserPasswordHasherInterface $hasher, TranslatorInterface $transaltor)
     {
         $user = $urp->findOneBy(['token' => $token]);
         $form = $this->createForm(RegistrationProFormType::class, $user);
@@ -70,7 +71,7 @@ class ProfessionnelController extends AbstractController
             $user->setInfoValid(true);
             $user->setToken("");
             if ($form->get('plainPassword1')->getData() != $form->get('plainPassword2')->getData()) {
-                $this->addFlash('danger', "Les mots de passe ne correspondent pas");
+                $this->addFlash('danger', $transaltor->trans("flash.mdp_dif"));
                 return $this->redirectToRoute('inscription');
             }
             $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
@@ -84,13 +85,13 @@ class ProfessionnelController extends AbstractController
             }
             else {
                 $user->setImageName('personne_lambda.png');
-                $size = filesize($this->getParameter('kernel.project_dir').'/public/image_profil/personne_lambda.png');
+                $size = filesize($this->getParameter('kernel.project_dir').'/public/images/personne_lambda.png');
                 $user->setImageSize($size);
             }
             $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', 'Votre compte a bien été créé, vous pouvez vous connecter');
+            $this->addFlash('success', $transaltor->trans('flash_compte_pro_creer'));
             return $this->redirectToRoute('connexion');
         }
         return $this->render('professionnel/inscription_pro.html.twig', [
@@ -116,7 +117,7 @@ class ProfessionnelController extends AbstractController
 
     #[Route('/compte/pro/modifier', name: 'pro_modifier')]
     #[IsGranted('ROLE_PROFESSIONNEL')]
-    public function editPro(Request $request, EntityManagerInterface $eM): Response
+    public function editPro(Request $request, EntityManagerInterface $eM, TranslatorInterface $transaltor): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
@@ -142,7 +143,7 @@ class ProfessionnelController extends AbstractController
             }
             $eM->persist($user);
             $eM->flush();
-            $this->addFlash('success', 'Profil modifié avec succès');
+            $this->addFlash('success', $transaltor->trans("flash.modf_profil"));
             return $this->redirectToRoute('compte');
         }
         return $this->render('professionnel/edit_pro.html.twig',[
@@ -176,12 +177,12 @@ class ProfessionnelController extends AbstractController
     }
 
     #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_pro_front")]
-    public function supprimerPro(int $id, String $nom, String $prenom, UserRepository $urp, Request $request, TokenStorageInterface $tokenStorage): Response
+    public function supprimerPro(int $id, String $nom, String $prenom, UserRepository $urp, Request $request, TokenStorageInterface $tokenStorage, TranslatorInterface $translator): Response
     {
         $em = $this->doctrine->getManager();
         $pro = $urp->findOneBy(['id' => $id, 'type' => 1, 'nom' => $nom, 'prenom' => $prenom]);
         if (!$pro) {
-            $this->addFlash("error", "Professionnel non trouvé.");
+            $this->addFlash("error", $translator->trans("flash.pro_not_found"));
             return $this->redirectToRoute("accueil");
         }
         // Avant la suppression, déconnectez l'utilisateur si c'est l'utilisateur actuellement connecté
@@ -200,7 +201,7 @@ class ProfessionnelController extends AbstractController
         }
         $em->remove($pro);
         $em->flush();
-        $this->addFlash("success", "Votre compte a été supprimé");
+        $this->addFlash("success", $translator->trans("flash.supp_compte"));
         return $this->redirectToRoute("accueil");
     }
 }

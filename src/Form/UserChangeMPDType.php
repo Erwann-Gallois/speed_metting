@@ -17,40 +17,40 @@ class UserChangeMPDType extends AbstractType
     {
         $builder
             ->add('ancien_mdp', PasswordType::class, [
-                'label' => 'Ancien mot de passe',
+                'label' => 'form.last_mdp',
                 'attr' => [
-                    'placeholder' => 'Ancien mot de passe'
+                    'placeholder' => 'form.last_mdp'
                 ],
             ])
             ->add('plainPassword1', PasswordType::class, [
-                'label' => 'Nouveau Mot de Passe', 
+                'label' => 'form.new_mdp', 
                 'attr' => ['id' => 'new-password'],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer le nouveau mot de passe',
+                        'message' => 'form.constraint.new_mdp.notblank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'form.constraint.new_mdp.limit',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
             ->add('plainPassword2', PasswordType::class, [
-                'label' => 'Répéter le nouveau mot de passe',
+                'label' => 'form.new_repeat_mdp',
                 'attr' => ['id' => 'repeat-password'],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer un mot de passe',
+                        'message' => 'form.constraint.new_mdp.notblank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'form.constraint.new_mdp.limit',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
