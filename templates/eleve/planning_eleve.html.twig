@@ -1,16 +1,16 @@
 {% extends "base.html.twig" %}
-{% block title %}Planning : {{ user.nom }} {{ user.prenom }}{% endblock %}
+{% block title %}{{'template.planning'|trans}} : {{ user.nom }} {{ user.prenom }}{% endblock %}
 {% block body %}
 <section class="section-padding">
     <div class="container">
-        <h1 class="text-center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <h1 class="text-center">{{'template.planning'|trans}} : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
         <table class = "table table-hover table-striped  table-bordered">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">Heure</th>
-                    <th scope="col">Professionnel (Nom Prenom - Poste)</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">{{'template.heure'|trans}}</th>
+                    <th scope="col">{{'template.pro'|trans}}</th>
+                    <th scope="col">{{'template.action'|trans}}</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -19,9 +19,7 @@
                     <td>{{ session.heure|date('H:i') }}</td>
                     <td>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</td>
                     <td>
-                        <a href="" class="btn btn-sm btn-success" title = "Voir la fiche du professionnel"><i class = "bi bi-eye-fill"></i></a>
-                        <a href="#" data-url = "{{path ('supp_reservation', {id : session.id})}}" class="btn btn-sm btn-info" title = "Modifier la session" onclick="confirmDeletion2(this);" class="link-danger" title="Supprimer"><i class="bi bi-pen-fill"></i></a>
-                        {# <a href="" class="btn btn-sm btn-danger">Supprimer</a> #}
+                        <a href="" class="btn btn-sm btn-success" title = "{{'template.voir_planning'|trans}}"><i class = "bi bi-eye-fill"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -30,12 +28,4 @@
         <a href="{{path ('impression_planning_eleve', {id : user.id, nom : user.nom, prenom : user.prenom})}}" role = 'button' class = "btn btn-info btn-sm" target = "_blank"><i class="bi bi-printer-fill"></i></a>
     </div>
 </section>
-<script>
-    function confirmDeletion(element) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce rendez-vous ?")) {
-            var url = element.getAttribute('data-url');
-            window.location.href = url;
-        }
-    }
-</script>
 {% endblock %}

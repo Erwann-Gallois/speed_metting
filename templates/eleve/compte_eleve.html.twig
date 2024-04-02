@@ -1,36 +1,36 @@
 {% extends "base.html.twig" %}
-{% block title %}Profil : {{ user.nom }} {{ user.prenom }}{% endblock %}
+{% block title %}{{"template.profil"|trans}} : {{ user.nom }} {{ user.prenom }}{% endblock %}
 {% block body %}
 <section class="section-padding">
     <div class="container">
         {% include "flash_message.html.twig" %}
-        <h1 class="text-center">Profil : {{ user.nom }} {{ user.prenom }}</h1>
+        <h1 class="text-center">{{"template.profil"|trans}} : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
         <div class='row justify-content-center'>
             <div class='col-3'>
-                <a href="{{path ('eleve_modifier')}}" class="btn btn-sm btn-primary">Modifier mon profil</a>
+                <a href="{{path ('eleve_modifier')}}" class="btn btn-sm btn-primary">{{'template.modif_profil'|trans}}</a>
             </div>
             <div class='col-3'>
-                <a href="{{path ('eleve_changer_mdp')}}" class="btn btn-sm btn-primary">Modifier mon mot de passe</a>
+                <a href="{{path ('eleve_changer_mdp')}}" class="btn btn-sm btn-primary">{{'template.modif_mdp'|trans}}</a>
             </div>
             <div class='col-3'>
                 <a href = "#" data-url="{{path ('supprimer_eleve_front', {id : user.id, nom : user.nom, prenom : user.prenom})}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">Supprimer mon compte</a>
             </div>
         </div>
         <hr />
-        <h2 class="text-center">Présentation</h2>
+        <h2 class="text-center">{{"template.info_gene"|trans}}</h2>
         <hr />
         <div class="row">
             <div class="col-md-8 text-center align-self-center">
-                <p><strong>Nom :</strong> {{ user.nom }}</p>
-                <p><strong>Prénom :</strong> {{ user.prenom }}</p>
-                <p><strong>Email :</strong> {{ user.email }}</p>
-                <p><strong>Filiere :</strong> {{ user.filiere }}</p>
-                <p><strong>Session :</strong> {{ user.session }}</p>
+                <p><strong>{{"template.nom"|trans}} : </strong> {{ user.nom }}</p>
+                <p><strong>{{"template.prenom"|trans}} :</strong> {{ user.prenom }}</p>
+                <p><strong>{{"template.mail"|trans}} :</strong> {{ user.email }}</p>
+                <p><strong>{{"template.filiere"|trans}} :</strong> {{ user.filiere }}</p>
+                <p><strong>{{"template.session"|trans}} :</strong> {{ user.session }}</p>
                 {# <p><strong>Entreprise :</strong> {{ user.entreprise }}</p> #}
             </div>
             <div class="col-md-4">
-                <img src="{{ vich_uploader_asset(user) }}" alt="Photo - {{user.nom}} {{user.prenom}}" class="img-fluid">
+                <img src="{{ vich_uploader_asset(user) }}" alt="{{"template.photo"|trans}} - {{user.nom}} {{user.prenom}}" class="img-fluid">
             </div>
         </div>
         {# <hr /> #}
@@ -43,16 +43,17 @@
         <hr />
         <div class='row'>
             <div class='col-12'>
-                <h2 class="text-center">Decrivez votre projet d'avenir</h2>
+                <h2 class="text-center">{{"template.question_etud"|trans}}</h2>
                 <p>{{ user.question | nl2br }}</p>
             </div>
         </div>
     </div>
 </section>
 <script>
+    question = {{'template.confirm_deletion'|trans}}
     function confirmDeletion(element) 
     {
-        if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ?")) {
+        if (confirm(question) {
             var url = element.getAttribute('data-url');
             window.location.href = url;
         }

@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}{{'template.inscription'|trans}}{% endblock %}
 
 {% block body %}
     <section class="contact-section section-padding" id="section_3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="text-center mb-4">Inscription</h2>
+                    <h2 class="text-center mb-4">{{'template.inscription'|trans}}</h2>
                         {% include 'flash_message.html.twig' %}
-                        <p class = "text-center">Les champs avec (*) sont obligatoire</p>
+                        <p class = "text-center">{{"template.obligatoire"|trans}}</p>
                         <div class = "custom-form">
                             <div class = "container">
                                 {{ form_errors(registrationForm) }}
@@ -40,7 +40,7 @@
                                     {{ form_row(registrationForm.question) }}
                                     {{ form_row(registrationForm.imageFile) }}
                                     {# {{ form_row(registrationForm.agreeTerms) }} #}
-                                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                                    <button type="submit" class="btn btn-primary">{{'template.button_inscrit'|trans}}</button>
                                 {{ form_end(registrationForm) }}
                             </div>
                         </div>

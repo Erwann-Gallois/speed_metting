@@ -25,6 +25,7 @@ form.new_repeat_mdp : Repeat new password
 form.quest_pro1 : What do you love about your job?
 form.quest_pro2 : Studys
 label.download : Download the image
+
 # ---------------------------------------------------------------------------- #
 #                            Contrainte Formulaire :                           #
 # ---------------------------------------------------------------------------- #
@@ -44,9 +45,9 @@ flash.modf_profil : Profile modified
 flash.no_connect : You must be connected to access this page
 flash.not_access : You do not have the right to access at this page
 flash.numetud_wrong : Student number is incorrect
-flash.rdvalreadytake : You have already registered with this profesionnal
-flash.rdvalreadywithpro : You have already registered a meeting with this profesionnal at this hour - 
-flash.rdvfull : This profesionnal is already full at this hour
+flash.rdvalreadytake : You have already registered with this professional
+flash.rdvalreadywithpro : You have already registered a meeting with this professional at this hour - 
+flash.rdvfull : This professional is already full at this hour
 flash.rdvgood : Your meeting is registered
 flash.session_complet : This session is full
 flash.student_not_found : Student not found
@@ -61,3 +62,36 @@ flash.send_mail : The email has been sent
 assert.length_num_etud : The student number must contain 8 digits
 entity.unique_email : This email is already used
 entity.unique_numetud : This student number is already used
+
+# ---------------------------------------------------------------------------- #
+#                                Template eleve                                #
+# ---------------------------------------------------------------------------- #
+template.confirm_deletion : Are you sure you want to delete your account ?
+template.filiere : Major
+template.info_gene : General Information
+template.mail : Email
+template.modif_mdp : Modify password
+template.modif_profil : Modify profile
+template.nom : Lastname
+template.photo : Picture
+template.prenom : Firstname
+template.profil : Profile
+template.question_etud : Describe your future project
+template.session : Session
+template.action : Action
+template.button_inscrit : Register
+template.heure : Hours
+template.inscription : Registration
+template.list_eleve : List of students
+template.modifier : Modify
+template.obligatoire : The fields marked with a * are required
+template.planning : Planning
+template.pro : Professional
+template.quest_etud : Describe your future project
+template.resa_button : Book
+template.resa_info1 : Select a hour and an professional (Lastname Firstname - Job Title)
+template.resa_info2 : Choose 6 professionals
+template.reservation : Booking
+template.title_maj_profil : Modify profile
+template.voir : See
+template.voir_planning : See the professional presentation page

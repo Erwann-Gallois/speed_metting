@@ -3,24 +3,24 @@
 {% block body %}
 <section class="section-padding">
     <div class="container">
-        <h2 class="text-center">Présentation</h2>
+        <h2 class="text-center">{{'template.info_gene'|trans}}</h2>
         <a href = "{{path ('impression_fiche_eleve', {nom : eleve.nom, prenom : eleve.prenom, id : eleve.id})}}" role = 'button' class = "btn btn-info btn-sm" target = "_blank"><i class="bi bi-printer-fill"></i></a>
         <hr />
         <div class="row">
             <div class="col-md-8 text-center align-self-center">
-                <p><strong>Nom :</strong> {{ eleve.nom }}</p>
-                <p><strong>Prénom :</strong> {{ eleve.prenom }}</p>
-                <p><strong>Filiere :</strong> {{ eleve.filiere }}</p>
+                <p><strong>{{'template.nom'|trans}} :</strong> {{ eleve.nom }}</p>
+                <p><strong>{{'template.prenom'|trans}} :</strong> {{ eleve.prenom }}</p>
+                <p><strong>{{'template.filiere'|trans}} :</strong> {{ eleve.filiere }}</p>
                 {# <p><strong>Entreprise :</strong> {{ eleve.entreprise }}</p> #}
             </div>
             <div class="col-md-4 align-self-center">
-                <img src="{{vich_uploader_asset(eleve)}}" alt="Photo de l'élève {{eleve.nom}} {{eleve.prenom}}" class="img-fluid" style = "width: 50%;">
+                <img src="{{vich_uploader_asset(eleve)}}" alt="{{'template.photo'|trans}} {{eleve.nom}} {{eleve.prenom}}" class="img-fluid" style = "width: 50%;">
             </div>
         </div>
         <hr />
         <div class='row'>
             <div class='col-12'>
-                <h2 class="text-center">Decrivez votre projet d'avenir</h2>
+                <h2 class="text-center">{{'template.quest_etud'|trans}}</h2>
                 <p>{{ eleve.question | nl2br }}</p>
             </div>
         </div>

@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reservation{% endblock %}
+{% block title %}{{'template.reservation'|trans}}{% endblock %}
 {% block body %}
     <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="text-center">Reservation</h2>
-                    <p class="text-center">Veuillez choisir une heure et un professionnel (nom prenom - intitulé du poste)</p>
-                    <p class="text-center">Il faut choisir 6 professionnels</p>
+                    <h2 class="text-center">{{'template.reservation'|trans}}</h2>
+                    <p class="text-center">{{'template.resa_info1'|trans}}</p>
+                    <p class="text-center">{{'template.resa_info2'|trans}}</p>
                     <div class = "custom-form">
                         <div class = "container">
                             {% include 'flash_message.html.twig'%}
@@ -16,8 +16,8 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Heure</th>
-                                        <th scope="col">Professionnel</th>
+                                        <th scope="col">{{'template.heure'|trans}}</th>
+                                        <th scope="col">{{'template.pro'|trans}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -30,7 +30,7 @@
                                     </tbody>
                                 </table>
                                 <div class="d-grid gap-2 col-3 mx-auto">
-                                    <button type="submit" class = "btn btn-secondary">Réserver</button>
+                                    <button type="submit" class = "btn btn-secondary">{{'template.resa_button'|trans}}</button>
                                 </div>
                             {{ form_end(forms) }}
                         </div>

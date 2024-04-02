@@ -61,3 +61,36 @@ flash.send_mail : L'email a été envoyé
 assert.length_num_etud : Le numéro étudiant doit contenir 8 chiffres
 entity.unique_email : Cet email est déjà utilisé
 entity.unique_numetud : Ce numéro étudiant est déjà utilisé
+
+# ---------------------------------------------------------------------------- #
+#                                Template eleve                                #
+# ---------------------------------------------------------------------------- #
+template.confirm_deletion : Vous êtes sûr de vouloir supprimer votre compte ?
+template.filiere : Filiere
+template.info_gene : Informations générales
+template.mail : Email
+template.modif_mdp : Modifier le mot de passe
+template.modif_profil : Modifier le profil
+template.nom :  Nom
+template.photo : Photo
+template.prenom : Prénom
+template.profil : Profil
+template.question_etud : Décrivez votre projet d'avenir
+template.session : Session
+template.action : Action
+template.button_inscrit : S'incrire
+template.heure : Heure
+template.inscription : Inscription 
+template.list_eleve : Liste des élèves
+template.modifier : Modifier
+template.obligatoire : Les champs marqués d'un * sont obligatoires
+template.planning : Planning
+template.pro : Professionnel
+template.quest_etud : Décrivez votre projet d'avenir
+template.resa_button : Réserver
+template.resa_info1 : Veuillez choisir une heure et un professionnel (nom prenom - intitulé du poste)
+template.resa_info2 : Il faut choisir 6 professionnels
+template.reservation : Réservation
+template.title_maj_profil : Modification du profil
+template.voir : Voir
+template.voir_planning : Voir la fiche du professionnel

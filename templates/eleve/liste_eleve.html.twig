@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
-{% block title %}Liste des Eleves{% endblock %}
+{% block title %}{{'template.list_eleve'|trans}}{% endblock %}
 {% block body %}
     <section class = "section-padding">
         <div class = "container">
-            <h2 class = "text-center">Liste des Eleves</h2>
+            <h2 class = "text-center">{{'template.list_eleve'|trans}}</h2>
             <hr />
             <div class="navigation mbt-4">
                 {{ knp_pagination_render(eleves) }}
@@ -18,7 +18,7 @@
                             <div class = "card-body">
                                 <h5 class = "card-title">{{ eleve.nom }} {{ eleve.prenom }}</h5>
                                 <p class = "card-text">{{ eleve.poste }}</p>
-                                <a href="{{ path('front_eleve', {'id': eleve.id, 'nom' : eleve.nom, "prenom" : eleve.prenom}) }}" class = "btn btn-primary">Voir</a>
+                                <a href="{{ path('front_eleve', {'id': eleve.id, 'nom' : eleve.nom, "prenom" : eleve.prenom}) }}" class = "btn btn-primary">{{'template.voir'|trans}}</a>
                             </div>
                         </div>
                     </div>
