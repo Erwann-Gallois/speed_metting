@@ -95,3 +95,7 @@ template.reservation : Booking
 template.title_maj_profil : Modify profile
 template.voir : See
 template.voir_planning : See the professional presentation page
+
+# ---------------------------------------------------------------------------- #
+#                            Template professionnel                            #
+# ---------------------------------------------------------------------------- #
