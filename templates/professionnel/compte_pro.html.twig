@@ -1,50 +1,50 @@
 {% extends "base.html.twig" %}
-{% block title %} Profil : {{ user.nom }} - {{ user.prenom }}{% endblock %}
+{% block title %} {{'template.profil'|trans}} : {{ user.nom }} - {{ user.prenom }}{% endblock %}
 {% block body %}
 <section class = "section-padding">
     <div class="container">
         {% include "flash_message.html.twig" %}
-        <h1 class="text-center">Profil : {{ user.nom }} - {{ user.prenom }}</h1>
+        <h1 class="text-center">{{'template.profil'|trans}} : {{ user.nom }} - {{ user.prenom }}</h1>
         <hr />
             <div class="container">
                 <div class="row justify-content-center align-items-center">
                     <div class='col-lg-4 col-md-12'>
-                        <a href="{{path ('pro_modifier')}}" class="btn btn-sm btn-primary">Modifier son profil</a>
+                        <a href="{{path ('pro_modifier')}}" class="btn btn-sm btn-primary">{{'template.modif_profil'|trans}}</a>
                     </div>
                     <div class='col-lg-4 col-md-12 align-self-center'>
-                        <a href="{{path ('pro_changer_mdp')}}" role = "button" class="btn btn-sm btn-secondary">Modifier mot de passe</a>
+                        <a href="{{path ('pro_changer_mdp')}}" role = "button" class="btn btn-sm btn-secondary">{{'template.modif_mdp'|trans}}</a>
                     </div>
                     <div class='col-lg-4 col-md-12'>
-                        <a href = "#" data-url="{{path ('supprimer_pro_front',{ id : user.id, nom : user.nom, prenom : user.prenom})}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">Supprimer son compte</a>
+                        <a href = "#" data-url="{{path ('supprimer_pro_front',{ id : user.id, nom : user.nom, prenom : user.prenom})}}" onclick="confirmDeletion(this);" class="btn btn-sm btn-danger">{{'template.delete_compte'|trans}}</a>
                     </div>
                 </div>
             </div>
         <hr />
-        <h2 class="text-center">Présentation</h2>
+        <h2 class="text-center">{{'template.info_gene'|trans}}</h2>
         <hr />
         <div class="row">
             <div class="col-md-8 text-center align-self-center">
-                <p><strong>Nom :</strong> {{ user.nom }}</p>
-                <p><strong>Prénom :</strong> {{ user.prenom }}</p>
-                <p><strong>Email :</strong> {{ user.email }}</p>
-                <p><strong>Intitulé du poste :</strong> {{ user.poste }}</p>
-                <p><strong>Entreprise :</strong> {{ user.entreprise }}</p>
+                <p><strong>{{'template.nom'|trans}} :</strong> {{ user.nom }}</p>
+                <p><strong>{{'template.prenom'|trans}} :</strong> {{ user.prenom }}</p>
+                <p><strong>{{'template.mail'|trans}} :</strong> {{ user.email }}</p>
+                <p><strong>{{'template.poste'|trans}} :</strong> {{ user.poste }}</p>
+                <p><strong>{{'template.entreprose'|trans}} :</strong> {{ user.entreprise }}</p>
             </div>
             <div class="col-md-4">
-                <img src="{{ vich_uploader_asset(user) }}" alt="Photo - {{user.nom}} {{user.prenom}}" class="img-fluid" style = "width : 50%;">
+                <img src="{{ vich_uploader_asset(user) }}" alt="{{'template.photo'|trans}} - {{user.nom}} {{user.prenom}}" class="img-fluid" style = "width : 50%;">
             </div>
         </div>
         <hr />
         <div class='row'>
             <div class='col-12'>
-                <h2 class="text-center">Etude</h2>
+                <h2 class="text-center">{{'template.quest_pro1'|trans}}</h2>
                 <p>{{ user.etude|nl2br }}</p>
             </div>
         </div>
         <hr />
         <div class='row'>
             <div class='col-12'>
-                <h2 class="text-center">Qu'est-ce qui vous passionne dans votre métier ?</h2>
+                <h2 class="text-center">{{'template.quest_pro2'|trans}}</h2>
                 <p>{{ user.question | nl2br }}</p>
             </div>
         </div>
@@ -53,7 +53,7 @@
 <script>
     function confirmDeletion(element) 
     {
-        if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ?")) {
+        if (confirm("{{'template.confirm_deletion'|trans}}")) {
             var url = element.getAttribute('data-url');
             window.location.href = url;
         }

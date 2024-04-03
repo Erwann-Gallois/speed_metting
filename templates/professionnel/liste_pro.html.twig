@@ -1,21 +1,21 @@
 {% extends "base.html.twig" %}
-{% block title %}Liste des professionnels{% endblock %}
+{% block title %}{{'template.list_pro'|trans}}{% endblock %}
 {% block body %}
     <section class = "section-padding">
         <div class = "container">
-            <h2 class = "text-center">Liste des professionnels</h2>
+            <h2 class = "text-center">{{'template.list_pro'|trans}}</h2>
             <hr />
             <div class = "row">
                 {% for pro in pros %}
                     <div class = "col-md-6">
                         <div class = "card text-center mt-4">
                             <a href="{{ path('front_pro', {'id': pro.id, 'nom' : pro.nom, "prenom" : pro.prenom}) }}">
-                                <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" style = "width: 50%;" class = "img-fluid">
+                                <img src="{{vich_uploader_asset(pro)}}" alt="{{'template.photo'|trans}} - {{pro.nom}} {{pro.prenom}}" style = "width: 50%;" class = "img-fluid">
                             </a>
                             <div class = "card-body">
                                 <h5 class = "card-title">{{ pro.nom }} {{ pro.prenom }}</h5>
                                 <p class = "card-text">{{ pro.poste }}</p>
-                                <a href="{{ path('front_pro', {'id': pro.id, 'nom' : pro.nom, "prenom" : pro.prenom}) }}" class = "btn btn-primary">Voir</a>
+                                <a href="{{ path('front_pro', {'id': pro.id, 'nom' : pro.nom, "prenom" : pro.prenom}) }}" class = "btn btn-primary">{{'template.voir'|trans}}</a>
                             </div>
                         </div>
                     </div>

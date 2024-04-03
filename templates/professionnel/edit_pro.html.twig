@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}Changement des informations du profil{% endblock %}
+{% block title %}{{'template.title_maj_profil'|trans}}{% endblock %}
 {% block body %}
     <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="text-center mb-4">Changement des informations du profil</h2>
+                    <h2 class="text-center mb-4">{{'template.title_maj_profil'|trans}}</h2>
                     <div class = "custom-form">
                         <div class = "container">
                             {# {{ form_errors(questionForm) }} #}
@@ -18,7 +18,7 @@
                                 {{form_row(form.question) }}
                                 {{form_row(form.etude) }}
                                 {# {{form_row(form.confirmation_mdp) }} #}
-                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                <button type="submit" class="btn btn-primary">{{'template.modifier'|trans}}</button>
                             {{ form_end(form) }}
                         </div>
                     </div>
