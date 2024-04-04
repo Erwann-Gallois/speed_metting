@@ -98,3 +98,22 @@ template.voir_planning : Voir la fiche du professionnel
 # ---------------------------------------------------------------------------- #
 #                            Template professionnel                            #
 # ---------------------------------------------------------------------------- #
+template.delete_compte : Supprimer le compte
+template.entreprise : Entreprise
+template.list_pro : Liste des professionnels
+template.planning_eleve : Eleves du groupe
+template.poste : Intitulé du poste
+template.quest_pro1 : Etudes
+template.quest_pro2 : Qu'est-ce qui vous passionne dans votre métier ?
+
+# ---------------------------------------------------------------------------- #
+#                               Template Security                              #
+# ---------------------------------------------------------------------------- #
+template.button_connexion : Se connecter
+template.connexion : Connexion
+template.deconnexion : Déconnexion
+template.forget_mdp : Mot de passe oublié ?
+template.mdp : Mot de passe
+template.msg_connect : Vous etes deja connecté en tant que 
+template.non_inscrit : S'inscrire
+template.rem : Se souvenir de moi

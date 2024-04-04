@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}{{'template.connexion'|trans}}{% endblock %}
 
 {% block header %}
     
@@ -11,7 +11,7 @@
             {% include 'flash_message.html.twig' %}
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="text-center mb-3">Connexion</h2>
+                    <h2 class="text-center mb-3">{{'template.connexion'|trans}}</h2>
                         <form method="post">
                             <div class="container custom-form">
                                 {% if error %}
@@ -20,13 +20,13 @@
 
                                 {% if app.user %}
                                     <div class="mb-3">
-                                        Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('deconnexion') }}">Deconnexion</a>
+                                        {{'template.msg_connect'|trans}} {{ app.user.userIdentifier }}, <a href="{{ path('deconnexion') }}">{{'template.deconnexion'|trans}}</a>
                                     </div>
                                 {% endif %}
 
-                                <label for="username">Email</label>
+                                <label for="username">{{'template.mail'|trans}}</label>
                                 <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-                                <label for="password">Mot de passe</label>
+                                <label for="password">{{'template.mdp'|trans}}</label>
                                 {# <label for="inputPassword">Mot de passe</label> #}
                                 <div class="input-group">
                                     <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
@@ -39,20 +39,20 @@
                             
                                 <div class="checkbox mb-3">
                                     <label>
-                                        <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                                        <input type="checkbox" name="_remember_me"> {{'template.rem'|trans}}
                                     </label>
                                 </div>
                             </div>
                             <div class = "container text-center">
                                 <div class = "row justify-content-center">
                                     <div class = "col-lg-4 col-md-12 mb-3">
-                                        <a href="{{path ("inscription")}}" role = "button" class = "btn btn-primary">Pas encore inscrit ?</a>
+                                        <a href="{{path ("inscription")}}" role = "button" class = "btn btn-primary">{{'template.non_inscrit'|trans}}</a>
                                     </div>
                                     <div class = "col-lg-4 col-md-12 mb-3">
-                                        <a href="" role = "button" class = "btn btn-success">Mot de passe oublié ?</a>
+                                        <a href="{{path ("mdp_oublie")}}" role = "button" class = "btn btn-success">{{'template.forget_mdp'|trans}}</a>
                                     </div>
                                     <div class = "col-lg-4 col-md-12 mb-3">
-                                        <button class="btn btn-secondary" type="submit">Connexion</button>
+                                        <button class="btn btn-secondary" type="submit">{{'template.button_connexion'|trans}}</button>
                                     </div>
                                 </div>
                             </div>

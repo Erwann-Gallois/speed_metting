@@ -3,15 +3,15 @@
 {% block body %}
 <section class="section-padding">
     <div class="container mt-4">
-        <h2 class="text-center">Présentation</h2>
+        <h2 class="text-center">{{"template.info_gene"|trans}}</h2>
         <a href = "{{path ('impression_fiche_professionnel', {nom : pro.nom, prenom : pro.prenom, id : pro.id})}}" role = 'button' class = "btn btn-info btn-sm" target = "_blank"><i class="bi bi-printer-fill"></i></a>
         <hr />
         <div class="row">
             <div class="col-lg-8 col-md-12 text-center align-self-center">
-                <p><strong>Nom :</strong> {{ pro.nom }}</p>
-                <p><strong>Prénom :</strong> {{ pro.prenom }}</p>
-                <p><strong>Intitulé du poste :</strong> {{ pro.poste }}</p>
-                <p><strong>Entreprise :</strong> {{ pro.entreprise }}</p>
+                <p><strong>{{"template.nom"|trans}} :</strong> {{ pro.nom }}</p>
+                <p><strong>{{"template.prenom"|trans}} :</strong> {{ pro.prenom }}</p>
+                <p><strong>{{"template.poste"|trans}} :</strong> {{ pro.poste }}</p>
+                <p><strong>{{"template.entreprise"|trans}} :</strong> {{ pro.entreprise }}</p>
             </div>
             <div class="col-lg-4 col-md-12 align-self-center">
                 <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="img-fluid" style = "width: 50%;">
@@ -20,14 +20,14 @@
         <hr />
         <div class='row'>
             <div class='col-12'>
-                <h2 class="text-center">Etudes</h2>
+                <h2 class="text-center">{{"template.quest_pro2"|trans}}</h2>
                 <p>{{ pro.etude|nl2br}}</p>
             </div>
         </div>
         <hr />
         <div class='row'>
             <div class='col-12'>
-                <h2 class="text-center">Qu'est ce qui vous passionne dans votre métier ?</h2>
+                <h2 class="text-center">{{"template.quest_pro1"|trans}}</h2>
                 <p>{{ pro.question|nl2br}}</p>
             </div>
         </div>

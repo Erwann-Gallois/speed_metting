@@ -23,7 +23,7 @@ form.last_mdp : Last password
 form.new_mdp : New password
 form.new_repeat_mdp : Repeat new password
 form.quest_pro1 : What do you love about your job?
-form.quest_pro2 : Studys
+form.quest_pro2 : Studies
 label.download : Download the image
 
 # ---------------------------------------------------------------------------- #
@@ -99,3 +99,22 @@ template.voir_planning : See the professional presentation page
 # ---------------------------------------------------------------------------- #
 #                            Template professionnel                            #
 # ---------------------------------------------------------------------------- #
+template.delete_compte : Delete account
+template.entreprise : Company
+template.list_pro : List of professionals
+template.planning_eleve : Students of the group
+template.poste : Job Title
+template.quest_pro1 : Studies
+template.quest_pro2 : What do you love about your job?
+
+# ---------------------------------------------------------------------------- #
+#                               Template Security                              #
+# ---------------------------------------------------------------------------- #
+template.button_connexion : Login
+template.connexion : Login
+template.deconnexion : Logout
+template.forget_mdp : Forget Password ?
+template.mdp : Password
+template.msg_connect : You already connected as
+template.non_inscrit : Register
+template.rem : Remember me
