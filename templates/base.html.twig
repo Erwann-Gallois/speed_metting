@@ -43,9 +43,9 @@ https://templatemo.com/tm-583-festava-live
                     </a>
                 {% endif %}
                 {% if app.user %}
-                        <a href="{{path ('deconnexion')}}" class="btn custom-btn d-lg-none ms-auto me-4">Deconnexion</a>
+                        <a href="{{path ('deconnexion')}}" class="btn custom-btn d-lg-none ms-auto me-4">{{"template.deconnexion"|trans}}</a>
                 {% else %}
-                    <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-none ms-auto me-4">Connexion</a>
+                    <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-none ms-auto me-4">{{"template.connexion"|trans}}</a>
                 {% endif %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,23 +56,23 @@ https://templatemo.com/tm-583-festava-live
                     <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
                             {% if route != "accueil" %}
-                                <a class="nav-link-class" href="{{path ('accueil')}}">Accueil</a>
+                                <a class="nav-link-class" href="{{path ('accueil')}}">{{"template.accueil"|trans}}</a>
                             {% else %}
-                                <a class="nav-link-class click-scroll" href="#presentation">Présentation</a>
+                                <a class="nav-link-class click-scroll" href="#presentation">{{"template.presentation"|trans}}</a>
                             {% endif %}
                         </li>
                         <li class="nav-item">
                             {% if route != "accueil" %}
-                                <a class="nav-link-class" href="{{path ('organisation')}}">Organisation</a>
+                                <a class="nav-link-class" href="{{path ('organisation')}}">{{"template.orga"|trans}}</a>
                             {% else %}
-                                <a class="nav-link-class click-scroll" href="#organisation">Organisation</a>
+                                <a class="nav-link-class click-scroll" href="#organisation">{{"template.orga"|trans}}</a>
                             {% endif %}
                         </li>
                         <li class="nav-item">
                             {% if route != "accueil" %}
-                                <a class="nav-link-class" href="{{path ('contact')}}">Contact</a>
+                                <a class="nav-link-class" href="{{path ('contact')}}">{{"template.contact"|trans}}</a>
                             {% else %}
-                                <a class="nav-link-class click-scroll" href="#contact">Contact</a>
+                                <a class="nav-link-class click-scroll" href="#contact">{{"template.contact"|trans}}</a>
                             {% endif %}
                         </li>
                         <li class="nav-item dropdown d-none d-lg-block">
@@ -80,15 +80,15 @@ https://templatemo.com/tm-583-festava-live
                                 Liste
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{path ('liste_pro')}}">Professionnels</a></li>
-                                <li><a class="dropdown-item" href="{{path ('front_liste_eleve')}}">Eleves</a></li>
+                                <li><a class="dropdown-item" href="{{path ('liste_pro')}}">{{"template.pro2"|trans}}</a></li>
+                                <li><a class="dropdown-item" href="{{path ('front_liste_eleve')}}">{{"template.student"|trans}}</a></li>
                             </ul>
                         </li>
                         <li class="nav-item d-md-block d-lg-none">
-                            <a class="nav-link-class" href="{{path ('liste_pro')}}">Professionnels</a>
+                            <a class="nav-link-class" href="{{path ('liste_pro')}}">{{"template.pro2"|trans}}</a>
                         </li>
                         <li class="nav-item d-md-block d-lg-none">
-                            <a class="nav-link-class" href="{{path ('front_liste_eleve')}}">Eleves</a>
+                            <a class="nav-link-class" href="{{path ('front_liste_eleve')}}">{{"template.student"|trans}}</a>
                         </li>
                         {% if app.user %}
                             <li class="nav-item dropdown">
@@ -96,17 +96,17 @@ https://templatemo.com/tm-583-festava-live
                                     Mon compte
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
-                                    <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
+                                    <li><a class="dropdown-item" href="{{path ('compte')}}">{{"template.profil"|trans}}</a></li>
+                                    <li><a class="dropdown-item" href="{{path ('planning')}}">{{"template.planning"|trans}}</a></li>
                                     {% if (afficherLien) and (pro == false) and (pro is not null) %}
-                                        <li><a class="dropdown-item" href="{{path ('reservation')}}">Reserver</a></li>
+                                        <li><a class="dropdown-item" href="{{path ('reservation')}}">{{"template.btn_resa"|trans}}</a></li>
                                     {% endif %}
                                 </ul>
                             </li>
                         {% endif %}
                         <li class="nav-item dropdown d-none d-lg-block">
                             <a class="nav-link dropdown-toggle d-lg-block d-sm-none d-md-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Langue
+                                {{"template.langue"|trans}}
                             </a>
                             <ul class="dropdown-menu">
                                 {% for locale in locales %}
@@ -118,9 +118,9 @@ https://templatemo.com/tm-583-festava-live
                         </li>
                     </ul>
                     {% if app.user %}
-                        <a href="{{path ('deconnexion')}}" class="btn custom-btn d-lg-block d-none">Deconnexion</a>
+                        <a href="{{path ('deconnexion')}}" class="btn custom-btn d-lg-block d-none">{{"template.deconnexion"|trans}}</a>
                     {% else %}
-                        <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-block d-none">Connexion</a>
+                        <a href="{{path ('connexion')}}" class="btn custom-btn d-lg-block d-none">{{"template.connexion"|trans}}</a>
                     {% endif %}
                     
                 </div>
@@ -196,7 +196,7 @@ https://templatemo.com/tm-583-festava-live
                 </div> #}
 
                 <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
-                    <h5 class="site-footer-title mb-3">Des questions ?</h5>
+                    <h5 class="site-footer-title mb-3">{{"template.question"|trans}}</h5>
 
                     {# <p class="text-white d-flex mb-1">
                         <a href="tel: 090-080-0760" class="site-footer-link">
@@ -212,7 +212,7 @@ https://templatemo.com/tm-583-festava-live
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-11 mb-4 mb-lg-0 mb-md-0">
-                    <h5 class="site-footer-title mb-3">Localisation</h5>
+                    <h5 class="site-footer-title mb-3">{{"template.localisation"|trans}}</h5>
 
                     <p class="text-white d-flex mt-3 mb-2">
                         Université d'Evry Val d'Essonne </br>

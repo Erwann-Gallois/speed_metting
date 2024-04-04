@@ -117,3 +117,50 @@ template.mdp : Mot de passe
 template.msg_connect : Vous etes deja connecté en tant que 
 template.non_inscrit : S'inscrire
 template.rem : Se souvenir de moi
+
+# ---------------------------------------------------------------------------- #
+#                                Template Front                                #
+# ---------------------------------------------------------------------------- #
+template.accueil : Accueil
+template.adresse : Adresse
+template.btn_resa : Reserver
+template.colloque_presenting : Colloque EvryBio 2024
+template.compte : Mon compte
+template.contact : Contact
+template.date : 21 Mai 2024
+template.date_lieu : Le 21 mai 2024 de 14h à 17h30, 31 cours Blaise Pascal, 91000 Evry-Courcouronnes
+template.envoyer : Envoyer
+template.find : Nous trouver
+template.form_contact : Formulaire de contact
+template.info1 : Les speed meetings sont des rencontres de 10 minutes entre les élèves de L3 et les professionnels
+template.info2 : Avant la date du speed meeting, vous recevrez un e-mail ou un message pour vous informer des créneaux disponibles pour les inscriptions. Attention, les places sont limitées !
+template.meet_pro : Rencontrer les professionnels
+template.msg_resa : Les réservations sont ouvertes
+template.quest1_sm : Comment ça va se passer ?
+template.quest2_sm : Où et quand ?
+template.rer : Transport
+template.sm_title : A propos des speed meetings
+template.gare : RER D - Gare d'Evry-Courcouronnes
+# ------------------------ Partie Organisation (index) ----------------------- #
+template.actvity : Activités
+template.first_session : Première session
+template.heure1 : 14h00 - 15h00
+template.heure2 : 15h00 - 15h30
+template.heure3 : 16h00 - 17h00
+template.heure4 : 17h00 - 17h30
+template.more : En savoir plus
+template.orga_title : Organisation de la journée
+template.part_free : Partie libre avec une pause gourmande
+template.part_quest : Partie questions - réponses
+template.second_session : Deuxième session
+
+# ---------------------------------------------------------------------------- #
+#                                     Base                                     #
+# ---------------------------------------------------------------------------- #
+template.langue : Langue
+template.localisation : Localisation
+template.orga : Organisation
+template.presentation : Présentation
+template.pro2 : Professionnels
+template.question : Des questions ?
+template.student : Etudiants

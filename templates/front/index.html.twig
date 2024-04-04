@@ -18,9 +18,9 @@
                                 <a class="btn btn-secondary" href="{{path ("inscription")}}">{{"template.inscription"|trans}}</a>
                             {% endif %}
                             {% if app.user %}
-                                <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
+                                <a class="btn btn-secondary" href="{{path ('deconnexion')}}">{{"template.deconnexion"|trans}}</a>
                             {% else %}
-                                <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
+                                <a class="btn btn-secondary" href="{{path ('connexion')}}">{{"template.connexion"|trans}}</a>
                             {% endif %}
                         </div>
 
@@ -99,9 +99,9 @@
                                 <a class="btn btn-secondary" href="{{path ("inscription")}}">{{"template.inscription"|trans}}</a>
                             {% endif %}
                             {% if app.user %}
-                                <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
+                                <a class="btn btn-secondary" href="{{path ('deconnexion')}}">{{"template.deconnexion"|trans}}</a>
                             {% else %}
-                                <a class="btn btn-secondary" href="{{path ('connexion')}}">Connexion</a>
+                                <a class="btn btn-secondary" href="{{path ('connexion')}}">{{"template.connexion"|trans}}</a>
                             {% endif %}
                         </div>
 
@@ -164,17 +164,14 @@
                     <div class="row">
                         <div class="col-lg-6 col-12 mb-4 mb-lg-0 d-flex align-items-center">
                             <div class="services-info">
-                                <h2 class="text-white mb-4">A propos des speed meetings</h2>
+                                <h2 class="text-white mb-4">{{"template.sm_title"|trans}}</h2>
                                 <p class="text-white">
-                                    Les speed meetings sont des rencontres de 10 minutes entre les élèves de L3 et les professionnels.
+                                    {{"template.info1"|trans}}
                                 </p>
-                                <h6 class="text-white mt-4">Comment cela va se passer ?</h6>
-                                <p class="text-white">
-                                    Avant la date du speed meeting, vous recevrez un mail pour vous prévenir de l'ouverture des inscriptions sur les créneaux.
-                                    Attention, les places sont limitées !
-                                </p>
-                                <h6 class="text-white mt-4">Quand et Où</h6>
-                                <p class="text-white">Le 21 mai 2024 de 14h à 17h30, 31 cours Blaise Pascal, 91000 Evry-Courcouronnes</p>
+                                <h6 class="text-white mt-4">{{"template.quest1_sm"|trans}}</h6>
+                                <p class="text-white">{{"template.info2"|trans}}</p>
+                                <h6 class="text-white mt-4">{{"template.quest2_sm"|trans}}</h6>
+                                <p class="text-white">{{"template.date_lieu"|trans}}</p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -199,19 +196,23 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-12 text-center">
-                            <h2 class="mb-4 text-white">Rencontrer les professionnels</h1>
+                            <h2 class="mb-4 text-white">{{"template.meet_pro"|trans}}</h1>
                         </div>
                         {% for pro in pros %}
                             <div class="col-lg-5 col-12">
                                 <a href="{{path ('front_pro', {'id': pro.id, "nom" : pro.nom, 'prenom' : pro.prenom })}}">
                                     <div class="artists-thumb">
                                         <div class="artists-image-wrap d-flex justify-content-center">
-                                            <img src="{{vich_uploader_asset(pro)}}" alt="Photo du professionnel {{pro.nom}} {{pro.prenom}}" class="artists-image img-fluid" style = "width: 50%;">
+                                            {% if vich_uploader_asset(pro) is null %}
+                                                <img src="../../public/images/personne_lambda.png" alt="{{"template.photo"|trans}} {{pro.nom}} {{pro.prenom}}" class="artists-image img-fluid" style = "width: 50%;">
+                                            {% else %}
+                                                <img src="{{vich_uploader_asset(pro)}}" alt="{{"template.photo"|trans}} {{pro.nom}} {{pro.prenom}}" class="artists-image img-fluid" style = "width: 50%;">
+                                            {% endif %}
                                         </div>
                                         <div class="artists-hover">
-                                            <p><strong>Nom : </strong>{{pro.nom}}</p>
-                                            <p><strong>Prenom:</strong>{{pro.prenom}}</p>
-                                            <p><strong>Intitulé du poste:</strong>{{pro.poste}}</p>
+                                            <p><strong>{{"template.nom"|trans}} : </strong>{{pro.nom}}</p>
+                                            <p><strong>{{"template.prenom"|trans}} :</strong>{{pro.prenom}}</p>
+                                            <p><strong>{{"template.poste"|trans}} :</strong>{{pro.poste}}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -220,7 +221,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-5">
-                    <a href="" class="btn btn-dark">Liste Complète</a>
+                    <a href="" class="btn btn-dark">{{"template.list_pro"|trans}}</a>
                 </div>
             </section>
         {% endif %}
@@ -228,49 +229,49 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2 class="text-white mb-4">Organisation de la journée</h2>
+                        <h2 class="text-white mb-4">{{"template.orga_title"|trans}}</h2>
                             <div class="table-responsive">
                                 <table class="schedule-table table table-dark table-hover table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>Heure</th>
-                                            <th>Activités</th>
+                                            <th>{{"template.heure"|trans}}</th>
+                                            <th>{{"template.actvity"|trans}}</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <tr>
-                                            <td scope = "row">14h00 - 15h00</td>
+                                            <td scope = "row">{{"template.heure1"|trans}}</td>
                                             <td>
-                                                Premiere Session<br />
-                                                Partie Question - Reponse par Groupe
+                                                {{"template.first_session"|trans}}<br />
+                                                {{"template.part_quest"|trans}}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td scope = "row">15h00 - 15h30</td>
+                                            <td scope = "row">{{"template.heure2"|trans}}</td>
                                             <td>
-                                                Premiere Session<br />
-                                                Partie Libre + Pause gourmande
+                                                {{"template.first_session"|trans}}<br />
+                                                {{"template.part_free"|trans}}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td scope = "row">16h00 - 17h00</td>
+                                            <td scope = "row">{{"template.heure3"|trans}}</td>
                                             <td>
-                                                Deuxieme Session<br />
-                                                Partie Question - Reponse par Groupe
+                                                {{"template.second_session"|trans}}<br />
+                                                {{"template.part_quest"|trans}}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td scope = "row">17h00 - 17h30</td>
+                                            <td scope = "row">{{"template.heure4"|trans}}</td>
                                             <td>
-                                                Deuxieme Session<br />
-                                                Partie Libre + Pause gourmande
+                                                {{"template.second_session"|trans}}<br />
+                                                {{"template.part_free"|trans}}
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        <a href="{{path ('organisation')}}" class="btn btn-dark">En savoir plus</a>
+                        <a href="{{path ('organisation')}}" class="btn btn-dark">{{"template.more"|trans}}</a>
                     </div>
                 </div>
             </div>
@@ -280,14 +281,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-12 mx-auto">
-                        <h2 class="text-center mb-4">Nous Contacter</h2>
+                        <h2 class="text-center mb-4">{{"template.contact"|trans}} - {{"template.find"|trans}}</h2>
                         <nav class="d-flex justify-content-center">
                             <div class="nav nav-tabs align-items-baseline justify-content-center" id="nav-tab"
                                 role="tablist">
                                 <button class="nav-link active" id="nav-ContactForm-tab" data-bs-toggle="tab"
                                     data-bs-target="#nav-ContactForm" type="button" role="tab"
                                     aria-controls="nav-ContactForm" aria-selected="false">
-                                    <h5>Formulaire</h5>
+                                    <h5>{{"template.form_contact"|trans}}</h5>
                                 </button>
 
                                 <button class="nav-link" id="nav-ContactMap-tab" data-bs-toggle="tab"
@@ -314,7 +315,7 @@
                                         {{form_row(form.sujet)}}
                                         {{form_row(form.message)}}
                                         <div class="col-lg-4 col-md-10 col-8 mx-auto">
-                                            <button type="submit" class = "form-control">Envoyer</button>
+                                            <button type="submit" class = "form-control">{{"template.envoyer"|trans}}</button>
                                         </div>
                                     </div>
                                     {{ form_end(form) }}

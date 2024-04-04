@@ -118,3 +118,50 @@ template.mdp : Password
 template.msg_connect : You already connected as
 template.non_inscrit : Register
 template.rem : Remember me
+
+# ---------------------------------------------------------------------------- #
+#                                Template Front                                #
+# ---------------------------------------------------------------------------- #
+template.accueil : Home
+template.adresse : Address
+template.btn_resa : Booking
+template.colloque_presenting : Colloque EvryBio 2024
+template.compte : My account
+template.contact : Contact us
+template.date : May 21, 2024
+template.date_lieu : May 21, 2024 from 2pm to 5:30pm, 31 cours Blaise Pascal, 91000 Evry-Courcouronnes, France
+template.envoyer : Send
+template.find : Find us
+template.form_contact : Contact form
+template.info1 : Speed meetings are 10-minute meetings between L3 students and professionals.
+template.info2 : Before the date of the speed meeting, you'll receive an e-mail or message to let you know when the slots are open for registration. Please note that places are limited!
+template.meet_pro : Meet the professionals
+template.msg_resa : Meeting reservations are available
+template.quest1_sm : How will it work?
+template.quest2_sm : Where and when?
+template.gare : RER D - Evry-Courcouronnes station
+template.rer : Transport
+template.sm_title : About the speed meeting
+# ------------------------ Partie Organisation (index) ----------------------- #
+template.actvity : Activities
+template.first_session : First session
+template.heure1 : 2:00pm - 3:00pm
+template.heure2 : 3:00pm - 3:30pm
+template.heure3 : 4:00pm - 5:00pm
+template.heure4 : 5:00pm - 5:30pm
+template.more : Learn more
+template.orga_title : Organization of the day
+template.part_free : Free part with a gourmet break
+template.part_quest : Questions - answers part
+template.second_session : Second session
+
+# ---------------------------------------------------------------------------- #
+#                                     Base                                     #
+# ---------------------------------------------------------------------------- #
+template.langue : Language
+template.localisation : Location
+template.orga : Organization
+template.presentation : Presentation
+template.pro2 : Professionals
+template.question : Questions ?
+template.student : Students
