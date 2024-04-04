@@ -67,7 +67,6 @@ class SecurityController extends AbstractController
                 'attr' => [
                     'class' => 'btn btn-primary'
                 ],
-                'required' => true
             ]);
         $form = $formbuilder->getForm();
         $form->handleRequest($request);
