@@ -55,6 +55,7 @@ flash.supp_compte : Your account has been deleted
 flash.pro_not_found : Professional not found
 flash_compte_pro_creer : Professional account created
 flash.send_mail : The email has been sent
+flash.email_not_found : Email not found
 
 # ---------------------------------------------------------------------------- #
 #                               Contrainte Entity                              #
@@ -118,6 +119,11 @@ template.mdp : Password
 template.msg_connect : You already connected as
 template.non_inscrit : Register
 template.rem : Remember me
+template.mdp_oublie : Forget Password
+flash.password_changed : Password changed
+flash.password_not_match : Passwords do not match
+flash.wrong_old_password : The old password is incorrect
+flash.token_not_found : Link is invalid or expired
 
 # ---------------------------------------------------------------------------- #
 #                                Template Front                                #
@@ -165,3 +171,17 @@ template.presentation : Presentation
 template.pro2 : Professionals
 template.question : Questions ?
 template.student : Students
+template.carte : Map
+template.liste : List
+
+# ---------------------------------------------------------------------------- #
+#                                 Organisation                                 #
+# ---------------------------------------------------------------------------- #
+template.avt_sm : Before the speed meeting
+template.during_sm : During the speed meeting
+template.orga_info1 : Students will be able to consult the list of professionals present at the speeds meetings, and choose the 6 professionals they would like to talk to. They can also consult information on the professionals (job, background, etc.) to prepare their questions.
+template.orga_info2 : For their part, professionals will be able to consult information on the students (education, professional projects, etc.), to prepare any questions they may have for the students.
+template.orga_info3.1 : The first part will be a question and answer session. Students, in groups of 
+template.orga_info3.3 : will have 10 minutes of interaction with the professionals to ask questions about the job, the career path, the skills required, and so on. This part will last 1 hour, and students will be able to meet 6 different professionals.
+template.orga_info3.2 : The second part will be an open forum. Students will have 30 minutes to chat with the professionals over a gourmet break.
+template.orga_info3 : Speed meetings are organized in two parts

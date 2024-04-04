@@ -35,29 +35,29 @@
 </head>
 <body>
     <div class="header">
-        <h1>Profil de {{ user.nom }} {{ user.prenom }}</h1>
-        <h2>Présentation</h2>
+        <h1>{{"template.profil"|trans}} : {{ user.nom }} {{ user.prenom }}</h1>
+        <h2>{{"template.info_gene"|trans}}</h2>
     </div>
     <hr />
     <table>
         <tr>
             <td class="text-cell">
-                <p><strong>Nom :</strong> {{ user.nom }}</p>
-                <p><strong>Prénom :</strong> {{ user.prenom }}</p>
-                <p><strong>Intitulé du poste :</strong> {{ user.poste }}</p>
-                <p><strong>Entreprise :</strong> {{ user.entreprise }}</p>
+                <p><strong>{{"template.nom"|trans}} :</strong> {{ user.nom }}</p>
+                <p><strong>{{"template.prenom"|trans}} :</strong> {{ user.prenom }}</p>
+                <p><strong>{{"template.poste"|trans}} :</strong> {{ user.poste }}</p>
+                <p><strong>{{"template.entreprise"|trans}} :</strong> {{ user.entreprise }}</p>
             </td>
             <td class="image-cell">
-                <img src="{{ imagePath }}" alt="Photo - {{ user.nom }} {{ user.prenom }}">
+                <img src="{{ imagePath }}" alt="{{"template.photo"|trans}} - {{ user.nom }} {{ user.prenom }}">
             </td>
         </tr>
     </table>
     <hr />
     <div class="content-section">
-        <h2 class="header">Etude</h2>
+        <h2 class="header">{{"template.quest_pro1"|trans}}</h2>
         <p>{{ user.etude|nl2br }}</p>
         <hr />
-        <h2 class="header">Qu'est ce qui vous passionne dans votre métier ?</h2>
+        <h2 class="header">{{"template.quest_pro2"|trans}}</h2>
         <p>{{ user.question|nl2br}}</p>
     </div>
 </body>

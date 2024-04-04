@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'template.mdp_oublie'|trans}}{% endblock %}
+
+{% block body %}
+    <section class="contact-section section-padding" id="section_3">
+        <div class="container">
+            {% include 'flash_message.html.twig' %}
+            <div class="row">
+                <div class="col-lg-8 col-12 mx-auto">
+                    <div class="section-title">
+                        <h2 class="text-center mb-4">{{'template.mdp_oublie'|trans}}</h2>
+                    </div>
+                    <div class = "custom-form mt-4">
+                        <div class = "container">
+                            {{ form_start(form) }}
+                                {{form_row(form.email)}}
+                                {{form_row(form.submit)}}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+{% endblock %}       

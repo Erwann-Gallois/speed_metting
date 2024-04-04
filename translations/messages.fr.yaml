@@ -54,6 +54,7 @@ flash.supp_compte : Votre compte a été supprimé
 flash.pro_not_found : Profesionnel non trouvé
 flash_compte_pro_creer : Compte profesionnel créé
 flash.send_mail : L'email a été envoyé
+flash.email_not_found : Email non trouvé
 
 # ---------------------------------------------------------------------------- #
 #                               Contrainte Entity                              #
@@ -117,6 +118,11 @@ template.mdp : Mot de passe
 template.msg_connect : Vous etes deja connecté en tant que 
 template.non_inscrit : S'inscrire
 template.rem : Se souvenir de moi
+template.mdp_oublie : Mot de passe oublié
+flash.password_changed : Mot de passe changé
+flash.password_not_match : Les mots de passe ne correspondent pas
+flash.wrong_old_password : L'ancien mot de passe est incorrect
+flash.token_not_found : Le lien est invalide ou a expiré
 
 # ---------------------------------------------------------------------------- #
 #                                Template Front                                #
@@ -164,3 +170,16 @@ template.presentation : Présentation
 template.pro2 : Professionnels
 template.question : Des questions ?
 template.student : Etudiants
+template.carte : Carte
+template.liste : Liste
+# ---------------------------------------------------------------------------- #
+#                                 Organisation                                 #
+# ---------------------------------------------------------------------------- #
+template.avt_sm : Avant le speed meeting
+template.during_sm : Pendant le speed meeting
+template.orga_info1 : Les étudiants auront la possibilité de consulter la liste des professionnels présents lors des speeds meetings, et de choisir les 6 professionnels avec lesquels ils souhaitent discuter. Ils pourront également consulter les informations sur les professionnels (métier, parcours, etc.) pour préparer leurs questions.
+template.orga_info2 : De leur côté, les professionnels auront la possibilité de consulter les informations sur les étudiants (formation, projets professionnels, etc.), pour préparer leurs questions qui souhaiteraient poser aux étudiants.
+template.orga_info3.1 : La première partie se passera sous forme de question réponse. Les étudiants, par groupe de 
+template.orga_info3.3 : auront 10 minutes d'interaction avec les professionnels pour poser des questions sur le métier, le parcours, les compétences requises, etc. Cette partie durera 1 heure, et les étudiants pourront rencontrer 6 professionnels différents.
+template.orga_info3.2 : La deuxième partie se passera sous forme de quartier libre. Les étudiants auront 30 minutes pour discuter avec les professionnels autour d'une pause gourmande.
+template.orga_info3 : Les speed meetings sont organisés en deux parties

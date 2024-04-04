@@ -1,18 +1,18 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <title>Planning : {{ user.nom }} {{ user.prenom }} </title>
+    <title>{{"template.planning"|trans}} : {{ user.nom }} {{ user.prenom }} </title>
 </head>
 <body>
     <div class="container">
-        <h1>Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <h1>{{"template.planning"|trans}} : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
             <div class = "row">
                 {% for key, session in sessions %}
-                    <strong>Heure : </strong>{{ key }}
+                    <strong>{{"template.heure"|trans}} : </strong>{{ key }}
                     {% for session in sessions[key] %}
                         <br />
-                        <strong>Eleve :</strong>
+                        <strong>{{"template.student"|trans}} :</strong>
                         {{ session.eleve.nom }} {{ session.eleve.prenom }}
                     {% endfor %}
                     <hr />

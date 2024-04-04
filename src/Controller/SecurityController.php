@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\NewMDPFormType;
 use App\Form\UserChangeMPDType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +21,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -50,24 +52,25 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/mdp-oublie', name: 'mdp_oublie')]
-    public function mdpOublie(UserRepository $urp, MailerInterface $mailer): Response
+    public function mdpOublie(UserRepository $urp, MailerInterface $mailer, TranslatorInterface $translator, Request $request): Response
     {
         $formbuilder = $this->createFormBuilder()
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'form.mail',
                 'attr' => [
-                    'placeholder' => 'Email'
+                    'placeholder' => 'form.mail'
                 ],
                 'required' => true
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'template.envoyer',
                 'attr' => [
                     'class' => 'btn btn-primary'
                 ],
                 'required' => true
             ]);
         $form = $formbuilder->getForm();
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
             $user = $urp->findOneBy(['email' => $data['email']]);
@@ -90,6 +93,10 @@ class SecurityController extends AbstractController
                 ]);
                 $mailer->send($message);
             }
+            else {
+                $this->addFlash('danger', $translator->trans('flash.email_not_found'));
+
+            }
         }
         return $this->render('security/mdp_oublie.html.twig', [
             'form' => $form->createView()
@@ -97,30 +104,25 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/reinitialisation-mdp/{token}', name: 'reinitialisation_mdp')]
-    public function reinitialisationMdp(String $token, UserRepository $urp, UserPasswordHasherInterface $hasher): Response
+    public function reinitialisationMdp(String $token, UserRepository $urp, UserPasswordHasherInterface $hasher, Request $request, TranslatorInterface $translator, EntityManagerInterface $eM): Response
     {
         $user = $urp->findOneBy(['token' => $token]);
         if ($user){
-            $formbuilder = $this->createFormBuilder()
-                ->add('nouveau_mdp', RepeatedType::class, [
-                    'type' => PasswordType::class,
-                    'invalid_message' => 'Les mots de passe ne correspondent pas',
-                    'options' => ['attr' => ['class' => 'password-field']],
-                    'required' => true,
-                    'first_options' => ['label' => 'Nouveau mot de passe'],
-                    'second_options' => ['label' => 'Répéter le mot de passe']
-                ])
-                ->add('submit', SubmitType::class, [
-                    'label' => 'Envoyer',
-                    'attr' => [
-                        'class' => 'btn btn-primary'
-                    ],
-                    'required' => true
-                ]);
-            $form = $formbuilder->getForm();
+            $form = $this->createForm(NewMDPFormType::class);
+            $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()){
-                $data = $form->getData();
-                $user->setPassword($hasher->hashPassword($user, $data['nouveau_mdp']));
+                if ($form->get('plainPassword1')->getData() == $form->get('plainPassword2')->getData()) {
+                    $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
+                    $user->setToken('null');
+                    $eM->persist($user);
+                    $eM->flush();
+                    $this->addFlash('success', $translator->trans("flash.password_changed"));
+                    return $this->redirectToRoute('connexion');
+                }
+                else {
+                    $this->addFlash('danger', $translator->trans("flash.password_not_match"));
+                    return $this->redirectToRoute('reinitialisation_mdp', ['token' => $token]);
+                }
                 $user->setToken('null');
                 $em = $this->doctrine->getManager();
                 $em->persist($user);
@@ -132,14 +134,14 @@ class SecurityController extends AbstractController
             ]);
         }
         else {
-            $this->addFlash('danger', 'Le lien est invalide');
+            $this->addFlash('danger', $translator->trans('flash.token_not_found'));
             return $this->redirectToRoute('accueil');
         }
     }
 
     #[Route('/compte/pro/changer_mdp', name: 'pro_changer_mdp')]
     #[Route('/compte/eleve/changer_mdp', name: 'eleve_changer_mdp')]
-    public function editPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $eM): Response
+    public function editPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $eM, TranslatorInterface $translator): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
@@ -154,7 +156,7 @@ class SecurityController extends AbstractController
                     $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
                     $eM->persist($user);
                     $eM->flush();
-                    $this->addFlash('success', 'Mot de passe modifié avec succès');
+                    $this->addFlash('success', $translator->trans("flash.password_changed"));
                     if ($user->getType() == 1) {
                         return $this->redirectToRoute('compte_pro');
                     }
@@ -163,7 +165,7 @@ class SecurityController extends AbstractController
                     }
                 }
                 else {
-                    $this->addFlash('danger', 'Les mots de passe ne correspondent pas');
+                    $this->addFlash('danger', $translator->trans("flash.password_not_match"));
                     if ($user->getType() == 1) {
                         return $this->redirectToRoute('pro_changer_mdp');
                     }
@@ -173,7 +175,7 @@ class SecurityController extends AbstractController
                 }
             }
             else {
-                $this->addFlash('danger', 'Ancien mot de passe incorrect');
+                $this->addFlash('danger', $translator->trans("flash.wrong_old_password"));
                 if ($user->getType() == 1) {
                     return $this->redirectToRoute('pro_changer_mdp');
                 }

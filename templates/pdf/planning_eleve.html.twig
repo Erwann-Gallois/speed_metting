@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <title>Planning : {{user.nom}} {{user.prenom}} </title>
+    <title>{{"template.planning"|trans}} : {{user.nom}} {{user.prenom}} </title>
     <style>
         .center {
             text-align: center;
@@ -13,13 +13,13 @@
 <body>
     <div class="container">
         <hr />
-        <h1 class="center">Planning : {{ user.nom }} {{ user.prenom }}</h1>
+        <h1 class="center">{{"template.planning"|trans}} : {{ user.nom }} {{ user.prenom }}</h1>
         <hr />
         <br />
         <div class = "row">
             {% for session in sessions %}
-                <div class = "col-2"><strong>Heure : </strong>{{ session.heure|date('H:i') }}</div>
-                <div class = "col-10" ><strong>Professionnel :</strong>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</div>
+                <div class = "col-2"><strong>{{"template.heure"|trans}} : </strong>{{ session.heure|date('H:i') }}</div>
+                <div class = "col-10" ><strong>{{"template.pro"|trans}} :</strong>{{ session.pro.nom }} {{ session.pro.prenom }} - {{session.pro.poste}}</div>
                 <br />
             {% endfor %}
         </div>

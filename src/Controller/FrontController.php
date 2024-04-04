@@ -79,7 +79,7 @@ class FrontController extends AbstractController
     public function organisation(): Response
     {
         $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/config';
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
         $filename = $configDir . '/limite_places.txt';
         if ($filesystem->exists($filename)) {
             $limite = file_get_contents($filename);
