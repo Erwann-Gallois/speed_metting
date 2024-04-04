@@ -216,6 +216,8 @@ class EleveController extends AbstractController
             return $this->redirectToRoute('connexion');
         }
         $eleves = $urp->findBy(['type' => 2]);
+        $orga = $urp->findBy(['type' => 3]);
+        $eleves = array_merge($eleves, $orga);
         $pagination = $paginator->paginate($eleves, $request->query->getInt('page', $page), 10);
         return $this->render('eleve/liste_eleve.html.twig', [
             'eleves' => $pagination
