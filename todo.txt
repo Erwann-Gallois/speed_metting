@@ -1,2 +1,2 @@
-- Verifier Photo de Profil 
+- Verifier Photo de Profil -> Fait
 - Ajouter Organisateur dans liste Eleve
