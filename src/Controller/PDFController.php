@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Spipu\Html2Pdf\Html2Pdf;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PDFController extends AbstractController
 {
@@ -41,9 +42,16 @@ class PDFController extends AbstractController
     }
 
     #[Route('/impression/fiche/eleve/{nom}/{prenom}/{id}' , name: 'impression_fiche_eleve')]
-    public function impressionFicheEleve(String $nom, String $prenom, int $id, UserRepository $urp)
+    public function impressionFicheEleve(String $nom, String $prenom, int $id, UserRepository $urp, TranslatorInterface $translator)
     {
         $user = $urp->findBy(["id"=>$id, "type"=>2, "nom"=>$nom, "prenom"=>$prenom])[0];
+        if ($user == null) {
+            $user = $urp->findBy(["id"=>$id, "type"=>3, "nom"=>$nom, "prenom"=>$prenom])[0];
+        }
+        if ($user == null) {
+            $this->addFlash('danger', $translator->trans('pdf.error'));
+            return $this->redirectToRoute('accueil');
+        }
         if ($user->getImageName() == null) {
             $imagePath = $this->getParameter('kernel.project_dir').'/public/images/personne_lambda.png';
         }
