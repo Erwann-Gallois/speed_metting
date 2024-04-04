@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}{{"template.accueil"|trans}}{% endblock %}
 
 {% block body %}
     {% include 'flash_message.html.twig' %}
@@ -11,11 +11,11 @@
                     <div class="row">
                         <div class="col-12 mt-auto mb-5 text-center">
                             <small>Speed Meetings 2024</small>
-                            <h1 class="text-white mb-5">La réservation des rencontres est disponible</h1>
+                            <h1 class="text-white mb-5">{{"template.msg_resa"|trans}}</h1>
                             {% if app.user %}
-                                <a class="btn btn-secondary" href="{{path ("reservation")}}">Reserver</a>
+                                <a class="btn btn-secondary" href="{{path ("reservation")}}">{{"template.btn_resa"|trans}}</a>
                             {% else %}
-                                <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
+                                <a class="btn btn-secondary" href="{{path ("inscription")}}">{{"template.inscription"|trans}}</a>
                             {% endif %}
                             {% if app.user %}
                                 <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
@@ -28,7 +28,7 @@
                             <div class="date-wrap">
                                 <h5 class="text-white">
                                     <i class="custom-icon bi-clock me-2"></i>
-                                    21 Mai 2024
+                                    {{"template.date"|trans}}
                                 </h5>
                             </div>
 
@@ -39,7 +39,7 @@
                                 </h5>
                             </div>
 
-                            <div class="social-share">
+                            {# <div class="social-share">
                                 <ul class="social-icon d-flex align-items-center justify-content-center">
                                     <span class="text-white me-3">Social:</span>
 
@@ -61,7 +61,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> #}
                         </div>
                     </div>
                 </div>
@@ -82,21 +82,21 @@
                 <div class="container d-flex justify-content-center align-items-center">
                     <div class="row">
                         <div class="col-12 mt-auto mb-5 text-center">
-                            <small>Colloque EvryBio présente : </small>
+                            <small>{{"template.colloque_presenting"|trans}} : </small>
                             <h1 class="text-white mb-5">Speed Meetings 2024</h1>
                             {% if app.user %}
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn custom-btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Mon compte</button>
+                                    <button type="button" class="btn custom-btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{"template.compte"|trans}}</button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{path ('compte')}}">Profil</a></li>
-                                        <li><a class="dropdown-item" href="{{path ('planning')}}">Planning</a></li>
+                                        <li><a class="dropdown-item" href="{{path ('compte')}}">{{"template.profil"|trans}}</a></li>
+                                        <li><a class="dropdown-item" href="{{path ('planning')}}">{{"template.planning"|trans}}</a></li>
                                         {% if (afficherLien) and (pro == false) and (pro is not null) %}
-                                            <li><a href = "{{path ("reservation")}}" class = "dropdown-item">Reserver</a></li>
+                                            <li><a href = "{{path ("reservation")}}" class = "dropdown-item">{{"template.btn_resa"|trans}}</a></li>
                                         {% endif %}
                                     </ul>
                                 </div>
                             {% else %}
-                                <a class="btn btn-secondary" href="{{path ("inscription")}}">Inscription</a>
+                                <a class="btn btn-secondary" href="{{path ("inscription")}}">{{"template.inscription"|trans}}</a>
                             {% endif %}
                             {% if app.user %}
                                 <a class="btn btn-secondary" href="{{path ('deconnexion')}}">Deconnexion</a>
@@ -109,7 +109,7 @@
                             <div class="date-wrap">
                                 <h5 class="text-white">
                                     <i class="custom-icon bi-clock me-2"></i>
-                                    21 Mai 2024
+                                    {{"template.date"|trans}}
                                 </h5>
                             </div>
 
@@ -120,7 +120,7 @@
                                 </h5>
                             </div>
 
-                            <div class="social-share">
+                            {# <div class="social-share">
                                 <ul class="social-icon d-flex align-items-center justify-content-center">
                                     <span class="text-white me-3">Social:</span>
 
@@ -142,7 +142,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> #}
                         </div>
                     </div>
                 </div>

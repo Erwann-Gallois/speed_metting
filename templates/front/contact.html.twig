@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Contact{% endblock %}
+{% block title %}{{"template.contact"|trans}}{% endblock %}
 {% block body %}
     <section class = "section-padding">
         <div class="container">
-            <h1 class="text-center">Formulaire de contact</h1>
+            <h1 class="text-center">{{"template.form_contact"|trans}}</h1>
             <hr class="divider my-4">
             <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"aria-labelledby="nav-ContactForm-tab">
                 <div class = "custom-form">
@@ -20,7 +20,7 @@
                         {{form_row(form.sujet)}}
                         {{form_row(form.message)}}
                         <div class="col-lg-4 col-md-10 col-8 mx-auto">
-                            <button type="submit" class = "form-control">Envoyer</button>
+                            <button type="submit" class = "form-control">{{"template.envoyer"|trans}}</button>
                         </div>
                     </div>
                     {{ form_end(form) }}

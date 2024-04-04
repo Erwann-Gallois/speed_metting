@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block title %}Nous trouvez{% endblock %}
+{% block title %}{{"template.find"|trans}}{% endblock %}
 {% block body %}
     <section class = "section-padding">
         <div class="container">
-            <h2 class="mb-5 text-center">Nous trouvez</h2>
+            <h2 class="mb-5 text-center">{{"template.find"|trans}}</h2>
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2637.192130685937!2d2.425795391858858!3d48.625305343092464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5de1b71db3e7d%3A0xc2b3c2bba0107943!2s31%20Cr%20Blaise%20Pascal%2C%2091000%20%C3%89vry-Courcouronnes!5e0!3m2!1sfr!2sfr!4v1706798837272!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="col-lg-6 col-md-12">
-                    <h3>Adresse</h3>
+                    <h3>{{"template.adresse"|trans}}</h3>
                     <p>31 Cr Blaise Pascal, 91000 Évry-Courcouronnes</p>
                     <br />
-                    <h3>RER - Gare</h3>
+                    <h3>{{"template.rer"|trans}}</h3>
                     <p>Evry-Courcouronnes sur la ligne du RER D</p>
                 </div>
             </div>
