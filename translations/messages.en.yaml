@@ -25,7 +25,7 @@ form.new_repeat_mdp : Repeat new password
 form.quest_pro1 : What do you love about your job?
 form.quest_pro2 : Studies
 label.download : Download the image
-
+label.valid_info : I confirm my answers and the fields with (*) are filled correctly 
 # ---------------------------------------------------------------------------- #
 #                            Contrainte Formulaire :                           #
 # ---------------------------------------------------------------------------- #

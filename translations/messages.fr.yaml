@@ -25,6 +25,7 @@ form.new_repeat_mdp : Répéter le nouveau mot de passe
 form.quest_pro1 : Qu'est-ce qui vous passionne dans votre métier ?
 form.quest_pro2 : Etudes
 label.download : Télécharger l'image
+label.valid_info : Je valide mes réponses et les champs sont correctement remplis (*)
 # ---------------------------------------------------------------------------- #
 #                            Contrainte Formulaire :                           #
 # ---------------------------------------------------------------------------- #

@@ -26,14 +26,18 @@
                                     <div class = "col-lg-6 col-md-12">{{form_row(form.entreprise)}}</div>    
                                 </div>
                                 <label>{{'form.mdp1'|trans}}</label>
-                                    <div class = 'row'>
-                                        <div class = "col-11">{{ form_widget(form.plainPassword1) }} </div>
-                                        <div class = 'col-1'><button id="togglePassword" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button></div>
+                                    <div class="input-group">
+                                        {{form_widget(form.plainPassword1) }}
+                                        <div class="input-group-append">
+                                            <button id="togglePassword" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button>
+                                        </div>
                                     </div>
-                                    <label>{{'form.mdp2'|trans}}</label>
-                                    <div class = 'row'>
-                                        <div class = "col-11">{{ form_widget(form.plainPassword2) }} </div>
-                                        <div class = 'col-1'><button id="togglePassword2" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button></div>
+                                <label>{{'form.mdp2'|trans}}</label>
+                                    <div class="input-group">
+                                        {{form_widget(form.plainPassword2) }}
+                                        <div class="input-group-append">
+                                            <button id="togglePassword2" class="btn btn-toogle" type="button"><i class="bi bi-eye-fill"></i></button>
+                                        </div>
                                     </div>
                                 <div class = "row">
                                     <div class = "col-12">{{form_row(form.etude)}}</div>

@@ -26,7 +26,10 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints\Uuid as ConstraintsUuid;
 
 #[Route('/admin')]
 #[IsGranted('ROLE_ORGANISATEUR')]
@@ -173,6 +176,7 @@ class AdminController extends AbstractController
     #[Route ("creation/professionnel", name : "creer_pro")]
     public function creer_pro (Request $request, UserPasswordHasherInterface $hasher, MailerInterface $mailer, UserRepository $urp)
     {
+        $link = null;
         $form = $this->createForm(ProfessionnelType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
@@ -191,34 +195,59 @@ class AdminController extends AbstractController
             $user->setEntreprise($data["entreprise"]);
             $user->setRoles(["ROLE_PROFESSIONNEL"]);
             $user->setType(1);
+            $user->setInfoValid(false);
             $user->setPoste($data["poste"]);
-            $password = $hasher->hashPassword($user, "1234");
-            $user->setPassword($password);
+            $password = $hasher->hashPassword($user, uniqid('', true)); 
             $token = uniqid('', true);
+            $user->setPassword($password);
             $user->setToken($token);
             $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
-            $message = (new TemplatedEmail())
-            ->from(new Address("no.reply.speed.meetings2024@univ-evry.fr", "Speed Meetings 2024"))
-            ->to($data["email"])
-            ->subject("Lien de connexion pour remplir le formulaire de présentation")
-            // path of the Twig template to render
-            ->htmlTemplate('mail/lien_connexion.html.twig')
-            // pass variables (name => value) to the template
-            ->context([
-                "user" => $user,
-                "token" => $token
-            ]);
-            $mailer->send($message);
-            $this->addFlash("success", "Le professionnel a été creer et l'email a été envoyer");
-            return $this->redirectToRoute("admin");
+            // $message = (new TemplatedEmail())
+            // ->from(new Address("no.reply.speed.meetings2024@univ-evry.fr", "Speed Meetings 2024"))
+            // ->to($data["email"])
+            // ->subject("Lien de connexion pour remplir le formulaire de présentation")
+            // // path of the Twig template to render
+            // ->htmlTemplate('mail/lien_connexion.html.twig')
+            // // pass variables (name => value) to the template
+            // ->context([
+            //     "user" => $user,
+            //     "token" => $token
+            // ]);
+            // $mailer->send($message);
+            // $this->addFlash("success", "Le professionnel a été creer et l'email a été envoyer");
+            $link = $token;
+            // $this->addFlash("success", "Le professionnel a été creer");
+            // return $this->redirectToRoute("admin");
         }
         return $this->render("admin/creer_pro.html.twig", [
             "form" => $form->createView(),
+            "link" => $link 
         ]);
     }   
+
+    #[Route("/recuperer_lien/{id}", name: "recuperer_lien")]
+    public function recupererLienPro(int $id, UserRepository $urp): Response
+    {
+        $user = $urp->find($id);
+        if ($user === null) {
+            $this->addFlash("danger", "L'utilisateur n'existe pas");
+        }
+        else if ($user->getToken() === "" && $user->isInfoValid() === true) {
+            $this->addFlash("danger", "L'utilisateur a déjà rempli le formulaire");
+        }
+        else if ($user->getToken() === "" && $user->isInfoValid() === false) {
+            $this->addFlash("danger", "L'utilisateur a déjà rempli le formulaire mais il n'a pas été validé");
+        }
+        else if($user->getToken() !== "") {
+            $link = $this->generateUrl("inscription_pro", ["token" => $user->getToken()], UrlGenerator::ABSOLUTE_URL);
+            $this->addFlash("info", "Le lien de connexion est : \n" . $link);
+        }
+        return $this->redirectToRoute("liste_professionnel");
+    }
+
 
     #[Route("/supprimer/{id}", name: "supprimer")]
     public function supprimerPro(int $id, UserRepository $urp): Response

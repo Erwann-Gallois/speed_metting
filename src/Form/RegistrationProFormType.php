@@ -77,7 +77,7 @@ class RegistrationProFormType extends AbstractType
             ])
             ->add("imageFile", VichImageType::class, 
             [
-                'label' => 'Photo de profil',
+                'label' => 'form.img',
                 'help' => 'help.size_img',	
                 'required' => false,
                 'allow_delete' => true,

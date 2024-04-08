@@ -3,17 +3,39 @@
 {% block title %}Creation de professionnel{% endblock %}
 
 {% block body %}
-    <div class = "container">
-        <h1 class = "text-center mt-4 mb-4">Ajouter un professionnel</h1>
-        {{ form_start(form) }}
-            <div class = "row">
-                <div class = "col-6">{{form_row(form.nom)}}</div>
-                <div class = "col-6">{{form_row(form.prenom)}}</div>
-            </div>
-            {{form_row(form.email)}}
-            {{form_row(form.poste)}}
-            {{form_row(form.entreprise)}}
-            <button type = "submit" class = "btn btn-primary">Enregistrer</button>
-        {{form_end(form)}}
-    </div>
+    {% if link is null %}
+        <div class = "container">
+            <h1 class = "text-center mt-4 mb-4">Ajouter un professionnel</h1>
+            {{ form_start(form) }}
+                <div class = "row">
+                    <div class = "col-6">{{form_row(form.nom)}}</div>
+                    <div class = "col-6">{{form_row(form.prenom)}}</div>
+                </div>
+                {{form_row(form.email)}}
+                {{form_row(form.poste)}}
+                {{form_row(form.entreprise)}}
+                <button type = "submit" class = "btn btn-primary">Generer le lien</button>
+            {{form_end(form)}}
+        </div>
+    {% else %}
+        <div class = "container">
+            <h1 class = "text-center mt-4 mb-4">Ajouter un professionnel</h1>
+            {{ form_start(form) }}
+                <div class = "row">
+                    <div class = "col-6">{{form_row(form.nom)}}</div>
+                    <div class = "col-6">{{form_row(form.prenom)}}</div>
+                </div>
+                {{form_row(form.email)}}
+                {{form_row(form.poste)}}
+                {{form_row(form.entreprise)}}
+                <button type = "submit" class = "btn btn-primary">Generer le lien</button>
+            {{form_end(form)}}
+        </div>
+        <div class = "container">
+            <hr />
+            <p>Lien : {{absolute_url (path("inscription_pro", {"token" : link}))}}</p>
+        </div>
+    {% endif %}
+
+    
 {% endblock %}

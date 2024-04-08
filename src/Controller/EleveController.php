@@ -25,7 +25,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/{_locale}', requirements:["_locale" => "fr|en"])]
 class EleveController extends AbstractController
 {
     public function __construct(

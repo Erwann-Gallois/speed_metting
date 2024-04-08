@@ -59,8 +59,8 @@ class FrontController extends AbstractController
     {
         $message = (new TemplatedEmail())
             ->from($email)
-            ->to('no.reply.speed.meetings2024@gmail.com')
-            ->subject('Contact - '.$sujet)
+            ->to('20210472@etud.univ-evry.fr')
+            ->subject('Contact Site Speed Meetings - '.$sujet)
             // path of the Twig template to render
             ->htmlTemplate('mail/contact.html.twig')
             // pass variables (name => value) to the template
@@ -119,7 +119,7 @@ class FrontController extends AbstractController
         return $this->render('front/carte.html.twig');
     }
 
-    #[Route('/{_locale}/compte', name: 'compte')]
+    #[Route('/compte', name: 'compte')]
     public function redirection_compte(): Response
     {
         $user = $this->security->getUser();
