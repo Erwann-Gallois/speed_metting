@@ -16,6 +16,7 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Mail</th>
+                        <th>Session</th>
                         <th>RDV pris</th>
                         {# <th>Validé</th> #}
                         <th>Actions</th>
@@ -28,6 +29,7 @@
                             <td>{{ eleve.nom }}</td>
                             <td>{{ eleve.prenom }}</td>
                             <td>{{ eleve.email }}</td>
+                            <td>{{ eleve.session }}</td>
                             <td>{{ nbre_session[loop.index0] }}</td>
                             {# <td>{{ eleve.valide }}</td> #}
                             <td>
