@@ -119,8 +119,8 @@ class RegistrationFormType extends AbstractType
                 'label' => "form.session",
                 'required' => true,
                 "choices" => [
-                    "Session 1" => 1,
-                    "Session 2" => 2
+                    "Session 1 : 14h - 15h30" => 1,
+                    "Session 2 : 16h - 17h30" => 2
                 ]
             ])
         ;
