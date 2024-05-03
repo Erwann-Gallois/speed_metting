@@ -23,9 +23,17 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{path ("liste_professionnel")}}">Professionnel</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path ("liste_eleve")}}">Eleve</a>
-						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							  Eleves
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="{{path ("liste_eleve_session", {num_session : 1}) }}">Session 1</a></li>
+								<li><a class="dropdown-item" href="{{path ("liste_eleve_session", {num_session : 2}) }}">Session 2</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="{{path ("liste_eleve") }}">Tout</a></li>
+							</ul>
+						</li>				  
 						<li class="nav-item">
 							<a class="nav-link" href="{{path ("liste_organisateur")}}">Organisateur</a>
 						</li>

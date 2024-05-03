@@ -106,7 +106,7 @@ class EleveController extends AbstractController
             $user->setPassword($hasher->hashPassword($user, $form->get('plainPassword1')->getData()));
 
             // NOTE Verification du nombre de place dans la session
-            $nbre_session = $entityManager->getRepository(User::class)->count(['session' => $form->get('session')->getData()]);
+            $nbre_session = $entityManager->getRepository(User::class)->count(['session' => $form->get('session')->getData(), "type" => 2]);
             if ($nbre_session >= $this->getMaxPlaceSession()) {
                 $this->addFlash('danger', $translator->trans("flash.session_complet"));
                 return $this->redirectToRoute('inscription');

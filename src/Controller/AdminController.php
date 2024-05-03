@@ -164,6 +164,20 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/liste/eleve/session/{num_session}', name: 'liste_eleve_session')]
+    public function listeEleveSession(int $num_session, UserRepository $urp, SessionRepository $srp): Response
+    {
+        $sessions = $urp->findBy(["session" => $num_session]);
+        $nbre_session = [];
+        foreach ($sessions as $key => $value) {
+            $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));
+        }
+        return $this->render('admin/liste_eleve_session.html.twig', [
+            'eleves' => $sessions,
+            'nbre_session' => $nbre_session,
+        ]);
+    }
+
     #[Route('/liste/organisateur', name: 'liste_organisateur')]
     public function listeorganisateur(UserRepository $urp): Response
     {
@@ -204,23 +218,7 @@ class AdminController extends AbstractController
             $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
-
-            // $message = (new TemplatedEmail())
-            // ->from(new Address("no.reply.speed.meetings2024@univ-evry.fr", "Speed Meetings 2024"))
-            // ->to($data["email"])
-            // ->subject("Lien de connexion pour remplir le formulaire de présentation")
-            // // path of the Twig template to render
-            // ->htmlTemplate('mail/lien_connexion.html.twig')
-            // // pass variables (name => value) to the template
-            // ->context([
-            //     "user" => $user,
-            //     "token" => $token
-            // ]);
-            // $mailer->send($message);
-            // $this->addFlash("success", "Le professionnel a été creer et l'email a été envoyer");
             $link = $token;
-            // $this->addFlash("success", "Le professionnel a été creer");
-            // return $this->redirectToRoute("admin");
         }
         return $this->render("admin/creer_pro.html.twig", [
             "form" => $form->createView(),

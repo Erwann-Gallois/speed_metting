@@ -1,0 +1,50 @@
+{% extends 'base_back.html.twig' %}
+{% block title %}
+    Liste des élèves
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Liste des élèves</h1>
+        <hr />
+        {# {{ form_start(form, {'method': 'POST'}) }} #}
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped table-hover table-responsive">
+                    <thead class = "table-dark">
+                    <tr>
+                        {# <th>Selection</th> #}
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Mail</th>
+                        <th>Session</th>
+                        <th>RDV pris</th>
+                        {# <th>Validé</th> #}
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for eleve in eleves %}
+                        {# {% set cpt = loop.index0 %} #}
+                        <tr>
+                            <td>{{ eleve.nom }}</td>
+                            <td>{{ eleve.prenom }}</td>
+                            <td>{{ eleve.email }}</td>
+                            <td>{{ eleve.session }}</td>
+                            <td>{{ nbre_session[loop.index0] }}</td>
+                            {# <td>{{ eleve.valide }}</td> #}
+                            <td>
+                                <a href="{{path ('front_eleve', {id : eleve.id, nom : eleve.nom, prenom:eleve.prenom})}}" class="btn btn-sm btn-primary"><i class="bi bi-eye-fill"></i></a>
+                                <a href="mailto:{{eleve.email}}" class="btn btn-sm btn-secondary"><i class="bi bi-envelope-at-fill"></i></a>
+                                <a href="{{path ('impression_fiche_eleve', {id : eleve.id, nom : eleve.nom, prenom:eleve.prenom})}}" class="btn btn-sm btn-warning"><i class="bi bi-printer-fill"></i></a>
+                                <a href="{{path ("supprimer", {id:eleve.id})}}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {# <a href="{{ path('eleve_new') }}" class="btn btn-success">Ajouter un elevefessionnel</a> #}
+            </div>
+        </div>
+        {# {{ form_end(form) }} #}
+    </div>
+{% endblock %}
