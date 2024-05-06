@@ -8,6 +8,7 @@
 /vendor/
 /migrations/
 /.env
+/.vagrant
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

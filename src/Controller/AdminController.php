@@ -167,14 +167,16 @@ class AdminController extends AbstractController
     #[Route('/liste/eleve/session/{num_session}', name: 'liste_eleve_session')]
     public function listeEleveSession(int $num_session, UserRepository $urp, SessionRepository $srp): Response
     {
-        $sessions = $urp->findBy(["session" => $num_session]);
+        $sessions = $urp->findBy(["session" => $num_session, "type" => 2]);
         $nbre_session = [];
+        $nbre_eleve = count($sessions);
         foreach ($sessions as $key => $value) {
             $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));
         }
         return $this->render('admin/liste_eleve_session.html.twig', [
             'eleves' => $sessions,
             'nbre_session' => $nbre_session,
+            "nbre_eleve_session" => $nbre_eleve
         ]);
     }
 
