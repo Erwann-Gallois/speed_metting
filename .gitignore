@@ -9,6 +9,7 @@
 /migrations/
 /.env
 /.vagrant
+/vagrant
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
