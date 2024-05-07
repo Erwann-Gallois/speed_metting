@@ -94,7 +94,6 @@ class SecurityController extends AbstractController
             }
             else {
                 $this->addFlash('danger', $translator->trans('flash.email_not_found'));
-
             }
         }
         return $this->render('security/mdp_oublie.html.twig', [

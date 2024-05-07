@@ -328,7 +328,7 @@
                 <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;">
                   
       <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.5;text-align:left;color:#000000;"><p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial; text-align: justify;"><span style="font-size: 13px;">Cher(e) {{user.nom}} {{user.prenom}},</span></p>
-<p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial; text-align: justify;"><span style="font-size: 13px;">Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte sur le site des <a href = "{{absolute_url ({{path ('accueil')}})}}">Speed Meeting 2024 </a>. Pour garantir la sécurité de votre compte, veuillez suivre les instructions ci-dessous pour choisir un nouveau mot de passe :</span></p>
+<p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial; text-align: justify;"><span style="font-size: 13px;">Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte sur le site des <a href = "{{absolute_url(path("accueil"))}}">Speed Meeting 2024 </a>. Pour garantir la sécurité de votre compte, veuillez suivre les instructions ci-dessous pour choisir un nouveau mot de passe :</span></p>
 <p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial; text-align: justify;"><span style="font-size: 13px;">Cliquez sur le bouton suivant pour accéder à la page de réinitialisation du mot de passe </span></p></div>
     
                 </td>
@@ -341,7 +341,7 @@
         <tbody>
           <tr>
             <td align="center" bgcolor="#F1C00B" role="presentation" style="border:none;border-radius:8px;cursor:auto;font-style:normal;mso-padding-alt:10px 20px 10px 20px;background:#F1C00B;" valign="middle">
-              <a href="{{absolute_url ({{path ("reinitialisation_mdp", {'token' : token})}})}}" style="display: inline-block; background: #F1C00B; color: #ffffff; font-family: Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-weight: normal; line-height: 100%; margin: 0; text-decoration: none; text-transform: none; padding: 10px 20px 10px 20px; mso-padding-alt: 0px; border-radius: 8px;" target="_blank">
+              <a href="{{absolute_url(path ("reinitialisation_mdp", {'token' : token}))}}" style="display: inline-block; background: #F1C00B; color: #ffffff; font-family: Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-weight: normal; line-height: 100%; margin: 0; text-decoration: none; text-transform: none; padding: 10px 20px 10px 20px; mso-padding-alt: 0px; border-radius: 8px;" target="_blank">
                 <span>Réinitialiser</span>
               </a>
             </td>
@@ -370,7 +370,7 @@
               <tr>
                 <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;">
                   
-      <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.5;text-align:left;color:#000000;"><p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial; text-align: center;">Si le bouton ne s'affiche pas ou ne fonctionne pas, vous pouvez cliquer sur ce <a href="{{absolute_url ({{path ("reinitialisation_mdp", {'token' : token})}})}}" style="color: #EE5007;">lien</a>.</p></div>
+      <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.5;text-align:left;color:#000000;"><p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial; text-align: center;">Si le bouton ne s'affiche pas ou ne fonctionne pas, vous pouvez cliquer sur ce <a href="{{absolute_url(path ("reinitialisation_mdp", {'token' : token}))}}" style="color: #EE5007;">lien</a>.</p></div>
     
                 </td>
               </tr>
