@@ -167,7 +167,7 @@ class AdminController extends AbstractController
     #[Route('/liste/eleve/session/{num_session}', name: 'liste_eleve_session')]
     public function listeEleveSession(int $num_session, UserRepository $urp, SessionRepository $srp): Response
     {
-        $sessions = $urp->findBy(["session" => $num_session, "type" => 2]);
+        $sessions = $urp->findAllUserBySession($num_session);
         $nbre_session = [];
         $nbre_eleve = count($sessions);
         foreach ($sessions as $key => $value) {

@@ -49,12 +49,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()->getResult();
     }
 
-    public function findAllUserBySession(int $id): array
+    public function findAllUserBySession(int $session): array
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.session = :id')
+            ->andWhere('u.session = :session')
             ->andWhere('u.type = 2')
-            ->setParameter('id', $id)
+            ->setParameter('session', $session)
             ->orderBy('u.nom', 'ASC')
             ->getQuery()
             ->getResult()
