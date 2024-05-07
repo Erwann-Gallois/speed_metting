@@ -23,6 +23,9 @@ class Session
     #[ORM\ManyToOne]
     private ?User $eleve = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_reservation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Session
     public function setEleve(?User $eleve): static
     {
         $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    public function getDateReservation(): ?\DateTimeInterface
+    {
+        return $this->date_reservation;
+    }
+
+    public function setDateReservation(\DateTimeInterface $date_reservation): static
+    {
+        $this->date_reservation = $date_reservation;
 
         return $this;
     }

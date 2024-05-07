@@ -23,7 +23,8 @@ class ReservationType extends AbstractType
                 'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                     ->where('u.type = :type')
-                    ->setParameter('type', 1);
+                    ->setParameter('type', 1)
+                    ->orderBy('u.nom', "ASC");
                 },
                 'label' => false,
                 'required' => true,

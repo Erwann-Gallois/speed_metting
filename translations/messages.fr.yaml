@@ -48,7 +48,7 @@ flash.numetud_wrong : Le numéro étudiant est incorrect
 flash.rdvalreadytake : Vous avez déjà enregistré un rendez vous avec ce profesionnel
 flash.rdvalreadywithpro : Vous avez déjà enregistré un rendez vous avec ce profesionnel à cette heure - 
 flash.rdvfull : Ce profesionnel est déjà complet à cette heure
-flash.rdvgood : Votre rendez vous est enregistré
+flash.rdvgood : Vos rendez vous sont enregistrés
 flash.session_complet : Cette session est complète
 flash.student_not_found : Etudiant non trouvé
 flash.supp_compte : Votre compte a été supprimé
@@ -56,6 +56,9 @@ flash.pro_not_found : Profesionnel non trouvé
 flash_compte_pro_creer : Compte profesionnel créé
 flash.send_mail : L'email a été envoyé
 flash.email_not_found : Email non trouvé
+flash.rdvnotopen : Vous ne pouvez pas encore réserver
+flash.rdvfinish : La phase de réservation de rendez vous est terminé
+flash.inscription_fin : La phase d'inscription est terminé
 
 # ---------------------------------------------------------------------------- #
 #                               Contrainte Entity                              #

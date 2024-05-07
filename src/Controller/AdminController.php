@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Entity\User;
+use App\Form\DateInscriptionFinType;
+use App\Form\DateReservationFinType;
 use App\Form\DateReservationType;
 use App\Form\EmailSelectionType;
 use App\Form\LimitePlacesFormType;
@@ -56,12 +58,20 @@ class AdminController extends AbstractController
 
         $form3 = $this->createForm(DateReservationType::class);
         $form3->handleRequest($request);
+
+        $form4 = $this->createForm(DateReservationFinType::class);
+        $form4->handleRequest($request);
+
+        $form5 = $this->createForm(DateInscriptionFinType::class);
+        $form5->handleRequest($request);
         // Mettre à jour le fichier de configuration ou un fichier spécifique
         $filesystem = new Filesystem();
         $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
         $filename = $configDir . '/limite_places.txt';
         $filename2 = $configDir . '/limite_place_session.txt';
         $filename3 = $configDir . '/date_reservation.txt';
+        $filename4 = $configDir . '/date_reservation_fin.txt';
+        $filename5 = $configDir . '/date_inscription_fin.txt';
         if ($form->isSubmitted() && $form->isValid()) {
             $limitePlaces = $form->get('limite_places')->getData();
 
@@ -116,6 +126,42 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin');
 
         }
+
+        if ($form4->isSubmitted() && $form4->isValid())
+        {
+            $date = $form4->get('date_fin')->getData();
+            // $date = new DateTime($date, new DateTimeZone("Europe/Paris"));
+            $filesystem = new Filesystem();
+            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
+            $filename4 = $configDir . '/date_reservation_fin.txt';
+            
+            try {
+                $filesystem->dumpFile($filename4, $date->format("d/m/Y H:i"));
+                $this->addFlash('success', 'La date de reservation de fin a été mise à jour.');
+            } catch (IOExceptionInterface $exception) {
+                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la date de réservation de fin.');
+            }
+
+            return $this->redirectToRoute('admin');
+        }
+
+        if ($form5->isSubmitted() && $form5->isValid())
+        {
+            $date = $form5->get('date_inscrit_fin')->getData();
+            // $date = new DateTime($date, new DateTimeZone("Europe/Paris"));
+            $filesystem = new Filesystem();
+            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
+            $filename5 = $configDir . '/date_inscription_fin.txt';
+            
+            try {
+                $filesystem->dumpFile($filename5, $date->format("d/m/Y H:i"));
+                $this->addFlash('success', 'La date des inscriptions a été mise à jour.');
+            } catch (IOExceptionInterface $exception) {
+                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la date des inscriptions.');
+            }
+
+            return $this->redirectToRoute('admin');
+        }
         // Lire la valeur actuelle
         $nbre_place_groupe = null;
         if ($filesystem->exists($filename)) {
@@ -129,14 +175,27 @@ class AdminController extends AbstractController
         if ($filesystem->exists($filename3)) {
             $date = file_get_contents($filename3);
         }
+        $date_fin = null;
+        if ($filesystem->exists($filename4)) {
+            $date_fin = file_get_contents($filename4);
+        }
+        $date_inscrit_fin = null;
+        if ($filesystem->exists($filename5)) {
+            $date_inscrit_fin = file_get_contents($filename5);
+        }
         return $this->render('admin/index.html.twig', [
             'form' => $form->createView(),
             'form2' => $form2->createView(),
             'form3' => $form3->createView(),
+            "form4" => $form4->createView(),
+            "form5" => $form5->createView(),
             'nbre_place_groupe' => $nbre_place_groupe,
             'nbre_place_session' => $nbre_place_session,
             'date' => $date,
-            'nbre_eleve' => $nbre_eleve + $nbre_organisateur,
+            'date_fin' => $date_fin,
+            'date_inscrit_fin' => $date_inscrit_fin,
+            'nbre_eleve' => $nbre_eleve,
+            'nbre_orga' => $nbre_organisateur,
             'nbre_pro' => $nbre_pro,
         ]);
     }

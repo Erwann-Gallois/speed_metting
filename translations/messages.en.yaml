@@ -48,7 +48,7 @@ flash.numetud_wrong : Student number is incorrect
 flash.rdvalreadytake : You have already registered with this professional
 flash.rdvalreadywithpro : You have already registered a meeting with this professional at this hour - 
 flash.rdvfull : This professional is already full at this hour
-flash.rdvgood : Your meeting is registered
+flash.rdvgood : Each meeting is registered
 flash.session_complet : This session is full
 flash.student_not_found : Student not found
 flash.supp_compte : Your account has been deleted
@@ -56,6 +56,9 @@ flash.pro_not_found : Professional not found
 flash_compte_pro_creer : Professional account created
 flash.send_mail : The email has been sent
 flash.email_not_found : Email not found
+flash.rdvnotopen : You cannot booking a meeting for now
+flash.rdvfinish : The appointment booking phase is over
+flash.inscription_fin : The registration phase is over
 
 # ---------------------------------------------------------------------------- #
 #                               Contrainte Entity                              #

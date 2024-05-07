@@ -9,9 +9,12 @@ use App\Form\ReservationCollectionType;
 use App\Form\UserEleveType;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
+use DateTime;
+use Doctrine\DBAL\Types\DateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\PseudoTypes\False_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -24,6 +27,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Filesystem\Filesystem;
+
 
 class EleveController extends AbstractController
 {
@@ -91,9 +96,83 @@ class EleveController extends AbstractController
         return false;
     }
 
+    private function getDateFinInscription():bool
+    {
+        $filesystem = new Filesystem();
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
+        $filename5 = $configDir . '/date_inscription_fin.txt';
+        $date = null;
+        if ($filesystem->exists($filename5)) {
+            $date = file_get_contents($filename5);
+        }
+        try {
+            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
+            if ($date === false) {
+                throw new \Exception("La conversion de la date a échoué.");
+            }
+            // Utilisez $date comme un objet DateTime
+        } catch (\Exception $e) {
+            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
+            echo "Erreur lors du parsing de la date : " . $e->getMessage();
+        }
+        $now = new DateTime();
+        return $now >= $date;
+    }
+
+    private function getDateOuvertureRDV():bool
+    {
+        $filesystem = new Filesystem();
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
+        $filename3 = $configDir . '/date_reservation.txt';
+        $date = null;
+        if ($filesystem->exists($filename3)) {
+            $date = file_get_contents($filename3);
+        }
+        try {
+            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
+            if ($date === false) {
+                throw new \Exception("La conversion de la date a échoué.");
+            }
+            // Utilisez $date comme un objet DateTime
+        } catch (\Exception $e) {
+            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
+            echo "Erreur lors du parsing de la date : " . $e->getMessage();
+        }
+        $now = new DateTime();
+        return $now >= $date;
+    }
+
+    private function getDateFinRDV():bool
+    {
+        $filesystem = new Filesystem();
+        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
+        $filename4 = $configDir . '/date_reservation_fin.txt';
+        $date = null;
+        if ($filesystem->exists($filename4)) {
+            $date = file_get_contents($filename4);
+        }
+        try {
+            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
+            if ($date === false) {
+                throw new \Exception("La conversion de la date a échoué.");
+            }
+            // Utilisez $date comme un objet DateTime
+        } catch (\Exception $e) {
+            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
+            echo "Erreur lors du parsing de la date : " . $e->getMessage();
+        }
+        $now = new DateTime();
+        return $now >= $date;
+    }
+
     #[Route('/inscription', name: 'inscription')]
     public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
+        if ($this->getDateFinInscription())
+        {
+            $this->addFlash('danger', $translator->trans("flash.inscription_fin"));
+            return $this->redirectToRoute('accueil');
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -303,6 +382,16 @@ class EleveController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
+        if ($this->getDateOuvertureRDV() == false)
+        {
+            $this->addFlash('warning', $translator->trans("flash.rdvnotopen"));
+            return $this->redirectToRoute("accueil");
+        }
+        if ($this->getDateFinRDV() == true)
+        {
+            $this->addFlash('info', $translator->trans("flash.rdvfinish"));
+            return $this->redirectToRoute("accueil");
+        }
         $session = $user->getSession();
         $heures = $this->slotRDV($session);
         $reservation = array();
@@ -332,6 +421,7 @@ class EleveController extends AbstractController
                 }
                 $value->setEleve($user);
                 $value->setHeure($heure);
+                $value->setDateReservation(new DateTime('now'));
                 $em = $this->doctrine->getManager();
                 $em->persist($value);
                 $em->flush();
