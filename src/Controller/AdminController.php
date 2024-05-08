@@ -212,7 +212,7 @@ class AdminController extends AbstractController
     #[Route('/liste/eleve', name: 'liste_eleve')]
     public function listeEleve(SessionRepository $srp, UserRepository $urp): Response
     {
-        $eleves = $urp->findBy(["type" => 2], ["nom" => "ASC"]);
+        $eleves = $urp->findBy(["type" => 2]);
         $nbre_session = [];
         foreach ($eleves as $key => $value) {
             $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));
