@@ -26,4 +26,5 @@
 /public/assets/
 /assets/vendor/
 /public/image_profil/*
+/public/donnee/*.txt
 ###< symfony/asset-mapper ###
