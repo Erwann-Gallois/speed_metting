@@ -203,7 +203,7 @@ class AdminController extends AbstractController
     #[Route('/liste/professionnel', name: 'liste_professionnel')]
     public function listeProfessionnel(UserRepository $urp): Response
     {
-        $pros = $urp->findBy(["type" => 1]);
+        $pros = $urp->findBy(["type" => 1], ["nom" => "ASC"]);
         return $this->render('admin/liste_professionnel.html.twig', [
             'pros' => $pros,
         ]);
@@ -212,7 +212,7 @@ class AdminController extends AbstractController
     #[Route('/liste/eleve', name: 'liste_eleve')]
     public function listeEleve(SessionRepository $srp, UserRepository $urp): Response
     {
-        $eleves = $urp->findBy(["type" => 2]);
+        $eleves = $urp->findBy(["type" => 2], ["nom" => "ASC"]);
         $nbre_session = [];
         foreach ($eleves as $key => $value) {
             $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));
@@ -242,7 +242,7 @@ class AdminController extends AbstractController
     #[Route('/liste/organisateur', name: 'liste_organisateur')]
     public function listeorganisateur(UserRepository $urp): Response
     {
-        $organisateurs = $urp->findBy(["type" => 3]);
+        $organisateurs = $urp->findBy(["type" => 3], ["nom" => "ASC"]);
         return $this->render('admin/liste_organisateur.html.twig', [
             'organisateurs' => $organisateurs,
         ]);
