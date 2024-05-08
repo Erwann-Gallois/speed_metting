@@ -84,7 +84,7 @@ class AdminController extends AbstractController
                 $filesystem->dumpFile($filename, $limitePlaces);
                 $this->addFlash('success', 'La limite de places a été mise à jour.');
             } catch (IOExceptionInterface $exception) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la limite de places.');
+                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la limite de places.');
             }
 
             return $this->redirectToRoute('admin');
@@ -102,7 +102,7 @@ class AdminController extends AbstractController
                 $filesystem->dumpFile($filename2, $limiteSession);
                 $this->addFlash('success', 'La limite de places par session a été mise à jour.');
             } catch (IOExceptionInterface $exception) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la limite de places par session.');
+                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la limite de places par session.');
             }
 
             return $this->redirectToRoute('admin');
@@ -120,7 +120,7 @@ class AdminController extends AbstractController
                 $filesystem->dumpFile($filename3, $date->format("d/m/Y H:i"));
                 $this->addFlash('success', 'La date de reservation a été mise à jour.');
             } catch (IOExceptionInterface $exception) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la date de réservation.');
+                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la date de réservation.');
             }
 
             return $this->redirectToRoute('admin');
@@ -134,14 +134,12 @@ class AdminController extends AbstractController
             $filesystem = new Filesystem();
             $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
             $filename4 = $configDir . '/date_reservation_fin.txt';
-            
             try {
                 $filesystem->dumpFile($filename4, $date->format("d/m/Y H:i"));
                 $this->addFlash('success', 'La date de reservation de fin a été mise à jour.');
             } catch (IOExceptionInterface $exception) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la date de réservation de fin.');
+                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la date de réservation de fin.');
             }
-
             return $this->redirectToRoute('admin');
         }
 
@@ -157,7 +155,7 @@ class AdminController extends AbstractController
                 $filesystem->dumpFile($filename5, $date->format("d/m/Y H:i"));
                 $this->addFlash('success', 'La date des inscriptions a été mise à jour.');
             } catch (IOExceptionInterface $exception) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la mise à jour de la date des inscriptions.');
+                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la date des inscriptions.');
             }
 
             return $this->redirectToRoute('admin');
@@ -212,7 +210,7 @@ class AdminController extends AbstractController
     #[Route('/liste/eleve', name: 'liste_eleve')]
     public function listeEleve(SessionRepository $srp, UserRepository $urp): Response
     {
-        $eleves = $urp->findBy(["type" => 2]);
+        $eleves = $urp->findBy(["type" => 2], ["nom" => "ASC"]);
         $nbre_session = [];
         foreach ($eleves as $key => $value) {
             $nbre_session[$key] = count($srp->findAllSessionEleve($value->getId()));

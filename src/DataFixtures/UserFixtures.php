@@ -32,6 +32,22 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
+        //Creation Eleve
+        for ($i = 0; $i < 60; $i++) {
+            $user = new User();
+            $user->setNom($faker->lastName);
+            $user->setPrenom($faker->firstName);
+            $user->setEmail($faker->email);
+            $password = $this->hasher->hashPassword($user, '1234');
+            $user->setPassword($password);
+            $user->setRoles(['ROLE_ELEVE']);
+            $user->setType(2);
+            $user->setSession($rand = rand(1, 2));
+            $user->setFiliere($faker->text());
+            $user->setQuestion($faker->text());
+            $manager->persist($user);
+        }
+
         $manager->flush();
     }
 }
