@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Variable;
 use App\Form\ContactFormType;
 use App\Form\QuestionProType;
 use App\Form\RegistrationProFormType;
@@ -78,14 +79,8 @@ class FrontController extends AbstractController
     #[Route('/organisation', name: 'organisation')]
     public function organisation(): Response
     {
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename = $configDir . '/limite_places.txt';
-        if ($filesystem->exists($filename)) {
-            $limite = file_get_contents($filename);
-        } else {
-            $limite = 0;
-        }
+        $limite = $this->doctrine->getRepository(Variable::class)->findOneBy(['id' => 1]);
+        $limite = $limite->getPlaceRdv();
         return $this->render('front/organisation.html.twig', [
             'limite' => $limite
         ]);

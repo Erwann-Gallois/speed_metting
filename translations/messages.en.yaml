@@ -40,6 +40,7 @@ form.contraint.mdp1.not_blank : The password cannot be empty
 flash.compte_non_valid  : Your account is not validated yet
 flash.compte_valid : Your account is now validated and you can now log in
 flash.mail_valid : We have sent you an email to validate your account, verify your spam folder
+flash.mail_mdp_oublie : We have sent you an email to reset your password, verify your spam folder
 flash.mdp_dif : Passwords do not match
 flash.modf_profil : Profile modified
 flash.no_connect : You must be connected to access this page

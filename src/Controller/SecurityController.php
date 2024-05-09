@@ -91,9 +91,12 @@ class SecurityController extends AbstractController
                     "token" => $token
                 ]);
                 $mailer->send($message);
+                $this->addFlash('success', $translator->trans("flash.mail_mdp_oublie"));
+                return $this->redirectToRoute('accueil');
             }
             else {
                 $this->addFlash('danger', $translator->trans('flash.email_not_found'));
+                return $this->redirectToRoute('mdp_oublie');
             }
         }
         return $this->render('security/mdp_oublie.html.twig', [

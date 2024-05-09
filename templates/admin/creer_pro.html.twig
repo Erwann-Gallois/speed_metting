@@ -5,6 +5,7 @@
 {% block body %}
     {% if link is null %}
         <div class = "container">
+        {% include 'flash_message.html.twig' %}
             <h1 class = "text-center mt-4 mb-4">Ajouter un professionnel</h1>
             {{ form_start(form) }}
                 <div class = "row">

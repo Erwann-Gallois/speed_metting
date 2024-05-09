@@ -2,36 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\Session;
+use App\Entity\NumeroEtudiant;
 use App\Entity\User;
-use App\Form\DateInscriptionFinType;
-use App\Form\DateReservationFinType;
-use App\Form\DateReservationType;
-use App\Form\EmailSelectionType;
-use App\Form\LimitePlacesFormType;
-use App\Form\LimiteSessionFormType;
+use App\Entity\Variable;
+use App\Form\NumeroEtudiantType;
 use App\Form\ProfessionnelType;
+use App\Form\VariableType;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-// use Symfony\Component\CssSelector\XPath\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Constraints\Uuid as ConstraintsUuid;
 
 #[Route('/admin')]
 #[IsGranted('ROLE_ORGANISATEUR')]
@@ -50,151 +40,100 @@ class AdminController extends AbstractController
         $nbre_pro = count($urp->findBy(["type" => 1]));
         $nbre_eleve = count($urp->findBy(["type" => 2]));
         $nbre_organisateur = count($urp->findBy(["type" => 3]));
-        $form = $this->createForm(LimitePlacesFormType::class);
+        $em = $this->doctrine->getManager();
+        $variable = $em->getRepository(Variable::class)->findBy(["id" => 1]);
+        $form = $this->createForm(VariableType::class);
         $form->handleRequest($request);
-
-        $form2 = $this->createForm(LimiteSessionFormType::class);
-        $form2->handleRequest($request);
-
-        $form3 = $this->createForm(DateReservationType::class);
-        $form3->handleRequest($request);
-
-        $form4 = $this->createForm(DateReservationFinType::class);
-        $form4->handleRequest($request);
-
-        $form5 = $this->createForm(DateInscriptionFinType::class);
-        $form5->handleRequest($request);
-        // Mettre à jour le fichier de configuration ou un fichier spécifique
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename = $configDir . '/limite_places.txt';
-        $filename2 = $configDir . '/limite_place_session.txt';
-        $filename3 = $configDir . '/date_reservation.txt';
-        $filename4 = $configDir . '/date_reservation_fin.txt';
-        $filename5 = $configDir . '/date_inscription_fin.txt';
-        if ($form->isSubmitted() && $form->isValid()) {
-            $limitePlaces = $form->get('limite_places')->getData();
-
-            // Mettre à jour le fichier de configuration ou un fichier spécifique
-            $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-            $filename = $configDir . '/limite_places.txt';
-
-            try {
-                $filesystem->dumpFile($filename, $limitePlaces);
-                $this->addFlash('success', 'La limite de places a été mise à jour.');
-            } catch (IOExceptionInterface $exception) {
-                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la limite de places.');
-            }
-
-            return $this->redirectToRoute('admin');
-        }
-
-        if ($form2->isSubmitted() && $form2->isValid()) {
-            $limiteSession = $form2->get('limite_session')->getData();
-
-            // Mettre à jour le fichier de configuration ou un fichier spécifique
-            $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-            $filename2 = $configDir . '/limite_place_session.txt';
-
-            try {
-                $filesystem->dumpFile($filename2, $limiteSession);
-                $this->addFlash('success', 'La limite de places par session a été mise à jour.');
-            } catch (IOExceptionInterface $exception) {
-                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la limite de places par session.');
-            }
-
-            return $this->redirectToRoute('admin');
-        }
-
-        if ($form3->isSubmitted() && $form3->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
-            $date = $form3->get('date')->getData();
-            // $date = new DateTime($date, new DateTimeZone("Europe/Paris"));
-            $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-            $filename3 = $configDir . '/date_reservation.txt';
-            
-            try {
-                $filesystem->dumpFile($filename3, $date->format("d/m/Y H:i"));
-                $this->addFlash('success', 'La date de reservation a été mise à jour.');
-            } catch (IOExceptionInterface $exception) {
-                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la date de réservation.');
+            $data = $form->getData();
+            $em = $this->doctrine->getManager();
+            $variable = $em->getRepository(Variable::class)->findBy(["id" => 1]);
+            if (count($variable) === 0)
+            {
+                $variable = new Variable();
+                $variable->setDateFinInscription($data->getDateFinInscription());
+                $variable->setDateOuverResa($data->getDateOuverResa());
+                $variable->setDateFinResa($data->getDateFinResa());
+                $variable->setPlaceSession($data->getPlaceSession());
+                $variable->setPlaceRdv($data->getPlaceRdv());
+                $em->persist($variable);
+                $em->flush();
+                $this->addFlash("success", "Les variables ont été modifiées");
+                return $this->redirectToRoute("admin");
             }
-
-            return $this->redirectToRoute('admin');
-
+            $variable = $variable[0];
+            dump($data);
+            $date_fin_inscription = ($data["date_fin_inscription"] === null) ? $variable->getDateFinInscription() : $data["date_fin_inscription"];
+            $date_ouver_resa = ($data["date_ouver_resa"] === null) ? $variable->getDateOuverResa() : $data["date_ouver_resa"];
+            $date_fin_resa = ($data["date_fin_resa"] === null) ? $variable->getDateFinResa() : $data["date_fin_resa"];
+            $place_session = ($data["place_session"] === null) ? $variable->getPlaceSession() : $data["place_session"];
+            $place_rdv = ($data["place_rdv"] === null) ? $variable->getPlaceRdv() : $data["place_rdv"];
+            $variable->setDateFinInscription($date_fin_inscription);
+            $variable->setDateOuverResa($date_ouver_resa);
+            $variable->setDateFinResa($date_fin_resa);
+            $variable->setPlaceSession($place_session);
+            $variable->setPlaceRdv($place_rdv);
+            $em->persist($variable);
+            $em->flush();
+            $this->addFlash("success", "Les variables ont été modifiées");
+            return $this->redirectToRoute("admin");
         }
-
-        if ($form4->isSubmitted() && $form4->isValid())
+        if ($variable === [])
         {
-            $date = $form4->get('date_fin')->getData();
-            // $date = new DateTime($date, new DateTimeZone("Europe/Paris"));
-            $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-            $filename4 = $configDir . '/date_reservation_fin.txt';
-            try {
-                $filesystem->dumpFile($filename4, $date->format("d/m/Y H:i"));
-                $this->addFlash('success', 'La date de reservation de fin a été mise à jour.');
-            } catch (IOExceptionInterface $exception) {
-                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la date de réservation de fin.');
-            }
-            return $this->redirectToRoute('admin');
+            return $this->render('admin/index.html.twig', [
+                'form' => $form->createView(),
+                'nbre_eleve' => $nbre_eleve,
+                'nbre_orga' => $nbre_organisateur,
+                'nbre_pro' => $nbre_pro,
+                'variable' => null
+            ]);
         }
-
-        if ($form5->isSubmitted() && $form5->isValid())
+        else
         {
-            $date = $form5->get('date_inscrit_fin')->getData();
-            // $date = new DateTime($date, new DateTimeZone("Europe/Paris"));
-            $filesystem = new Filesystem();
-            $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-            $filename5 = $configDir . '/date_inscription_fin.txt';
-            
-            try {
-                $filesystem->dumpFile($filename5, $date->format("d/m/Y H:i"));
-                $this->addFlash('success', 'La date des inscriptions a été mise à jour.');
-            } catch (IOExceptionInterface $exception) {
-                $this->addFlash('danger', 'Une erreur est survenue lors de la mise à jour de la date des inscriptions.');
-            }
+            $variable = $variable[0];
+            $date_fin_inscription = $variable->getDateFinInscription()->format("d/m/Y H:i");
+            $date_ouver_resa = $variable->getDateOuverResa()->format("d/m/Y H:i");
+            $date_fin_resa = $variable->getDateFinResa()->format("d/m/Y H:i");
+            $place_session = $variable->getPlaceSession();
+            $place_rdv = $variable->getPlaceRdv();
+            return $this->render('admin/index.html.twig', [
+                'form' => $form->createView(),
+                'nbre_eleve' => $nbre_eleve,
+                'nbre_orga' => $nbre_organisateur,
+                'nbre_pro' => $nbre_pro,
+                'variable' => $variable,
+                'date_fin_inscription' => $date_fin_inscription,
+                'date_ouver_resa' => $date_ouver_resa,
+                'date_fin_resa' => $date_fin_resa,
+                'place_session' => $place_session,
+                'place_rdv' => $place_rdv
+            ]);
+        }
+    }
 
-            return $this->redirectToRoute('admin');
+    #[Route('/ajouter/numero_etudiant', name: 'add_num_etud')]
+    public function addNumEtud(Request $request): Response
+    {
+        $em = $this->doctrine->getManager();
+        $num_etud = new NumeroEtudiant();
+        $form = $this->createForm(NumeroEtudiantType::class, $num_etud);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $verif = $em->getRepository(NumeroEtudiant::class)->findBy(["numero" => $num_etud->getNumero()]);
+            if (count($verif) > 0)
+            {
+                $this->addFlash("danger", "Ce numéro étudiant existe déjà");
+                return $this->redirectToRoute("admin");
+            }
+            $em->persist($num_etud);
+            $em->flush();
+            $this->addFlash("success", "Le numéro étudiant a été ajouté");
+            return $this->redirectToRoute("admin");
         }
-        // Lire la valeur actuelle
-        $nbre_place_groupe = null;
-        if ($filesystem->exists($filename)) {
-            $nbre_place_groupe = file_get_contents($filename);
-        }
-        $nbre_place_session = null;
-        if ($filesystem->exists($filename2)) {
-            $nbre_place_session = file_get_contents($filename2);
-        }
-        $date = null;
-        if ($filesystem->exists($filename3)) {
-            $date = file_get_contents($filename3);
-        }
-        $date_fin = null;
-        if ($filesystem->exists($filename4)) {
-            $date_fin = file_get_contents($filename4);
-        }
-        $date_inscrit_fin = null;
-        if ($filesystem->exists($filename5)) {
-            $date_inscrit_fin = file_get_contents($filename5);
-        }
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/add_num_etud.html.twig', [
             'form' => $form->createView(),
-            'form2' => $form2->createView(),
-            'form3' => $form3->createView(),
-            "form4" => $form4->createView(),
-            "form5" => $form5->createView(),
-            'nbre_place_groupe' => $nbre_place_groupe,
-            'nbre_place_session' => $nbre_place_session,
-            'date' => $date,
-            'date_fin' => $date_fin,
-            'date_inscrit_fin' => $date_inscrit_fin,
-            'nbre_eleve' => $nbre_eleve,
-            'nbre_orga' => $nbre_organisateur,
-            'nbre_pro' => $nbre_pro,
         ]);
     }
 

@@ -2,19 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\NumeroEtudiant;
 use App\Entity\Session;
 use App\Entity\User;
+use App\Entity\Variable;
 use App\Form\RegistrationFormType;
 use App\Form\ReservationCollectionType;
 use App\Form\UserEleveType;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
 use DateTime;
-use Doctrine\DBAL\Types\DateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
-use phpDocumentor\Reflection\PseudoTypes\False_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -27,7 +27,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 
 class EleveController extends AbstractController
@@ -41,18 +40,14 @@ class EleveController extends AbstractController
 
     private function getMaxPlaceSession():int
     {
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename = $configDir . '/limite_place_session.txt';
-        $limite = file_get_contents($filename);
-        return $limite;
+        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
+        return $variable->getPlaceSession();
     }    
 
     private function getMaxPlaceRDV():int
     {
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename = $configDir . '/limite_places.txt';
-        $limite = file_get_contents($filename);
-        return $limite;
+        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
+        return $variable->getPlaceRdv();
     }
 
     private function slotRDV(int $session):array
@@ -78,89 +73,33 @@ class EleveController extends AbstractController
 
     private function getNumEtud(int $num_etud_compare):int|bool
     {
-        $publicDir = $this->getParameter('kernel.project_dir') . '/public';
-        $filename = $publicDir . '/donnee/num_etud.json';
-        $filename2 = $publicDir . '/donnee/num_etud_orga.json';
-        $num_etud = json_decode(file_get_contents($filename), true);
-        $num_etud_orga = json_decode(file_get_contents($filename2), true);
-        foreach ($num_etud_orga as $num) {
-            if ($num_etud_compare == $num) {
-                return 1;
-            }
-        }
-        foreach ($num_etud as $num) {
-            if ($num_etud_compare == $num) {
-                return 2;
-            }
+        $num_etud = $this->doctrine->getRepository(NumeroEtudiant::class)->findOneBy(['numero' => $num_etud_compare]);
+        if ($num_etud != null) {
+           return $num_etud->getType();
         }
         return false;
     }
 
     private function getDateFinInscription():bool
     {
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename5 = $configDir . '/date_inscription_fin.txt';
-        $date = null;
-        if ($filesystem->exists($filename5)) {
-            $date = file_get_contents($filename5);
-        }
-        try {
-            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
-            if ($date === false) {
-                throw new \Exception("La conversion de la date a échoué.");
-            }
-            // Utilisez $date comme un objet DateTime
-        } catch (\Exception $e) {
-            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
-            echo "Erreur lors du parsing de la date : " . $e->getMessage();
-        }
+        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
+        $date = $variable->getDateFinInscription();
         $now = new DateTime();
         return $now >= $date;
     }
 
     private function getDateOuvertureRDV():bool
     {
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename3 = $configDir . '/date_reservation.txt';
-        $date = null;
-        if ($filesystem->exists($filename3)) {
-            $date = file_get_contents($filename3);
-        }
-        try {
-            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
-            if ($date === false) {
-                throw new \Exception("La conversion de la date a échoué.");
-            }
-            // Utilisez $date comme un objet DateTime
-        } catch (\Exception $e) {
-            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
-            echo "Erreur lors du parsing de la date : " . $e->getMessage();
-        }
+        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
+        $date = $variable->getDateOuverResa();
         $now = new DateTime();
         return $now >= $date;
     }
 
     private function getDateFinRDV():bool
     {
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename4 = $configDir . '/date_reservation_fin.txt';
-        $date = null;
-        if ($filesystem->exists($filename4)) {
-            $date = file_get_contents($filename4);
-        }
-        try {
-            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
-            if ($date === false) {
-                throw new \Exception("La conversion de la date a échoué.");
-            }
-            // Utilisez $date comme un objet DateTime
-        } catch (\Exception $e) {
-            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
-            echo "Erreur lors du parsing de la date : " . $e->getMessage();
-        }
+        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
+        $date = $variable->getDateFinResa();
         $now = new DateTime();
         return $now >= $date;
     }
@@ -195,13 +134,13 @@ class EleveController extends AbstractController
             switch ($num_etud_exist) {
                 case 1: 
                     $user->setNumEtud($form->get('numetud')->getData());
-                    $user->setRoles(["ROLE_ORGANISATEUR"]);
-                    $user->setType(3);
+                    $user->setRoles(['ROLE_ELEVE']);
+                    $user->setType(2);
                     break;
                 case 2:
                     $user->setNumEtud($form->get('numetud')->getData());
-                    $user->setRoles(['ROLE_ELEVE']);
-                    $user->setType(2);
+                    $user->setRoles(["ROLE_ORGANISATEUR"]);
+                    $user->setType(3);
                     break;
                 default:
                     $this->addFlash('danger', $translator->trans("flash.numetud_wrong"));

@@ -40,6 +40,7 @@ form.contraint.mdp1.not_blank : Le mot de passe ne peut pas être vide
 flash.compte_non_valid  : Votre compte n'est pas encore validé
 flash.compte_valid : Votre compte est maintenant validé et vous pouvez vous connecter
 flash.mail_valid : Nous vous avons envoyé un mail pour valider votre compte, vérifiez votre dossier spam
+flash.mail_mdp_oublie : Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vérifiez votre dossier spam
 flash.mdp_dif : Les mots de passe ne correspondent pas
 flash.modf_profil : Profil modifié
 flash.no_connect : Vous devez être connecté pour accéder à cette page

@@ -15,8 +15,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'entity.unique_email')]
-#[UniqueEntity(fields: ['numetud'], message: 'entity.unique_numetud')]
+#[UniqueEntity(fields: ['email'], message: 'Email déjà utilisé')]
+#[UniqueEntity(fields: ['numetud'], message: 'Numéro étudiant déjà utilisé')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {

@@ -2,11 +2,12 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Variable;
 use DateTime;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -14,31 +15,18 @@ class DateReservationSubscriber extends AbstractController  implements EventSubs
 {
     private $twig;
     private $security;
+    private $doctrine;
 
-    public function __construct(\Twig\Environment $twig, Security $security)
+    public function __construct(\Twig\Environment $twig, Security $security, ManagerRegistry $doctrine)
     {
         $this->twig = $twig;
         $this->security = $security;
+        $this->doctrine = $doctrine;
     }
     public function onKernelRequest(RequestEvent $event): void
     {
-        $filesystem = new Filesystem();
-        $configDir = $this->getParameter('kernel.project_dir') . '/public/donnee';
-        $filename3 = $configDir . '/date_reservation.txt';
-        $date = null;
-        if ($filesystem->exists($filename3)) {
-            $date = file_get_contents($filename3);
-        }
-        try {
-            $date = \DateTime::createFromFormat('d/m/Y H:i', $date);
-            if ($date === false) {
-                throw new \Exception("La conversion de la date a échoué.");
-            }
-            // Utilisez $date comme un objet DateTime
-        } catch (\Exception $e) {
-            // Gérez l'erreur, par exemple en loggant l'erreur ou en informant l'utilisateur
-            echo "Erreur lors du parsing de la date : " . $e->getMessage();
-        }
+        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
+        $date = $variable->getDateOuverResa();
         $now = new DateTime();
         $afficherLien = $now >= $date;
         $this->twig->addGlobal('afficherLien', $afficherLien);
