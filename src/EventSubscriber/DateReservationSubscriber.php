@@ -27,8 +27,9 @@ class DateReservationSubscriber extends AbstractController  implements EventSubs
     {
         $variable = $this->doctrine->getRepository(Variable::class)->find(1);
         $date = $variable->getDateOuverResa();
+        $date_fin = $variable->getDateFinResa();
         $now = new DateTime();
-        $afficherLien = $now >= $date;
+        $afficherLien = $now >= $date && $now <= $date_fin;
         $this->twig->addGlobal('afficherLien', $afficherLien);
 
         $user = $this->security->getUser();

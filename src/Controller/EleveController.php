@@ -62,7 +62,6 @@ class EleveController extends AbstractController
             1 => ['14:00', '15:00'],
             2 => ['16:00', '17:00'],
         ];
-
         list($start, $end) = $sessions[$session];
         $start = new \DateTime($start);
         $end = new \DateTime($end);
@@ -326,6 +325,14 @@ class EleveController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('connexion');
         }
+        if ($user->getType() == 1) {
+            return $this->redirectToRoute('accueil');
+        }
+        if (count($this->doctrine->getRepository(Session::class)->findBy(["eleve" => $user->getId()])) >= 6)
+        {
+            $this->addFlash('warning', "Vous avez deja reserver vos 6 rendez-vous.");
+            return $this->redirectToRoute("accueil");
+        }
         if ($this->getDateOuvertureRDV() == false)
         {
             $this->addFlash('warning', $translator->trans("flash.rdvnotopen"));
@@ -336,42 +343,53 @@ class EleveController extends AbstractController
             $this->addFlash('info', $translator->trans("flash.rdvfinish"));
             return $this->redirectToRoute("accueil");
         }
-        $session = $user->getSession();
-        $heures = $this->slotRDV($session);
-        $reservation = array();
-        for ($i = 0; $i < count($heures); $i++) {
-            $reservation['reservation'][$i] = new Session();
-        }
-        $form = $this->createForm(ReservationCollectionType::class, $reservation);
+        $num_session = $user->getSession();
+        $heures = $this->slotRDV($num_session);
+        $reservation = array_fill(0, 6, ['pro' => null]); // Ou toute autre logique initiale
+        $form = $this->createForm(ReservationCollectionType::class, ['reservation' => $reservation]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            $pro_diff = false;
+            $pro_not_full = false;
+            $em = $this->doctrine->getManager();
+            $pros = [];
+            $ids = [];
             foreach ($data['reservation'] as $key => $value) {
-                $heure = new \DateTime($heures[$key]);
-                $unique = $srp->findUniqueSession($value->getPro()->getId(), $heure, $user->getId());
-                if (count($unique) > 0) {
-                    $this->addFlash('danger', $translator->trans("flash.rdvalreadywithpro") . $heure->format("H:i:s")) ;
-                    return $this->redirectToRoute('reservation');
+                $pros[] = $this->doctrine->getRepository(User::class)->find($value['pro']->getId());
+                $ids[] = $value['pro']->getId();
+            }
+            // Verification que chaque pro est différent
+            if (count($ids) !== count(array_unique($ids))) {
+                $this->addFlash("danger", $translator->trans("flash.rdvalreadytake"));
+                return $this->redirectToRoute("reservation");
+            }
+            else {
+                $pro_diff = true;
+            }
+            // Verification que le pro n'a pas deja un groupe complet à cet heure
+            for ($i = 0; $i < count($pros); $i++) {
+                $nbre_rdv = count($srp->findBy(['pro' => $pros[$i]->getId(), 'heure' => new \DateTime($heures[$i])]));
+                if ($nbre_rdv >= $this->getMaxPlaceRDV($num_session)) {
+                    $this->addFlash("danger", $translator->trans("flash.rdvfull") . " : ". $pros[$i]->getNom() . " " . $pros[$i]->getPrenom());
+                    return $this->redirectToRoute("reservation");
                 }
-                $uniquerdv = $srp->findUniqueSessionProEleve($value->getPro()->getId(), $user->getId());
-                if (count($uniquerdv) > 0) {
-                    $this->addFlash('danger', $translator->trans("flash.rdvalreadytake"));
-                    return $this->redirectToRoute('reservation');
+            }
+            $pro_not_full = true;
+            if ($pro_diff && $pro_not_full)
+            {
+                for ($i = 0; $i < count($pros); $i++) {
+                    $session = new Session();
+                    $session->setEleve($user);
+                    $session->setPro($pros[$i]);
+                    $session->setHeure(new \DateTime($heures[$i]));
+                    $session->setDateReservation(new \DateTime());
+                    $em->persist($session);
                 }
-                $allrdv = $srp->findAllSessionProForOneHour($value->getPro()->getId(), $heure);
-                if (count($allrdv) >= $this->getMaxPlaceRDV($session)) {
-                    $this->addFlash('danger', $translator->trans("flash.rdvfull"));
-                    return $this->redirectToRoute('reservation');
-                }
-                $value->setEleve($user);
-                $value->setHeure($heure);
-                $value->setDateReservation(new DateTime('now'));
-                $em = $this->doctrine->getManager();
-                $em->persist($value);
                 $em->flush();
             }
-            $this->addFlash('success', $translator->trans("flash.rdvgood"));
-            return $this->redirectToRoute('accueil');
+            $this->addFlash("success", $translator->trans("flash.rdvgood"));
+            return $this->redirectToRoute("accueil");
         }
         return $this->render('eleve/reservation.html.twig', [
             'user' => $user,
@@ -379,7 +397,6 @@ class EleveController extends AbstractController
             'heures' => $heures,
         ]);
     }
-
     #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_eleve_front")]
     public function supprimerEleve(int $id, String $nom, String $prenom, UserRepository $urp, SessionRepository $srp, Request $request, TranslatorInterface $translator, EntityManagerInterface $em, TokenStorageInterface $tokenStorage): Response
     {

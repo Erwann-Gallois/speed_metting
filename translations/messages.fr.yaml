@@ -46,7 +46,7 @@ flash.modf_profil : Profil modifié
 flash.no_connect : Vous devez être connecté pour accéder à cette page
 flash.not_access : Vous n'avez pas le droit d'accéder à cette page
 flash.numetud_wrong : Le numéro étudiant est incorrect
-flash.rdvalreadytake : Vous avez déjà enregistré un rendez vous avec ce profesionnel
+flash.rdvalreadytake : Vous avez un professionnel en doublons
 flash.rdvalreadywithpro : Vous avez déjà enregistré un rendez vous avec ce profesionnel à cette heure - 
 flash.rdvfull : Ce profesionnel est déjà complet à cette heure
 flash.rdvgood : Vos rendez vous sont enregistrés

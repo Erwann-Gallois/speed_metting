@@ -80,4 +80,26 @@ class SessionRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function SearchReservation (int $id_eleve = null, int $id_pro = null, DateTimeInterface $heure = null): array
+    {
+        $query = $this->createQueryBuilder('s');
+
+        if ($id_eleve) {
+            $query->andWhere('s.eleve = :id_eleve')
+                ->setParameter('id_eleve', $id_eleve);
+        }
+
+        if ($id_pro) {
+            $query->andWhere('s.pro = :id_pro')
+                ->setParameter('id_pro', $id_pro);
+        }
+
+        if ($heure) {
+            $query->andWhere('s.heure = :heure')
+                ->setParameter('heure', $heure);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

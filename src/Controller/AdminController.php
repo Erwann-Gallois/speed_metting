@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\NumeroEtudiant;
+use App\Entity\Session;
 use App\Entity\User;
 use App\Entity\Variable;
+use App\Form\ModifResaType;
 use App\Form\NumeroEtudiantType;
 use App\Form\ProfessionnelType;
+use App\Form\SearchResaType;
 use App\Form\VariableType;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
@@ -261,6 +264,67 @@ class AdminController extends AbstractController
         $em->flush();
         $this->addFlash("success", "L'utilisateur a été supprimé");
         return $this->redirectToRoute("admin");
+    }
+
+    #[Route("/reservation", name: "search_reservation")]
+    public function reservation_serch (Request $request) : Response
+    {
+        $form = $this->createForm(SearchResaType::class);
+        $form->handleRequest($request);
+        $resultats = null;
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            $em = $this->doctrine->getManager();
+            $eleve_id = ($data["eleve"] === null) ? null : $data["eleve"]->getId();
+            $pro_id = ($data["pro"] === null) ? null : $data["pro"]->getId();
+            $heure = ($data["heure"] === null) ? null : new \DateTime($data["heure"]->format('H:i:s'));
+            $resultats = $em->getRepository(Session::class)->SearchReservation($eleve_id, $pro_id, $heure);
+        }
+        return $this->render("admin/search_reservation.html.twig", 
+        [
+            "form" => $form->createView(), 
+            "resultats" => $resultats
+        ]);
+    }
+
+    #[Route("/reservation/modifie/{id}", name: "modifie_reservation")]
+    public function modifie_reservation (int $id, Request $request, SessionRepository $srp, UserRepository $urp) : Response
+    {
+        $em = $this->doctrine->getManager();
+        $session = $srp->find($id);
+        $form = $this->createForm(ModifResaType::class, $session);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            $pro = $urp->find($data->getPro());
+            $eleve = $urp->find($data->getEleve());
+            $session->setPro($pro);
+            $session->setEleve($eleve);
+            $session->setHeure(new \DateTime($data->getHeure()->format('H:i:s')));
+            $session->setDateReservation($session->getDateReservation());
+            $em->persist($session);
+            $em->flush();
+            $this->addFlash("success", "La réservation a été modifiée");
+            return $this->redirectToRoute("search_reservation");
+        }
+        return $this->render("admin/modifie_reservation.html.twig", 
+        [
+            "form" => $form->createView(), 
+            "session" => $session
+        ]);
+    }
+
+    #[Route("/reservation/delete/{id}", name: "delete_reservation")]
+    public function delete_reservation (int $id, SessionRepository $srp) : Response
+    {
+        $em = $this->doctrine->getManager();
+        $session = $srp->find($id);
+        $em->remove($session);
+        $em->flush();
+        $this->addFlash("success", "La réservation a été supprimée");
+        return $this->redirectToRoute("search_reservation");
     }
 
 }

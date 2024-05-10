@@ -1,0 +1,18 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Modification réservation{% endblock %}
+
+{% block body %}
+    <div class = "container">
+        {% include 'flash_message.html.twig' %}
+        <h1 class = "text-center mt-4 mb-4">Modification réservation</h1>
+        {{ form_start(form) }}
+            <div class = "row">
+                <div class = "col-4">{{form_row(form.eleve)}}</div>
+                <div class = "col-4">{{form_row(form.pro)}}</div>
+                <div class = "col-4">{{form_row(form.heure)}}</div>
+            </div>
+            <button type = "submit" class = "btn btn-primary">Modification réservation</button>
+        {{form_end(form)}}
+    </div>   
+{% endblock %}

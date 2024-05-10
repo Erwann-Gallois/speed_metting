@@ -343,14 +343,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->imageSize;
     }
 
-    /**
-     * @return Collection<int, Session>
-     */
-    public function getSessions(): Collection
-    {
-        return $this->sessions;
-    }
-
     public function addSession(Session $session): static
     {
         if (!$this->sessions->contains($session)) {
