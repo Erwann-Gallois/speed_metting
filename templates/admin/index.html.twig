@@ -40,12 +40,16 @@
                     <div class = "col-6">{{form_widget(form.date_fin_resa, {"attr": {"class": "form-control"}})}}</div>
                 </div>
                 <div class = "form-group row">
-                    <div class = "col-6">{{form_label(form.place_session, "Nouvelle limite de places par session : " ~ place_session)}}</div>
+                    <div class = "col-6">{{form_label(form.place_session, "Limite de places par session : " ~ place_session)}}</div>
                     <div class = "col-6">{{form_widget(form.place_session, {"attr": {"class": "form-control"}})}}</div>
                 </div>
                 <div class = "form-group row">
-                    <div class = "col-6">{{form_label(form.place_rdv, "Nouvelle limite de places par RDVs : " ~ place_rdv) }}</div>
+                    <div class = "col-6">{{form_label(form.place_rdv, "Limite de places par RDVs - Session 1 : " ~ place_rdv) }}</div>
                     <div class = "col-6">{{form_widget(form.place_rdv, {"attr": {"class": "form-control"}})}}</div>
+                </div>
+                <div class = "form-group row">
+                    <div class = "col-6">{{form_label(form.place_rdv2, "Limite de places par RDVs - Session 2 : " ~ place_rdv2) }}</div>
+                    <div class = "col-6">{{form_widget(form.place_rdv2, {"attr": {"class": "form-control"}})}}</div>
                 </div>
                 <button type = "submit" class = "btn btn-primary">Mettre a jour</button>
             {{form_end(form)}}

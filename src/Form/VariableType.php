@@ -44,7 +44,15 @@ class VariableType extends AbstractType
             ->add('place_rdv', IntegerType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Nouvelle limite de places par RDVs',
+                    'placeholder' => 'Nouvelle limite de places par RDVs - Session 1',
+                    'class' => 'form-control',
+                ],
+                'required' => false,
+            ])
+            ->add('place_rdv2', IntegerType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Nouvelle limite de places par RDVs - Session 2',
                     'class' => 'form-control',
                 ],
                 'required' => false,

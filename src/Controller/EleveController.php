@@ -44,10 +44,15 @@ class EleveController extends AbstractController
         return $variable->getPlaceSession();
     }    
 
-    private function getMaxPlaceRDV():int
+    private function getMaxPlaceRDV(int $session):int
     {
         $variable = $this->doctrine->getRepository(Variable::class)->find(1);
-        return $variable->getPlaceRdv();
+        if ($session == 1) {
+            return $variable->getPlaceRdv();
+        }
+        else {
+            return $variable->getPlaceRdv2();
+        }
     }
 
     private function slotRDV(int $session):array
@@ -354,7 +359,7 @@ class EleveController extends AbstractController
                     return $this->redirectToRoute('reservation');
                 }
                 $allrdv = $srp->findAllSessionProForOneHour($value->getPro()->getId(), $heure);
-                if (count($allrdv) >= $this->getMaxPlaceRDV()) {
+                if (count($allrdv) >= $this->getMaxPlaceRDV($session)) {
                     $this->addFlash('danger', $translator->trans("flash.rdvfull"));
                     return $this->redirectToRoute('reservation');
                 }

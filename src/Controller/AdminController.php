@@ -68,11 +68,13 @@ class AdminController extends AbstractController
             $date_fin_resa = ($data["date_fin_resa"] === null) ? $variable->getDateFinResa() : $data["date_fin_resa"];
             $place_session = ($data["place_session"] === null) ? $variable->getPlaceSession() : $data["place_session"];
             $place_rdv = ($data["place_rdv"] === null) ? $variable->getPlaceRdv() : $data["place_rdv"];
+            $place_rdv2 = ($data["place_rdv2"] === null) ? $variable->getPlaceRdv2() : $data["place_rdv2"];
             $variable->setDateFinInscription($date_fin_inscription);
             $variable->setDateOuverResa($date_ouver_resa);
             $variable->setDateFinResa($date_fin_resa);
             $variable->setPlaceSession($place_session);
             $variable->setPlaceRdv($place_rdv);
+            $variable->setPlaceRdv2($place_rdv2);
             $em->persist($variable);
             $em->flush();
             $this->addFlash("success", "Les variables ont été modifiées");
@@ -96,6 +98,7 @@ class AdminController extends AbstractController
             $date_fin_resa = $variable->getDateFinResa()->format("d/m/Y H:i");
             $place_session = $variable->getPlaceSession();
             $place_rdv = $variable->getPlaceRdv();
+            $place_rdv2 = $variable->getPlaceRdv2();
             return $this->render('admin/index.html.twig', [
                 'form' => $form->createView(),
                 'nbre_eleve' => $nbre_eleve,
@@ -106,7 +109,8 @@ class AdminController extends AbstractController
                 'date_ouver_resa' => $date_ouver_resa,
                 'date_fin_resa' => $date_fin_resa,
                 'place_session' => $place_session,
-                'place_rdv' => $place_rdv
+                'place_rdv' => $place_rdv,
+                'place_rdv2' => $place_rdv2
             ]);
         }
     }

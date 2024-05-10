@@ -29,6 +29,9 @@ class Variable
     #[ORM\Column(nullable: true)]
     private ?int $place_rdv = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $place_rdv2 = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Variable
     public function setPlaceRdv(?int $place_rdv): static
     {
         $this->place_rdv = $place_rdv;
+
+        return $this;
+    }
+
+    public function getPlaceRdv2(): ?int
+    {
+        return $this->place_rdv2;
+    }
+
+    public function setPlaceRdv2(?int $place_rdv2): static
+    {
+        $this->place_rdv2 = $place_rdv2;
 
         return $this;
     }
