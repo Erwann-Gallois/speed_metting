@@ -63,7 +63,6 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute("admin");
             }
             $variable = $variable[0];
-            dump($data);
             $date_fin_inscription = ($data["date_fin_inscription"] === null) ? $variable->getDateFinInscription() : $data["date_fin_inscription"];
             $date_ouver_resa = ($data["date_ouver_resa"] === null) ? $variable->getDateOuverResa() : $data["date_ouver_resa"];
             $date_fin_resa = ($data["date_fin_resa"] === null) ? $variable->getDateFinResa() : $data["date_fin_resa"];
