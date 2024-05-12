@@ -6,6 +6,7 @@
 parameters:
     app.supported_locales: [en, fr]
 services:
+    App\Services\FonctionUtile:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

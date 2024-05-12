@@ -11,6 +11,7 @@ use App\Form\ReservationCollectionType;
 use App\Form\UserEleveType;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
+use App\Services\FonctionUtile;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,6 +35,7 @@ class EleveController extends AbstractController
     public function __construct(
         private ManagerRegistry $doctrine, 
         private Security $security, 
+        private FonctionUtile $fonctionUtile
     )
     {
     }
@@ -43,37 +45,6 @@ class EleveController extends AbstractController
         $variable = $this->doctrine->getRepository(Variable::class)->find(1);
         return $variable->getPlaceSession();
     }    
-
-    private function getMaxPlaceRDV(int $session):int
-    {
-        $variable = $this->doctrine->getRepository(Variable::class)->find(1);
-        if ($session == 1) {
-            return $variable->getPlaceRdv();
-        }
-        else {
-            return $variable->getPlaceRdv2();
-        }
-    }
-
-    private function slotRDV(int $session):array
-    {
-        $slots = [];
-        $sessions = [
-            1 => ['14:00', '15:00'],
-            2 => ['16:00', '17:00'],
-        ];
-        list($start, $end) = $sessions[$session];
-        $start = new \DateTime($start);
-        $end = new \DateTime($end);
-        $i = 0;
-        while ($start < $end) {
-            $time = $start->format('H:i');
-            $slots[$i] = $time;
-            $start->modify('+10 minutes');
-            $i++;
-        }
-        return $slots;
-    }
 
     private function getNumEtud(int $num_etud_compare):int|bool
     {
@@ -344,7 +315,20 @@ class EleveController extends AbstractController
             return $this->redirectToRoute("accueil");
         }
         $num_session = $user->getSession();
-        $heures = $this->slotRDV($num_session);
+        $heures = $this->fonctionUtile->slotRDV($num_session);
+        $all_pro = $this->doctrine->getRepository(User::class)->findBy(['type' => 1], ['nom' => 'ASC']);
+        $tab_place = []; // Tableau de la forme [pro][heure] = nbre de rdv
+        for ($i = 0; $i < count($all_pro); $i++) {
+            for ($j = 0; $j < count($heures); $j++) {
+                $nbre_rdv = count($srp->findBy(['pro' => $all_pro[$i]->getId(), 'heure' => new \DateTime($heures[$j])]));
+                $nbre_place = $this->fonctionUtile->getMaxPlaceRDV($num_session);
+                if ($nbre_rdv >= $nbre_place) {
+                    $tab_place[$all_pro[$i]->getNom()." ".$all_pro[$i]->getPrenom()][$heures[$j]] = "Plein";
+                    continue;
+                }
+                $tab_place[$all_pro[$i]->getNom()." ".$all_pro[$i]->getPrenom()][$heures[$j]] = $nbre_place - $nbre_rdv;
+            }
+        }
         $reservation = array_fill(0, 6, ['pro' => null]); // Ou toute autre logique initiale
         $form = $this->createForm(ReservationCollectionType::class, ['reservation' => $reservation]);
         $form->handleRequest($request);
@@ -370,7 +354,7 @@ class EleveController extends AbstractController
             // Verification que le pro n'a pas deja un groupe complet à cet heure
             for ($i = 0; $i < count($pros); $i++) {
                 $nbre_rdv = count($srp->findBy(['pro' => $pros[$i]->getId(), 'heure' => new \DateTime($heures[$i])]));
-                if ($nbre_rdv >= $this->getMaxPlaceRDV($num_session)) {
+                if ($nbre_rdv >= $this->fonctionUtile->getMaxPlaceRDV($num_session)) {
                     $this->addFlash("danger", $translator->trans("flash.rdvfull") . " : ". $pros[$i]->getNom() . " " . $pros[$i]->getPrenom());
                     return $this->redirectToRoute("reservation");
                 }
@@ -395,6 +379,7 @@ class EleveController extends AbstractController
             'user' => $user,
             'forms' => $form->createView(),
             'heures' => $heures,
+            'tab_place' => $tab_place
         ]);
     }
     #[Route("/supprimer/{nom}/{prenom}/{id}", name: "supprimer_eleve_front")]

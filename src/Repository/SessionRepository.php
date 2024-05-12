@@ -66,6 +66,7 @@ class SessionRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.pro = :id_pro')
             ->setParameter('id_pro', $id_pro)
+            ->orderBy('s.heure', 'ASC')
             ->getQuery()
             ->getResult()
         ;

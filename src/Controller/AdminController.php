@@ -13,6 +13,7 @@ use App\Form\SearchResaType;
 use App\Form\VariableType;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
+use App\Services\FonctionUtile;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,6 +34,7 @@ class AdminController extends AbstractController
     public function __construct(
         private ManagerRegistry $doctrine, 
         private Security $security, 
+        private FonctionUtile $fonction_utile
     )
     {
     }
@@ -266,7 +268,31 @@ class AdminController extends AbstractController
         return $this->redirectToRoute("admin");
     }
 
-    #[Route("/reservation", name: "search_reservation")]
+    #[Route("/reservation/{num_session}", name: "place_reservation")]
+    public function admin_place (SessionRepository $srp, int $num_session)
+    {
+        $heures = $this->fonction_utile->slotRdv($num_session); // Slot de 14h à 15h (session 1)
+        $all_pro = $this->doctrine->getRepository(User::class)->findBy(['type' => 1], ['nom' => 'ASC']);
+        $tab_place = []; // Tableau de la forme [pro][heure] = nbre de rdv
+        for ($i = 0; $i < count($all_pro); $i++) {
+            for ($j = 0; $j < count($heures); $j++) {
+                $nbre_rdv = count($srp->findBy(['pro' => $all_pro[$i]->getId(), 'heure' => new \DateTime($heures[$j])]));
+                $nbre_place = $this->fonction_utile->getMaxPlaceRDV($num_session);
+                if ($nbre_rdv >= $nbre_place) {
+                    $tab_place[$all_pro[$i]->getNom()." ".$all_pro[$i]->getPrenom()][$heures[$j]] = "Plein";
+                    continue;
+                }
+                $tab_place[$all_pro[$i]->getNom()." ".$all_pro[$i]->getPrenom()][$heures[$j]] = $nbre_place - $nbre_rdv;
+            }
+        }
+        return $this->render("admin/place_reservation.html.twig", [
+            "tab_place" => $tab_place,
+            'num_session' => $num_session,
+            'heures' => $heures
+        ]);
+    }
+
+    #[Route("/recherche/reservation", name: "search_reservation")]
     public function reservation_serch (Request $request) : Response
     {
         $form = $this->createForm(SearchResaType::class);

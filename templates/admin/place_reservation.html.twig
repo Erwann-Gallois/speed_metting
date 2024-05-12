@@ -1,0 +1,31 @@
+{% extends 'base_back.html.twig' %}
+{% block title %}
+    Crénaux disponible session {{ num_session }}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Crénaux disponible session {{ num_session }}</h1>
+        {% include "flash_message.html.twig" %}
+        <hr />
+        <table class = "table table-striped table-hover table-responsive">
+            <thead class = "table-dark">
+                <tr>
+                    <th>Nom</th>
+                    {% for heure in heures %}
+                        <th>{{ heure }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for nom, heures_rdv in tab_place %}
+                    <tr>
+                        <td>{{ nom }}</td>
+                        {% for heure in heures %}
+                            <td>{{ heures_rdv[heure] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

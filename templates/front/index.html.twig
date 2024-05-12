@@ -38,30 +38,6 @@
                                     31 cours Blaise Pascal, 91000 Évry-Courcouronnes
                                 </h5>
                             </div>
-
-                            {# <div class="social-share">
-                                <ul class="social-icon d-flex align-items-center justify-content-center">
-                                    <span class="text-white me-3">Social:</span>
-
-                                    <li class="social-icon-item">
-                                        <a href="#" class="social-icon-link">
-                                            <span class="bi-facebook"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="social-icon-item">
-                                        <a href="#" class="social-icon-link">
-                                            <span class="bi-twitter"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="social-icon-item">
-                                        <a href="#" class="social-icon-link">
-                                            <span class="bi-instagram"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> #}
                         </div>
                     </div>
                 </div>
@@ -69,12 +45,6 @@
                 <div class = "image-wrap">
                     <img src="{{asset ("images/header.jpg")}}" alt="...">
                 </div>
-                {# <div class="video-wrap">
-                    <video autoplay="" loop="" muted="" class="custom-video" poster="">
-                        <source src="video/pexels-2022395.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div> #}
         </section>
     {% else %}
         <section class="hero-section" id="">
@@ -119,30 +89,6 @@
                                     31 cours Blaise Pascal, 91000 Évry-Courcouronnes
                                 </h5>
                             </div>
-
-                            {# <div class="social-share">
-                                <ul class="social-icon d-flex align-items-center justify-content-center">
-                                    <span class="text-white me-3">Social:</span>
-
-                                    <li class="social-icon-item">
-                                        <a href="#" class="social-icon-link">
-                                            <span class="bi-facebook"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="social-icon-item">
-                                        <a href="#" class="social-icon-link">
-                                            <span class="bi-twitter"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="social-icon-item">
-                                        <a href="#" class="social-icon-link">
-                                            <span class="bi-instagram"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> #}
                         </div>
                     </div>
                 </div>
@@ -150,15 +96,9 @@
                 <div class = "image-wrap">
                     <img src="{{asset ("images/header.jpg")}}" alt="...">
                 </div>
-                {# <div class="video-wrap">
-                    <video autoplay="" loop="" muted="" class="custom-video" poster="">
-                        <source src="video/pexels-2022395.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div> #}
         </section>
     {% endif %}
-        {% if (pros is empty ) or (app.user is null) %}
+        {% if (pros is empty) or (app.user is null) %}
             <section class="about-section section-padding" id="presentation">
                 <div class="container">
                     <div class="row">
@@ -177,15 +117,6 @@
                         <div class="col-lg-6 col-12">
                             <div class="about-text-wrap d-none d-md-block">
                                 <img src="{{asset ('images/fond_1.jpg')}}" class="about-image img-fluid">
-                                {# <div class="about-text-info d-flex">
-                                    <div class="d-flex">
-                                        <i class="about-text-icon bi-person"></i>
-                                    </div>
-                                    <div class="ms-4">
-                                        <h3>Un moment de rencontre</h3>
-                                        <p class="mb-0">Construisez votre avenir avec nous</p>
-                                    </div>
-                                </div> #}
                             </div>
                         </div>
                     </div>
@@ -325,7 +256,6 @@
                             <div class="tab-pane fade" id="nav-ContactMap" role="tabpanel"
                                 aria-labelledby="nav-ContactMap-tab">
                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2637.192130685937!2d2.425795391858858!3d48.625305343092464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5de1b71db3e7d%3A0xc2b3c2bba0107943!2s31%20Cr%20Blaise%20Pascal%2C%2091000%20%C3%89vry-Courcouronnes!5e0!3m2!1sfr!2sfr!4v1706798837272!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                <!-- You can easily copy the embed code from Google Maps -> Share -> Embed a map // -->
                             </div>
                         </div>
                     </div>
